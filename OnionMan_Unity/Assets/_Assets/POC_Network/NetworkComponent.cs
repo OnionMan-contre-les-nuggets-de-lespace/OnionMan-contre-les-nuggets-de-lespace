@@ -6,6 +6,7 @@ using System.Text;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEditor.VersionControl;
 
 public class NetworkComponent : MonoBehaviour
 {
@@ -42,16 +43,21 @@ public class NetworkComponent : MonoBehaviour
         {
             if (!wasSending)
             {
-                var data = Encoding.UTF8.GetBytes(m_sentMessage);
-                m_udpSendClient.Send(data, data.Length, m_sendIP, m_sendPort);
-                Debug.LogWarning("Sent Message");
-                wasSending = true;
+                SendMessageViaNetwork(m_sentMessage);
             }
         }
         else
         {
             wasSending = false;
         }
+    }
+
+    public void SendMessageViaNetwork(string message)
+    {
+        byte[] data = Encoding.UTF8.GetBytes(message);
+        m_udpSendClient.Send(data, data.Length, m_sendIP, m_sendPort);
+        Debug.LogWarning("Sent Message");
+        wasSending = true;
     }
 
     private IEnumerator RecieveCoroutine()
