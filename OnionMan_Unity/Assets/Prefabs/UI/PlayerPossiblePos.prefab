@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6480109547866964794}
   m_Layer: 5
-  m_Name: PlayerFinalPos
+  m_Name: PlayerPossiblePos
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
