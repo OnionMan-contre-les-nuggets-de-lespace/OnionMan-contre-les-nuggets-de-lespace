@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using System.Threading.Tasks;
-using UnityEditor.VersionControl;
+using UnityEngine.UI;
 
 public class NetworkComponent : MonoBehaviour
 {
@@ -17,9 +15,15 @@ public class NetworkComponent : MonoBehaviour
     private int m_recievePort = 3001;
     [SerializeField]
     private int m_sendPort = 3002;
+    [SerializeField]
+    private InputField m_senderPortInput = null;
+    [SerializeField]
+    private InputField m_recieverPortInput = null;
 
     [SerializeField]
     private string m_sendIP = "127.0.0.1";
+    [SerializeField]
+    private InputField m_sendIPInput = null;
 
     [SerializeField]
     string m_sentMessage = string.Empty;
@@ -32,9 +36,10 @@ public class NetworkComponent : MonoBehaviour
         //m_udpRecieveClient = new UdpClient();
         //m_udpRecieveClient.Client.Bind(new IPEndPoint(IPAddress.Parse(m_sendIP), m_recievePort));
         m_udpSendClient = new UdpClient();
-        m_udpSendClient.Client.Bind(new IPEndPoint(IPAddress.Any, m_sendPort));
+        m_udpSendClient.Client.Bind(new IPEndPoint(IPAddress.Any, int.Parse(m_senderPortInput.text)));
 
         //StartCoroutine(RecieveCoroutine());
+
     }
 
     private void Update()
@@ -55,7 +60,7 @@ public class NetworkComponent : MonoBehaviour
     public void SendMessageViaNetwork(string message)
     {
         byte[] data = Encoding.UTF8.GetBytes(message);
-        m_udpSendClient.Send(data, data.Length, m_sendIP, m_sendPort);
+        m_udpSendClient.Send(data, data.Length, m_sendIPInput.text, int.Parse(m_recieverPortInput.text));
         Debug.LogWarning("Sent Message");
         wasSending = true;
     }
