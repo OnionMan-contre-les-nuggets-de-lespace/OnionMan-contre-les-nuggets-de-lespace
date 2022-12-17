@@ -91,6 +91,7 @@ namespace OnionMan.Network
 
         public static T Decode<T>(byte[] bytes, ref int offset, int size = -1)
         {
+            int baseOffset = offset;
             // string are too specific
             if (typeof(T) == typeof(string))
             {
@@ -191,6 +192,11 @@ namespace OnionMan.Network
                 #endregion
                 default:
                     throw new NotImplementedException($"The type {typeof(T)} cannot be decoded");
+            }
+
+            if (size != -1 && offset - baseOffset > size)
+            {
+                Debug.LogError("Offset Overflow");
             }
             return (T)decodedValue;
         }
