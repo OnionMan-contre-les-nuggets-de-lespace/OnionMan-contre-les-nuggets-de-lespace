@@ -11,9 +11,17 @@ namespace OnionMan.Network
 {
     public class EncodingUtility : MonoBehaviour
     {
-        public static int FloatSize = sizeof(float);
-        public static int IntSize = sizeof(int);
-
+        public static int BoolSize => sizeof(bool);
+        public static int CharSize => sizeof(char);
+        public static int DoubleSize => sizeof(double);
+        public static int FloatSize => sizeof(float);
+        public static int IntSize => sizeof(int);
+        public static int LongSize => sizeof(long);
+        public static int UIntSize => sizeof(uint);
+        public static int ULongSize => sizeof(ulong);
+        public static int ShortSize => sizeof(short);
+        public static int UShortSize => sizeof(ushort);
+        //public static int Size = sizeof();
 
 
 
@@ -77,16 +85,21 @@ namespace OnionMan.Network
                         .ToArray();
 
                 default:
-                    throw new NotSupportedException($"The type {typeof(T)} cannot be encoded");
+                    throw new NotImplementedException($"The type {typeof(T)} cannot be encoded");
             }
         }
 
-        public static T Decode<T>(byte[] bytes, int startIndex)
+        public static T Decode<T>(byte[] bytes, ref int offset, int size = -1)
         {
-            // string are too specifics
+            // string are too specific
             if (typeof(T) == typeof(string))
             {
-                object st = Encoding.UTF8.GetString(bytes);
+                if (size == -1)
+                {
+                    throw new ArgumentException($"In order to decode a string, the argument 'size' must be set");
+                }
+                object st = Encoding.UTF8.GetString(bytes, offset, size);
+                offset += size;
                 return (T)st;
             }
 
@@ -95,77 +108,89 @@ namespace OnionMan.Network
 
             switch (defaultObj)
             {
+                #region Base Types
                 //Misc
                 case bool:
-                    decodedValue = BitConverter.ToBoolean(bytes, startIndex);
+                    decodedValue = BitConverter.ToBoolean(bytes, offset);
+                    offset += BoolSize;
                     break;
                 case char:
-                    decodedValue = BitConverter.ToChar(bytes, startIndex);
+                    decodedValue = BitConverter.ToChar(bytes, offset);
+                    offset += CharSize;
                     break;
 
                 //Numbers
                 case double:
-                    decodedValue = BitConverter.ToDouble(bytes, startIndex);
+                    decodedValue = BitConverter.ToDouble(bytes, offset);
+                    offset += DoubleSize;
                     break;
                 case float:
-                    decodedValue = BitConverter.ToSingle(bytes, startIndex);
+                    decodedValue = BitConverter.ToSingle(bytes, offset);
+                    offset += FloatSize;
                     break;
                 case int:
-                    decodedValue = BitConverter.ToInt32(bytes, startIndex);
+                    decodedValue = BitConverter.ToInt32(bytes, offset);
+                    offset += IntSize;
                     break;
                 case long:
-                    decodedValue = BitConverter.ToInt64(bytes, startIndex);
+                    decodedValue = BitConverter.ToInt64(bytes, offset);
+                    offset += LongSize;
                     break;
                 case short:
-                    decodedValue = BitConverter.ToInt16(bytes, startIndex);
+                    decodedValue = BitConverter.ToInt16(bytes, offset);
+                    offset += ShortSize;
                     break;
                 case uint:
-                    decodedValue = BitConverter.ToUInt32(bytes, startIndex);
+                    decodedValue = BitConverter.ToUInt32(bytes, offset);
+                    offset += UIntSize;
                     break;
                 case ulong:
-                    decodedValue = BitConverter.ToUInt64(bytes, startIndex);
+                    decodedValue = BitConverter.ToUInt64(bytes, offset);
+                    offset += ULongSize;
                     break;
                 case ushort:
-                    decodedValue = BitConverter.ToUInt16(bytes, startIndex);
+                    decodedValue = BitConverter.ToUInt16(bytes, offset); 
+                    offset += UShortSize;
                     break;
-
+                #endregion
+                #region Derived Types
                 //Vectors
                 case Vector3:
                     decodedValue = new Vector3(
-                        Decode<float>(bytes, startIndex),
-                        Decode<float>(bytes, startIndex + FloatSize),
-                        Decode<float>(bytes, startIndex + FloatSize * 2));
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset));
                     break;
 
                 case Vector3Int:
                     decodedValue = new Vector3Int(
-                        Decode<int>(bytes, startIndex),
-                        Decode<int>(bytes, startIndex + IntSize),
-                        Decode<int>(bytes, startIndex + IntSize * 2));
+                        Decode<int>(bytes, ref offset),
+                        Decode<int>(bytes, ref offset),
+                        Decode<int>(bytes, ref offset));
                     break;
 
                 case Vector2:
                     decodedValue = new Vector2(
-                        Decode<float>(bytes, startIndex),
-                        Decode<float>(bytes, startIndex + FloatSize));
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset));
                     break;
 
                 case Vector2Int:
                     decodedValue = new Vector2Int(
-                        Decode<int>(bytes, startIndex),
-                        Decode<int>(bytes, startIndex + IntSize));
+                        Decode<int>(bytes, ref offset),
+                        Decode<int>(bytes, ref offset));
                     break;
 
                 case Quaternion:
                     decodedValue = new Quaternion(
-                        Decode<float>(bytes, startIndex),
-                        Decode<float>(bytes, startIndex + FloatSize),
-                        Decode<float>(bytes, startIndex + FloatSize * 2),
-                        Decode<float>(bytes, startIndex + FloatSize * 3));
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset));
                     break;
-
+                #endregion
                 default:
-                    throw new NotSupportedException($"The type {typeof(T)} cannot be decoded");
+                    throw new NotImplementedException($"The type {typeof(T)} cannot be decoded");
             }
             return (T)decodedValue;
         }
