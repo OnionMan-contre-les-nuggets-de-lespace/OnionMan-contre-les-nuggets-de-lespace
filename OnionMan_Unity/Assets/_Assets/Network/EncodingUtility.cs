@@ -78,13 +78,13 @@ namespace OnionMan.Network
                         .Concat(Encode(quaternionValue.w));
 
                 default:
-                    throw new NotImplementedException($"The type {typeof(T)} cannot be encoded");
+                    throw new NotImplementedException($"The type {typeof(T)} cannot be encoded yet");
             }
         }
 
         public static T Decode<T>(byte[] bytes, ref int offset, int size = -1)
         {
-            int baseOffset = offset;
+            int initialOffset = offset;
             // string are too specific
             if (typeof(T) == typeof(string))
             {
@@ -184,16 +184,17 @@ namespace OnionMan.Network
                     break;
                 #endregion
                 default:
-                    throw new NotImplementedException($"The type {typeof(T)} cannot be decoded");
+                    throw new NotImplementedException($"The type {typeof(T)} cannot be decoded yet");
             }
 
-            if (size != -1 && offset - baseOffset > size)
+            if (size != -1 && offset - initialOffset != size)
             {
-                Debug.LogError("Offset Overflow");
+                Debug.LogError("Offset Overflow !");
             }
             return (T)decodedValue;
         }
-        public static string GetBytesAsString(byte[] bytes)
+
+        public static string GetBytesAsString(IEnumerable<byte> bytes)
         {
             string returnValue = string.Empty;
             foreach (byte b in bytes)
