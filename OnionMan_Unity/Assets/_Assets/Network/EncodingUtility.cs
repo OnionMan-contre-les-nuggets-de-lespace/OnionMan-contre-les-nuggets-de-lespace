@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace OnionMan.Network
 {
@@ -25,7 +22,7 @@ namespace OnionMan.Network
 
 
 
-        public static byte[] Encode<T>(T value)
+        public static IEnumerable<byte> Encode<T>(T value)
         {
             switch (value)
             {
@@ -59,30 +56,26 @@ namespace OnionMan.Network
                 case Vector3 vector3Value:
                     return Encode(vector3Value.x)
                         .Concat(Encode(vector3Value.y))
-                        .Concat(Encode(vector3Value.z)).ToArray();
+                        .Concat(Encode(vector3Value.z));
 
                 case Vector3Int vector3IntValue:
                     return Encode(vector3IntValue.x)
                         .Concat(Encode(vector3IntValue.y))
-                        .Concat(Encode(vector3IntValue.z))
-                        .ToArray();
+                        .Concat(Encode(vector3IntValue.z));
 
                 case Vector2 vector2Value:
                     return Encode(vector2Value.x)
-                        .Concat(Encode(vector2Value.y))
-                        .ToArray();
+                        .Concat(Encode(vector2Value.y));
 
                 case Vector2Int vector2IntValue:
                     return Encode(vector2IntValue.x)
-                        .Concat(Encode(vector2IntValue.y))
-                        .ToArray();
+                        .Concat(Encode(vector2IntValue.y));
 
                 case Quaternion quaternionValue:
                     return Encode(quaternionValue.x)
                         .Concat(Encode(quaternionValue.y))
                         .Concat(Encode(quaternionValue.z))
-                        .Concat(Encode(quaternionValue.w))
-                        .ToArray();
+                        .Concat(Encode(quaternionValue.w));
 
                 default:
                     throw new NotImplementedException($"The type {typeof(T)} cannot be encoded");
@@ -200,7 +193,7 @@ namespace OnionMan.Network
             }
             return (T)decodedValue;
         }
-        public static string PrintBytes(byte[] bytes)
+        public static string GetBytesAsString(byte[] bytes)
         {
             string returnValue = string.Empty;
             foreach (byte b in bytes)

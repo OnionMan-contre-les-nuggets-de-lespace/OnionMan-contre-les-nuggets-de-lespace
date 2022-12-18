@@ -30,10 +30,10 @@ namespace OnionMan.Network
             m_value = value;
         }
 
-        public byte[] Encode()
+        public IEnumerable<byte> Encode()
         {
-            byte[] encodedProperty = EncodingUtility.Encode(m_value);
-            return EncodingUtility.Encode(encodedProperty.Length).Concat(encodedProperty).ToArray();
+            IEnumerable<byte> encodedProperty = EncodingUtility.Encode(m_value);
+            return EncodingUtility.Encode(encodedProperty.Count()).Concat(encodedProperty);
         }
 
         public T Decode(byte[] encodedProperty, ref int offset) 
