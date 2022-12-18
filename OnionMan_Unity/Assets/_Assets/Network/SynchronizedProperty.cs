@@ -33,13 +33,17 @@ namespace OnionMan.Network
         public IEnumerable<byte> Encode()
         {
             IEnumerable<byte> encodedProperty = EncodingUtility.Encode(m_value);
-            return EncodingUtility.Encode(encodedProperty.Count()).Concat(encodedProperty);
+            encodedProperty = EncodingUtility.Encode(encodedProperty.Count()).Concat(encodedProperty);
+            Debug.LogWarning($"SyncProp<{typeof(T)}> Encoded Value : {EncodingUtility.GetBytesAsString(encodedProperty)}");
+            return encodedProperty;
         }
 
         public T Decode(byte[] encodedProperty, ref int offset) 
         {
             int propertySize = EncodingUtility.Decode<int>(encodedProperty, ref offset);
-            return EncodingUtility.Decode<T>(encodedProperty, ref offset, propertySize);
+            m_value = EncodingUtility.Decode<T>(encodedProperty, ref offset, propertySize);
+            Debug.LogWarning($"SyncProp<{typeof(T)}> Decoded Value : {m_value}");
+            return m_value;
         }
     }
 }

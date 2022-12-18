@@ -25,25 +25,22 @@ public class NetworkTests : SynchronizedMonoBehaviour
 
     public void EncodeString()
     {
-        byte[] encoded = GetEncodedProperties();
-        int offset = 0;
-        var decodedSP0 = SP0.Decode(encoded, ref offset);
-        var decodedSP1 = SP1.Decode(encoded, ref offset);
-        var decodedSP2 = SP2.Decode(encoded, ref offset);
-        var decodedSP3 = SP3.Decode(encoded, ref offset);
-        Debug.LogError(EncodingUtility.GetBytesAsString(encoded));
-        Debug.LogError(decodedSP0);
-        Debug.LogError(decodedSP1);
-        Debug.LogError(decodedSP2);
-        Debug.LogError(decodedSP3);
+        NetworkManager.Instance.DecodeObjects(NetworkManager.Instance.EncodeObjectsToSync());
     }
 
-    public override byte[] GetEncodedProperties()
+    public override IEnumerable<byte> GetEncodedProperties()
     {
         return SP0.Encode()
             .Concat(SP1.Encode())
             .Concat(SP2.Encode())
-            .Concat(SP3.Encode())
-            .ToArray();
+            .Concat(SP3.Encode());
+    }
+
+    public override void DecodeProperties(byte[] encodedProperties, ref int offset)
+    {
+        SP0.Decode(encodedProperties, ref offset);
+        SP1.Decode(encodedProperties, ref offset);
+        SP2.Decode(encodedProperties, ref offset);
+        SP3.Decode(encodedProperties, ref offset);
     }
 }
