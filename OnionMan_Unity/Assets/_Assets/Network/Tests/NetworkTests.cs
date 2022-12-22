@@ -16,6 +16,9 @@ public class NetworkTests : SynchronizedMonoBehaviour
     [SerializeField]
     private SynchronizedProperty<long> SP3;
 
+    [SerializeField]
+    private SerializableDictionary<int, ulong> dict = new SerializableDictionary<int, ulong>();
+
 
     // Update is called once per frame
     void Update()
@@ -23,24 +26,24 @@ public class NetworkTests : SynchronizedMonoBehaviour
         
     }
 
+    public void ChangeValues()
+    {
+        SP0.Value = 'a';
+        SP1.Value = 1;
+        SP2.Value = "Blaubleubleu";
+        SP3.Value = 2;
+    }
+
     public void EncodeString()
     {
-        NetworkManager.Instance.DecodeObjects(NetworkManager.Instance.EncodeObjectsToSync());
+        NetworkManager.Instance.DecodeObjects(NetworkManager.Instance.EncodeObjects());
     }
 
-    public override IEnumerable<byte> GetEncodedProperties()
+    public override void LoadProperties()
     {
-        return SP0.Encode()
-            .Concat(SP1.Encode())
-            .Concat(SP2.Encode())
-            .Concat(SP3.Encode());
-    }
-
-    public override void DecodeProperties(byte[] encodedProperties, ref int offset)
-    {
-        SP0.Decode(encodedProperties, ref offset);
-        SP1.Decode(encodedProperties, ref offset);
-        SP2.Decode(encodedProperties, ref offset);
-        SP3.Decode(encodedProperties, ref offset);
+        AddSynchronizedProperty(SP0);
+        AddSynchronizedProperty(SP1);
+        AddSynchronizedProperty(SP2);
+        AddSynchronizedProperty(SP3);
     }
 }

@@ -18,6 +18,10 @@ public class NetworkTestEditor : Editor
         {
             m_target.EncodeString();
         }
+        if (GUILayout.Button("ChangeValue"))
+        {
+            m_target.ChangeValues();
+        }
         base.OnInspectorGUI();
     }
 }
