@@ -169,6 +169,7 @@ MonoBehaviour:
     m_value: 533543
     m_propertyID: 3
     m_needSync: 0
+  m_encodedObjects: 
 --- !u!4 &1230472128
 Transform:
   m_ObjectHideFlags: 0
@@ -217,11 +218,11 @@ MonoBehaviour:
   SP0:
     m_value: 106
     m_propertyID: 0
-    m_needSync: 0
+    m_needSync: 1
   SP1:
     m_value: 5535
     m_propertyID: 2
-    m_needSync: 0
+    m_needSync: 1
   SP2:
     m_value: rbbtdnyf
     m_propertyID: 3
@@ -229,7 +230,8 @@ MonoBehaviour:
   SP3:
     m_value: 12424
     m_propertyID: 123
-    m_needSync: 0
+    m_needSync: 1
+  m_encodedObjects: 
 --- !u!4 &1969823608
 Transform:
   m_ObjectHideFlags: 0

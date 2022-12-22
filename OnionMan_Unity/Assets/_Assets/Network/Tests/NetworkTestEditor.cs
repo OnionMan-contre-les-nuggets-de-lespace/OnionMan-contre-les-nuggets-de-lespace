@@ -16,7 +16,11 @@ public class NetworkTestEditor : Editor
     {
         if (GUILayout.Button("Encode"))
         {
-            m_target.EncodeString();
+            m_target.EncodeAndPrint();
+        }
+        if (GUILayout.Button("Decode"))
+        {
+            m_target.TryDecode();
         }
         if (GUILayout.Button("ChangeValue"))
         {

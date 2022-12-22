@@ -194,16 +194,32 @@ namespace OnionMan.Network
             return (T)decodedValue;
         }
 
-        public static string GetBytesAsString(IEnumerable<byte> bytes)
+        #region Debug
+        public static string GetBytesAsString(IEnumerable<byte> bytesEnum)
         {
             string returnValue = string.Empty;
-            foreach (byte b in bytes)
+            byte[] bytes = bytesEnum.ToArray();
+            int byteCount = bytes.Count();
+            for (int i = 0; i < byteCount; i++)
             {
-                returnValue += b.ToString();
+                returnValue += $"{bytes[i]}" + (i < byteCount - 1 ? "|" : "");
             }
             return returnValue;
         }
 
+        public static byte[] GetStringAsBytes(string stringifiedBytes)
+        {
+            string[] strings = stringifiedBytes.Split('|');
+
+            byte[] bytes = new byte[strings.Length];
+            for ( int i = 0; i < strings.Length; i++)
+            {
+                bytes[i] = byte.Parse(strings[i]);
+            }
+
+            return bytes;
+        }
+        #endregion
 
         private static T GetDefaultObj<T>()
         {

@@ -16,7 +16,7 @@ public class NetworkTests : SynchronizedMonoBehaviour
     [SerializeField]
     private SynchronizedProperty<long> SP3;
 
-
+    [SerializeField] private string m_encodedObjects = string.Empty;
 
     // Update is called once per frame
     void Update()
@@ -32,9 +32,15 @@ public class NetworkTests : SynchronizedMonoBehaviour
         SP3.Value = 2;
     }
 
-    public void EncodeString()
+    public void EncodeAndPrint()
     {
-        NetworkManager.Instance.DecodeObjects(NetworkManager.Instance.EncodeObjects());
+        Debug.Log(EncodingUtility.GetBytesAsString(NetworkManager.Instance.EncodeObjects()));
+        //NetworkManager.Instance.DecodeObjects(NetworkManager.Instance.EncodeObjects());
+    }
+
+    public void TryDecode()
+    {
+        NetworkManager.Instance.DecodeObjects(EncodingUtility.GetStringAsBytes(m_encodedObjects));
     }
 
     public override void LoadProperties()
