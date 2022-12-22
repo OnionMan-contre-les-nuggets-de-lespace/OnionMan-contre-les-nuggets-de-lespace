@@ -12,8 +12,7 @@ namespace OnionMan.Network
         public uint ObjectID { get => m_ObjectID; }
         public bool NeedSync 
         { 
-            get => AnyPropertyNeedSync(); 
-            set => ResetNeedSync(value); 
+            get => AnyPropertyNeedSync();
         }
         public Dictionary<ushort, ISynchronizedProperty> Properties 
         { 
