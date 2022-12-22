@@ -7,7 +7,7 @@ using UnityEngine;
 namespace OnionMan.Network
 {
     [Serializable]
-    public class SynchronizedProperty<T>
+    public class SynchronizedProperty<T> : ISynchronizedProperty
     {
         public T Value
         {
@@ -17,12 +17,27 @@ namespace OnionMan.Network
                 if (!m_value.Equals(value))
                 {
                     m_value = value;
-                    m_onValueChanged.Invoke(m_value);
+                    m_needSync = true;
                 }
             }
         }
 
-        [SerializeField] private T m_value;
+        public bool NeedSync 
+        { 
+            get => m_needSync; 
+            set => m_needSync = value; 
+        }
+
+        public ushort PropertyID => m_propertyID;
+
+        [SerializeField]
+        private T m_value;
+        [SerializeField]
+        private ushort m_propertyID;
+
+        [SerializeField] //Temp
+        private bool m_needSync = false;
+
         private Action<T> m_onValueChanged;
 
         public SynchronizedProperty(T value)
@@ -30,20 +45,30 @@ namespace OnionMan.Network
             m_value = value;
         }
 
-        public IEnumerable<byte> Encode()
+        public IEnumerable<byte> EncodeProperty(bool forSync = true)
         {
-            IEnumerable<byte> encodedProperty = EncodingUtility.Encode(m_value);
+            if (forSync)
+            {
+                m_needSync = false;
+            }
+            IEnumerable<byte> encodedProperty = EncodingUtility.Encode(m_propertyID).Concat(EncodingUtility.Encode(m_value));
             encodedProperty = EncodingUtility.Encode(encodedProperty.Count()).Concat(encodedProperty);
             Debug.LogWarning($"SyncProp<{typeof(T)}> Encoded Value : {EncodingUtility.GetBytesAsString(encodedProperty)}");
             return encodedProperty;
         }
 
-        public T Decode(byte[] encodedProperty, ref int offset) 
+        public void DecodeProperty(byte[] encodedProperty, ref int offset, int propertySize) 
         {
-            int propertySize = EncodingUtility.Decode<int>(encodedProperty, ref offset);
-            m_value = EncodingUtility.Decode<T>(encodedProperty, ref offset, propertySize);
-            Debug.LogWarning($"SyncProp<{typeof(T)}> Decoded Value : {m_value}");
-            return m_value;
+            T decodedValue = EncodingUtility.Decode<T>(encodedProperty, ref offset, propertySize);
+            if (!m_value.Equals(decodedValue))
+            {
+                m_value = decodedValue;
+                if (m_onValueChanged != null)
+                {
+                    m_onValueChanged(m_value);
+                }
+            }
+            Debug.LogWarning($"SyncProp<{typeof(T)}> Decoded Value : {decodedValue}");
         }
     }
 }
