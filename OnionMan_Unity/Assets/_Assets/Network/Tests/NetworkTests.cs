@@ -16,8 +16,6 @@ public class NetworkTests : SynchronizedMonoBehaviour
     [SerializeField]
     private SynchronizedProperty<long> SP3;
 
-    [SerializeField]
-    private SerializableDictionary<int, ulong> dict = new SerializableDictionary<int, ulong>();
 
 
     // Update is called once per frame
