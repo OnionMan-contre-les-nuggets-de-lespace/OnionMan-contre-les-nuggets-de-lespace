@@ -98,7 +98,7 @@ namespace OnionMan.Network
             }
 
             object decodedValue;
-            T defaultObj = GetDefaultObj<T>();
+            T defaultObj = GetDefaultObjOfType<T>();
 
             switch (defaultObj)
             {
@@ -209,19 +209,19 @@ namespace OnionMan.Network
 
         public static byte[] GetStringAsBytes(string stringifiedBytes)
         {
-            string[] strings = stringifiedBytes.Split('|');
+            string[] splittedString = stringifiedBytes.Split('|');
 
-            byte[] bytes = new byte[strings.Length];
-            for ( int i = 0; i < strings.Length; i++)
+            byte[] bytes = new byte[splittedString.Length];
+            for ( int i = 0; i < splittedString.Length; i++)
             {
-                bytes[i] = byte.Parse(strings[i]);
+                bytes[i] = byte.Parse(splittedString[i]);
             }
 
             return bytes;
         }
         #endregion
 
-        private static T GetDefaultObj<T>()
+        private static T GetDefaultObjOfType<T>()
         {
             if (typeof(T).IsValueType || typeof(T) == typeof(string))
             {
