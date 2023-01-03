@@ -40,15 +40,7 @@ namespace OnionMan.Network
             IEnumerable<byte> encodedObjects = new byte[0];
             foreach(ISynchronizedObject synchronizedObject in GetObjectsToSync())
             {
-                IEnumerable<byte> encodedObject = 
-                    EncodingUtility.Encode(synchronizedObject.ObjectID)
-                    .Concat(synchronizedObject.EncodeObject());
-
-                encodedObjects = encodedObjects.Concat(
-                    EncodingUtility.Encode(encodedObject.Count())
-                    .Concat(encodedObject));
-
-                Debug.LogError($"Encoded Object : {EncodingUtility.GetBytesAsString(encodedObject)}");
+                encodedObjects = encodedObjects.Concat(synchronizedObject.EncodeObject());
             }
             return encodedObjects.ToArray();
         }
@@ -62,9 +54,11 @@ namespace OnionMan.Network
                 int initialOffset = offset;
 
                 uint objectID = EncodingUtility.Decode<uint>(encodedObjects, ref offset);
+                int objectDataSize = objectSize - sizeof(uint);
+
                 if (m_synchronizedObjects.TryGetValue(objectID, out ISynchronizedObject synchronizedObject))
                 {
-                    synchronizedObject.DecodeObject(encodedObjects, ref offset, objectSize);
+                    synchronizedObject.DecodeObject(encodedObjects, ref offset, objectDataSize);
                     if (offset - initialOffset != objectSize)
                     {
                         Debug.LogError("Offset Overflow !");

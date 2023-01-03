@@ -9,10 +9,10 @@ namespace OnionMan.Network
     public abstract class SynchronizedMonoBehaviour : MonoBehaviour, ISynchronizedObject
     {
         #region ISynchronizedObject Implementation
-        public uint ObjectID { get => m_ObjectID; }
+        public uint ObjectID { get => m_objectID; }
         public bool NeedSync 
         { 
-            get => AnyPropertyNeedSync();
+            get => enabled && AnyPropertyNeedSync();
         }
         public Dictionary<ushort, ISynchronizedProperty> Properties 
         { 
@@ -20,26 +20,29 @@ namespace OnionMan.Network
         }
 
         [SerializeField]
-        private uint m_ObjectID;
+        private uint m_objectID;
 
         private Dictionary<ushort, ISynchronizedProperty> m_synchronizedProperties = new Dictionary<ushort, ISynchronizedProperty>();
 
         public IEnumerable<byte> EncodeObject(bool forSync = true)
         {
-            IEnumerable<byte> result = new byte[0];
+            IEnumerable<byte> encodedObject = EncodingUtility.Encode(m_objectID);
             foreach (ISynchronizedProperty property in GetPropertiesToSync())
             {
-                result = result.Concat(property.EncodeProperty(forSync));
+                encodedObject = encodedObject.Concat(property.EncodeProperty(forSync));
             }
-            return result;
+
+            Debug.LogError($"Encoded Object : {EncodingUtility.GetBytesAsString(encodedObject)}");
+            return EncodingUtility.Encode(encodedObject.Count()).Concat(encodedObject);
         }
 
         public void DecodeObject(byte[] encodedProperties, ref int offset, int size)
         {
-            while (offset < size)
+            int objectStartOffset = offset;
+            while (offset - objectStartOffset < size)
             {
                 int propertySize = EncodingUtility.Decode<int>(encodedProperties, ref offset);
-                int initialOffset = offset;
+                int porpertyStartOffset = offset;
 
                 ushort propertyID = EncodingUtility.Decode<ushort>(encodedProperties, ref offset);
                 int dataSize = propertySize - sizeof(ushort);
@@ -47,7 +50,7 @@ namespace OnionMan.Network
                 if (m_synchronizedProperties.TryGetValue(propertyID, out ISynchronizedProperty synchronizedProperty))
                 {
                     synchronizedProperty.DecodeProperty(encodedProperties, ref offset, dataSize);
-                    if (offset - initialOffset != propertySize)
+                    if (offset - porpertyStartOffset != propertySize)
                     {
                         Debug.LogError("Offset Overflow !");
                     }
