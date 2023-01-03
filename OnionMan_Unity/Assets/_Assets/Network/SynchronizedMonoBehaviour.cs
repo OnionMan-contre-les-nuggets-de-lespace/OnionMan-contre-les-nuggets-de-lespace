@@ -39,7 +39,7 @@ namespace OnionMan.Network
         public void DecodeObject(byte[] encodedProperties, ref int offset, int size)
         {
             int objectStartOffset = offset;
-            while (offset - objectStartOffset < size)
+            while (offset < size + objectStartOffset)
             {
                 int propertySize = EncodingUtility.Decode<int>(encodedProperties, ref offset);
                 int porpertyStartOffset = offset;
