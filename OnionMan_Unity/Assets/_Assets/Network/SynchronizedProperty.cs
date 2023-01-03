@@ -22,13 +22,19 @@ namespace OnionMan.Network
             }
         }
 
-        public bool NeedSync 
-        { 
-            get => m_needSync; 
-            set => m_needSync = value; 
+        public bool NeedSync
+        {
+            get => m_needSync;
+            set => m_needSync = value;
         }
 
         public ushort PropertyID => m_propertyID;
+
+        public Action<T> OnValueChanged 
+        { 
+            get => m_onValueChanged;
+            set => m_onValueChanged = value;
+        }
 
         [SerializeField]
         private T m_value;
@@ -40,9 +46,10 @@ namespace OnionMan.Network
 
         private Action<T> m_onValueChanged;
 
-        public SynchronizedProperty(T value)
+        public SynchronizedProperty(T value, ushort ID)
         {
             m_value = value;
+            m_propertyID = ID;
         }
 
         public IEnumerable<byte> EncodeProperty(bool forSync = true)
