@@ -78,7 +78,7 @@ namespace OnionMan.Network
                         .Concat(Encode(quaternionValue.w));
 
                 default:
-                    throw new NotImplementedException($"The type {typeof(T)} cannot be encoded yet");
+                    throw new NotImplementedException($"The type {typeof(T)} cannot be encoded yet, u looser");
             }
         }
 
@@ -194,6 +194,18 @@ namespace OnionMan.Network
             return (T)decodedValue;
         }
 
+        private static T GetDefaultObjOfType<T>()
+        {
+            if (typeof(T).IsValueType || typeof(T) == typeof(string))
+            {
+                return default(T);
+            }
+            else
+            {
+                return (T)Activator.CreateInstance(typeof(T));
+            }
+        }
+
         #region Debug
         public static string GetBytesAsString(IEnumerable<byte> bytesEnum)
         {
@@ -220,17 +232,5 @@ namespace OnionMan.Network
             return bytes;
         }
         #endregion
-
-        private static T GetDefaultObjOfType<T>()
-        {
-            if (typeof(T).IsValueType || typeof(T) == typeof(string))
-            {
-                return default(T);
-            }
-            else
-            {
-                return (T)Activator.CreateInstance(typeof(T));
-            }
-        }
     }
 }
