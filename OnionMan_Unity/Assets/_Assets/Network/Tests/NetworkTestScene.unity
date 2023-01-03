@@ -169,6 +169,22 @@ MonoBehaviour:
     m_value: 2
     m_propertyID: 3
     m_needSync: 1
+  SP4:
+    m_propertyID: 4
+    m_needSync: 1
+    m_value:
+    - {x: 1, y: 2, z: 3}
+    - {x: 4, y: 5, z: 6}
+    - {x: 7, y: 8, z: 9}
+  SP5:
+    m_propertyID: 5
+    m_needSync: 1
+    m_value:
+    - el6546546
+    - kchsiuhci
+    - el2
+    - El0
+    - ijoisjvoiro
   m_encodedObjects: 
 --- !u!4 &1230472128
 Transform:
@@ -209,7 +225,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969823606}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 954e1d7b72963d34988b6866582b0ada, type: 3}
   m_Name: 
@@ -231,6 +247,22 @@ MonoBehaviour:
     m_value: 12424
     m_propertyID: 123
     m_needSync: 1
+  SP4:
+    m_propertyID: 4
+    m_needSync: 1
+    m_value:
+    - {x: 12, y: 11, z: 10}
+    - {x: 9, y: 8, z: 7}
+    - {x: 6, y: 5, z: 4}
+    - {x: 3, y: 2, z: 1}
+  SP5:
+    m_propertyID: 5
+    m_needSync: 0
+    m_value:
+    - El0
+    - kchsiuhci
+    - el2
+    - el6546546
   m_encodedObjects: 
 --- !u!4 &1969823608
 Transform:

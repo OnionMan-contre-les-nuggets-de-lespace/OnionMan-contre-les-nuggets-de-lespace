@@ -15,6 +15,10 @@ public class NetworkTests : SynchronizedMonoBehaviour
     private SynchronizedProperty<string> SP2;
     [SerializeField]
     private SynchronizedProperty<long> SP3;
+    [SerializeField]
+    private SynchronizedList<Vector3> SP4;
+    [SerializeField]
+    private SynchronizedList<string> SP5;
 
     [SerializeField] private string m_encodedObjects = string.Empty;
 
@@ -49,5 +53,7 @@ public class NetworkTests : SynchronizedMonoBehaviour
         AddSynchronizedProperty(SP1);
         AddSynchronizedProperty(SP2);
         AddSynchronizedProperty(SP3);
+        AddSynchronizedProperty(SP4);
+        AddSynchronizedProperty(SP5);
     }
 }
