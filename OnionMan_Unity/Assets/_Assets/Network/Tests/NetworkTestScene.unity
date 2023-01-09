@@ -185,6 +185,20 @@ MonoBehaviour:
     - el2
     - El0
     - ijoisjvoiro
+  SP6:
+    m_pairs:
+    - Key: 0
+      Value: 0
+    - Key: 0
+      Value: 87656456
+    - Key: 0
+      Value: 64564
+    - Key: 0
+      Value: 5.645646e+9
+    - Key: 0
+      Value: 0
+    - Key: 0
+      Value: 5645645
   m_encodedObjects: 
 --- !u!4 &1230472128
 Transform:
@@ -194,7 +208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230472126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.236, y: 1.119, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -225,7 +239,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969823606}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 954e1d7b72963d34988b6866582b0ada, type: 3}
   m_Name: 
@@ -263,6 +277,8 @@ MonoBehaviour:
     - kchsiuhci
     - el2
     - el6546546
+  SP6:
+    m_pairs: []
   m_encodedObjects: 
 --- !u!4 &1969823608
 Transform:
