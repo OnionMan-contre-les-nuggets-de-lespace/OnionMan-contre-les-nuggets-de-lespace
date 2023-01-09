@@ -1,20 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public abstract class Singleton<T> : ISingleton<T> where T : Singleton<T>, new()
+namespace OnionMan.Utils
 {
-    public static T Instance
-    {
-        get
-        {
-            if (m_instance == null)
-            {
-                m_instance = new T();
-            }
-            return m_instance;
-        }
-    }
+	public abstract class Singleton<T> : ISingleton<T> where T : Singleton<T>
+	{
+		private static T s_instance;
 
-    private static T m_instance;
+		public static T Instance
+		{
+			get
+			{
+				if (s_instance == null)
+				{
+					s_instance = Activator.CreateInstance<T>();
+				}
+				return s_instance;
+			}
+		}
+
+		/// <summary>
+		/// Default constructor
+		/// </summary>
+		protected Singleton()
+		{
+			if (s_instance != null)
+			{
+				//todo : create specific exception
+				throw new Exception("Instance already exists");
+			}
+
+			s_instance = this as T;
+
+			if (s_instance == null)
+			{
+				throw new Exception("Instance creation failed");
+			}
+		}
+
+
+		public static void DestroyInstance()
+		{
+			s_instance = null;
+			GC.Collect();
+		}
+	}
 }

@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISingleton<T>/* where T : ISingleton<T>*/
+namespace OnionMan.Utils
 {
-    public static T Instance { get; }
+    public interface ISingleton<T> where T : ISingleton<T>
+    {
+        public static T Instance { get; }
+    }
 }

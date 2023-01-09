@@ -3,9 +3,11 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 
+using OnionMan.Utils;
+
 namespace OnionMan.Network
 {
-    public class NetworkManager : Singleton<NetworkManager>
+    public class NetworkManager : SingletonMonoBehaviour<NetworkManager>
     {
         private Dictionary<uint, ISynchronizedObject> m_synchronizedObjects = new Dictionary<uint, ISynchronizedObject>();
 
