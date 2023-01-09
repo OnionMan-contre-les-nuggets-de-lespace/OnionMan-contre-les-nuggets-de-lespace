@@ -7,6 +7,10 @@ using System.Linq;
 
 public class NetworkTests : SynchronizedMonoBehaviour
 {
+    private enum Enumeuh
+	{
+        A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T
+	}
     [SerializeField]
     private SynchronizedProperty<char> SP0;
     [SerializeField]
@@ -19,6 +23,8 @@ public class NetworkTests : SynchronizedMonoBehaviour
     private SynchronizedList<Vector3> SP4;
     [SerializeField]
     private SynchronizedList<string> SP5;
+    [SerializeField]
+    private OnionMan.Utils.SerializedDictionary<Enumeuh,float> SP6;
 
     [SerializeField] private string m_encodedObjects = string.Empty;
 
