@@ -30,10 +30,8 @@ public class NetworkTests : SynchronizedMonoBehaviour
 
     public void ChangeValues()
     {
-        SP0.Value = 'a';
-        SP1.Value = 1;
-        SP2.Value = "Blaubleubleu";
-        SP3.Value = 2;
+        SP4.Value.Add(new Vector3(Random.value, Random.value, Random.value));
+        SP5.Value.Add($"Value {Random.value}");
     }
 
     public void EncodeAndPrint()

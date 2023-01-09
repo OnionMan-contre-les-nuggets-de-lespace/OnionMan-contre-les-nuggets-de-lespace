@@ -89,6 +89,7 @@ namespace OnionMan.Network
             if (!ListEquals(m_value, decodedList))
             {
                 m_value = DeepCopy(decodedList);
+                m_previousValue = DeepCopy(decodedList);
                 if (m_onValueChanged != null)
                 {
                     m_onValueChanged(m_value);

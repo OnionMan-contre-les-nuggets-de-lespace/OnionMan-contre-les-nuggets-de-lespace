@@ -32,7 +32,6 @@ namespace OnionMan.Network
                 encodedObject = encodedObject.Concat(property.EncodeProperty(forSync));
             }
 
-            Debug.LogError($"Encoded Object : {EncodingUtility.GetBytesAsString(encodedObject)}");
             return EncodingUtility.Encode(encodedObject.Count()).Concat(encodedObject);
         }
 
