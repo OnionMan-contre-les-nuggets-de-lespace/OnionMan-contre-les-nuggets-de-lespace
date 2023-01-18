@@ -180,6 +180,106 @@ namespace OnionMan.Network
             return (T)decodedValue;
         }
 
+        public static int GetSize<T>(T value = default)
+        {
+            // string are too specific
+            if (typeof(T) == typeof(string))
+            {
+                if ()
+                return ;
+            }
+
+            object decodedValue;
+            T defaultObj = GetDefaultObjOfType<T>();
+
+            switch (defaultObj)
+            {
+                #region Base Types
+                //Misc
+                case bool:
+                    decodedValue = BitConverter.ToBoolean(bytes, offset);
+                    offset += sizeof(bool);
+                    break;
+                case char:
+                    decodedValue = BitConverter.ToChar(bytes, offset);
+                    offset += sizeof(char);
+                    break;
+
+                //Numbers
+                case double:
+                    decodedValue = BitConverter.ToDouble(bytes, offset);
+                    offset += sizeof(double);
+                    break;
+                case float:
+                    decodedValue = BitConverter.ToSingle(bytes, offset);
+                    offset += sizeof(float);
+                    break;
+                case int:
+                    decodedValue = BitConverter.ToInt32(bytes, offset);
+                    offset += sizeof(int);
+                    break;
+                case long:
+                    decodedValue = BitConverter.ToInt64(bytes, offset);
+                    offset += sizeof(long);
+                    break;
+                case short:
+                    decodedValue = BitConverter.ToInt16(bytes, offset);
+                    offset += sizeof(short);
+                    break;
+                case uint:
+                    decodedValue = BitConverter.ToUInt32(bytes, offset);
+                    offset += sizeof(uint);
+                    break;
+                case ulong:
+                    decodedValue = BitConverter.ToUInt64(bytes, offset);
+                    offset += sizeof(ulong);
+                    break;
+                case ushort:
+                    decodedValue = BitConverter.ToUInt16(bytes, offset);
+                    offset += sizeof(ushort);
+                    break;
+                #endregion
+                #region Derived Types
+                //Vectors
+                case Vector3:
+                    decodedValue = new Vector3(
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset));
+                    break;
+
+                case Vector3Int:
+                    decodedValue = new Vector3Int(
+                        Decode<int>(bytes, ref offset),
+                        Decode<int>(bytes, ref offset),
+                        Decode<int>(bytes, ref offset));
+                    break;
+
+                case Vector2:
+                    decodedValue = new Vector2(
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset));
+                    break;
+
+                case Vector2Int:
+                    decodedValue = new Vector2Int(
+                        Decode<int>(bytes, ref offset),
+                        Decode<int>(bytes, ref offset));
+                    break;
+
+                case Quaternion:
+                    decodedValue = new Quaternion(
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset),
+                        Decode<float>(bytes, ref offset));
+                    break;
+                #endregion
+                default:
+                    throw new NotImplementedException($"The type {typeof(T)} cannot be decoded yet");
+            }
+        }
+
         private static T GetDefaultObjOfType<T>()
         {
             if (typeof(T).IsValueType || typeof(T) == typeof(string))
