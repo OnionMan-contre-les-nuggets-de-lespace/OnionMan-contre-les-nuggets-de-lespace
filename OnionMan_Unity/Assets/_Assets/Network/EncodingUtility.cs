@@ -12,9 +12,9 @@ namespace OnionMan.Network
         {
             switch (value)
             {
-				#region Base Types
-				//Misc
-				case string stringValue:
+                #region Base Types
+                //Misc
+                case string stringValue:
                     return Encoding.UTF8.GetBytes(stringValue);
                 case bool boolValue:
                     return BitConverter.GetBytes(boolValue);
@@ -38,10 +38,10 @@ namespace OnionMan.Network
                     return BitConverter.GetBytes(ulongValue);
                 case ushort ushortValue:
                     return BitConverter.GetBytes(ushortValue);
-				#endregion
-				#region Derived Types
-				//Vectors
-				case Vector3 vector3Value:
+                #endregion
+                #region Derived Types
+                //Vectors
+                case Vector3 vector3Value:
                     return Encode(vector3Value.x)
                         .Concat(Encode(vector3Value.y))
                         .Concat(Encode(vector3Value.z));
@@ -64,8 +64,86 @@ namespace OnionMan.Network
                         .Concat(Encode(quaternionValue.y))
                         .Concat(Encode(quaternionValue.z))
                         .Concat(Encode(quaternionValue.w));
-				#endregion
-				default:
+                #endregion
+                default:
+                    throw new NotImplementedException($"The type {typeof(T)} cannot be encoded yet, u looser");
+            }
+        }
+
+        public static void PutEncodedValueInBuffer<T>(T value, byte[] buffer, ref int offset)
+        {
+            switch (value)
+            {
+                #region Base Types
+                //Misc
+                case string stringValue:
+                    PutToBuffer(buffer, Encoding.UTF8.GetBytes(stringValue), ref offset);
+                    break;
+                case bool boolValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(boolValue), ref offset);
+                    break;
+                case char charValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(charValue), ref offset);
+                    break;
+
+                //Numbers
+                case double doubleValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(doubleValue), ref offset);
+                    break;
+                case float floatValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(floatValue), ref offset);
+                    break;
+                case int intValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(intValue), ref offset);
+                    break;
+                case long longValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(longValue), ref offset);
+                    break;
+                case short shortValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(shortValue), ref offset);
+                    break;
+                case uint uintValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(uintValue), ref offset);
+                    break;
+                case ulong ulongValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(ulongValue), ref offset);
+                    break;
+                case ushort ushortValue:
+                    PutToBuffer(buffer, BitConverter.GetBytes(ushortValue), ref offset);
+                    break;
+                #endregion
+                #region Derived Types
+                //Vectors
+                case Vector3 vector3Value:
+                    PutEncodedValueInBuffer(vector3Value.x, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3Value.y, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3Value.z, buffer, ref offset);
+                    break;
+
+                case Vector3Int vector3IntValue:
+                    PutEncodedValueInBuffer(vector3IntValue.x, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3IntValue.y, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3IntValue.z, buffer, ref offset);
+                    break;
+
+                case Vector2 vector2Value:
+                    PutEncodedValueInBuffer(vector2Value.x, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector2Value.y, buffer, ref offset);
+                    break;
+
+                case Vector2Int vector2IntValue:
+                    PutEncodedValueInBuffer(vector2IntValue.x, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector2IntValue.y, buffer, ref offset);
+                    break;
+
+                case Quaternion quaternionValue:
+                    PutEncodedValueInBuffer(quaternionValue.x, buffer, ref offset);
+                    PutEncodedValueInBuffer(quaternionValue.y, buffer, ref offset);
+                    PutEncodedValueInBuffer(quaternionValue.z, buffer, ref offset);
+                    PutEncodedValueInBuffer(quaternionValue.w, buffer, ref offset);
+                    break;
+                #endregion
+                default:
                     throw new NotImplementedException($"The type {typeof(T)} cannot be encoded yet, u looser");
             }
         }
@@ -284,6 +362,14 @@ namespace OnionMan.Network
                     throw new NotImplementedException($"The size of {typeof(T)} cannot be found yet");
             }
         }
+
+        public static void PutToBuffer(byte[] toBuffer, byte[] fromBuffer, ref int offset)
+		{
+            for (int i = 0; offset < fromBuffer.Length; offset++, i++)
+			{
+                toBuffer[offset] = fromBuffer[i];
+			}
+		}
 
         private static T GetDefaultObjOfType<T>()
         {

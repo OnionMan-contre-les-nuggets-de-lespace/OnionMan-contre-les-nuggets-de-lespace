@@ -26,24 +26,37 @@ namespace OnionMan.Network
             m_synchronizedObjects.Add(objID, obj);
         }
 
-        public IEnumerable<ISynchronizedObject> GetObjectsToSync()
+        public IEnumerable<(ISynchronizedObject, int)> GetObjectsToSync()
         {
             foreach (ISynchronizedObject synchronizedObject in m_synchronizedObjects.Values)
             {
-                if (synchronizedObject.NeedSync)
+                ObjectNeedSyncResult needSyncResult = synchronizedObject.NeedSync();
+                if (needSyncResult.NeedSync)
                 {
-                    yield return synchronizedObject;
+                    yield return (synchronizedObject, needSyncResult.EncodedSize);
                 }
             }
         }
 
         public byte[] EncodeObjects()
         {
-            IEnumerable<byte> encodedObjects = new byte[0];
-            foreach(ISynchronizedObject synchronizedObject in GetObjectsToSync())
+            IEnumerable<(ISynchronizedObject, int)> objectsToSync = GetObjectsToSync();
+
+            int encodedObjectsTotalSize = 0;
+            foreach((ISynchronizedObject synchronizedObject, int encodedSize) in objectsToSync)
             {
-                encodedObjects = encodedObjects.Concat(synchronizedObject.EncodeObject());
+                encodedObjectsTotalSize += encodedSize;
             }
+
+            IEnumerable<byte> encodedObjects = new byte[encodedObjectsTotalSize];
+            int offset = 0;
+
+            foreach ((ISynchronizedObject synchronizedObject, int encodedSize) in objectsToSync)
+            {
+                synchronizedObject.PutEncodedObjectToBuffer(encodedObjects, ref int offset);
+            }
+
+            encodedObjects = encodedObjects.Concat(synchronizedObject.EncodeObject());
             return encodedObjects.ToArray();
         }
 

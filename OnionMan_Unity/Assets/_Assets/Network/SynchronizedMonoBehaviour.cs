@@ -10,10 +10,7 @@ namespace OnionMan.Network
     {
         #region ISynchronizedObject Implementation
         public uint ObjectID { get => m_objectID; }
-        public bool NeedSync 
-        { 
-            get => enabled && AnyPropertyNeedSync();
-        }
+
         public Dictionary<ushort, ISynchronizedProperty> Properties 
         { 
             get => m_synchronizedProperties;
@@ -23,6 +20,16 @@ namespace OnionMan.Network
         private uint m_objectID;
 
         private Dictionary<ushort, ISynchronizedProperty> m_synchronizedProperties = new Dictionary<ushort, ISynchronizedProperty>();
+
+        public ObjectNeedSyncResult NeedSync()
+        {
+            int encodedObjectSize = 0;
+            foreach (ISynchronizedProperty property in GetPropertiesToSync())
+			{
+                encodedObjectSize += property.GetEncodedPropertySize();
+			}
+            return new ObjectNeedSyncResult(enabled && encodedObjectSize > 0, encodedObjectSize);
+        }
 
         public IEnumerable<byte> EncodeObject(bool forSync = true)
         {
@@ -62,11 +69,6 @@ namespace OnionMan.Network
         }
 
         public abstract void LoadProperties();
-
-        private bool AnyPropertyNeedSync()
-        {
-            return GetPropertiesToSync().Any();
-        }
 
         private void ResetNeedSync(bool state)
         {
