@@ -48,12 +48,12 @@ namespace OnionMan.Network
                 encodedObjectsTotalSize += encodedSize;
             }
 
-            IEnumerable<byte> encodedObjects = new byte[encodedObjectsTotalSize];
+            byte[] encodedObjects = new byte[encodedObjectsTotalSize];
             int offset = 0;
 
             foreach ((ISynchronizedObject synchronizedObject, int encodedSize) in objectsToSync)
             {
-                synchronizedObject.PutEncodedObjectToBuffer(encodedObjects, ref int offset);
+                synchronizedObject.PutEncodedObjectToBuffer(encodedObjects, ref offset);
             }
 
             encodedObjects = encodedObjects.Concat(synchronizedObject.EncodeObject());

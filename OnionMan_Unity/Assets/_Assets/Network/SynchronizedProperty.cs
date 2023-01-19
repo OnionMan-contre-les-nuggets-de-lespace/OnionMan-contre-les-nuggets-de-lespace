@@ -18,6 +18,8 @@ namespace OnionMan.Network
                 {
                     m_value = value;
                     m_needSync = true;
+
+                    m_sizeMayHaveChanged = true;
                 }
             }
         }
@@ -48,6 +50,8 @@ namespace OnionMan.Network
         private int m_fixedSize = 0;
 
         private Action<T> m_onValueChanged;
+		private bool m_sizeMayHaveChanged;
+		private int m_encodedSize;
 
 		public SynchronizedProperty(T value, ushort ID)
         {
@@ -57,7 +61,7 @@ namespace OnionMan.Network
             m_hasFixedSize = EncodingUtility.HasFixedEncodedSize<T>();
             if (m_hasFixedSize)
 			{
-                m_fixedSize = EncodingUtility.GetEncodedSize<T>();
+                m_fixedSize = EncodingUtility.GetSizeOf<T>() + sizeof(int) + sizeof(ushort);
 			}
         }
 
@@ -91,9 +95,22 @@ namespace OnionMan.Network
 		{
 			if (m_hasFixedSize)
 			{
-                return m_fixedSize;
+                return sizeof(int) + sizeof(ushort) + m_fixedSize; // Size + ID + Data
 			}
-            return EncodingUtility.GetEncodedSize(m_value);
+
+            if (m_sizeMayHaveChanged)
+            {
+                m_sizeMayHaveChanged = false;
+                m_encodedSize = sizeof(int) + sizeof(ushort) + EncodingUtility.GetSizeOf(m_value); // Size + ID + Data
+            }
+            return m_encodedSize;
 		}
+
+		public void PutEncodedPoropertyToBuffer(byte[] buffer, ref int offset)
+        {
+            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), buffer, ref offset); // Put Size
+            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, buffer, ref offset);                           // Put ID
+            EncodingUtility.PutEncodedValueInBuffer(m_value, buffer, ref offset);                                // Put Data
+        }
 	}
 }

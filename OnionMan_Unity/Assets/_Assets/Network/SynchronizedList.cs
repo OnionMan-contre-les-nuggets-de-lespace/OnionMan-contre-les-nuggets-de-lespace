@@ -42,8 +42,8 @@ namespace OnionMan.Network
         [SerializeField]
         private List<T> m_value = new List<T>();
 
-        private bool m_hasFixedSize = false;
-        private int m_fixedSize = 0;
+        private bool m_hasTAFixedSize = false;
+        private int m_fixedTSize = 0;
 
         private List<T> m_previousValue = new List<T>();
         private bool m_sizeMayHaveChanged = true;
@@ -57,10 +57,10 @@ namespace OnionMan.Network
             m_propertyID = propertyID; 
             m_previousValue = new List<T>();
 
-            m_hasFixedSize = EncodingUtility.HasFixedEncodedSize<T>();
-            if (m_hasFixedSize)
+            m_hasTAFixedSize = EncodingUtility.HasFixedEncodedSize<T>();
+            if (m_hasTAFixedSize)
             {
-                m_fixedSize = EncodingUtility.GetEncodedSize<T>();
+                m_fixedTSize = EncodingUtility.GetSizeOf<T>();
             }
         }
 
@@ -109,7 +109,61 @@ namespace OnionMan.Network
 
             Debug.LogWarning($"SyncList<{typeof(T)}> Decoded Value : {decodedList}");
         }
+		private void CheckNeedSync()
+        {
+            if (m_needSync)
+            {
+                return;
+            }
 
+            if (ListEquals(m_value, m_previousValue))
+            {
+                m_needSync = false;
+                return;
+            }
+
+            m_sizeMayHaveChanged = true;
+            m_previousValue = DeepCopy(m_value);
+            m_needSync = true;
+        }
+
+        public int GetEncodedPropertySize()
+        {
+            if (m_hasTAFixedSize)
+            {
+                int encodedTSize = sizeof(int) + m_fixedTSize; // Size + Data
+                return sizeof(int) + sizeof(ushort) + encodedTSize * m_value.Count; // Size + ID + Each element Size * n
+            }
+
+            if (m_sizeMayHaveChanged)
+			{
+                m_sizeMayHaveChanged = false;
+                m_encodedSize = sizeof(int) + sizeof(ushort); // Property size + PropertyID
+                m_value.ForEach((T element) => m_encodedSize += GetTSize(element)); // each element size
+            }
+            return m_encodedSize;
+        }
+
+        private int GetTSize(T element)
+        {
+            if (m_hasTAFixedSize)
+            {
+                return m_fixedTSize;
+            }
+            return EncodingUtility.GetSizeOf(element);
+        }
+
+		public void PutEncodedPoropertyToBuffer(byte[] buffer, ref int offset)
+        {
+            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), buffer, ref offset); // Put Size
+            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, buffer, ref offset);                           // Put ID
+            foreach (T t in m_value)                                                                             // For each element in list :
+            {
+                EncodingUtility.PutEncodedValueInBuffer(GetTSize(t), buffer, ref offset);           // Put Size
+                EncodingUtility.PutEncodedValueInBuffer(t, buffer, ref offset);                                  // Put Data
+            }
+        }
+        #region Utils
         private static bool ListEquals(List<T> self, List<T> other)
         {
             if (self == null || other == null)
@@ -146,39 +200,6 @@ namespace OnionMan.Network
             }
             return copy;
         }
-
-        private void CheckNeedSync()
-        {
-            if (m_needSync)
-            {
-                return;
-            }
-
-            if (ListEquals(m_value, m_previousValue))
-            {
-                m_needSync = false;
-                return;
-            }
-
-            m_sizeMayHaveChanged = true;
-            m_previousValue = DeepCopy(m_value);
-            m_needSync = true;
-        }
-
-        public int GetEncodedPropertySize()
-        {
-            if (m_hasFixedSize)
-            {
-                return m_fixedSize * m_value.Count;
-            }
-
-            if (m_sizeMayHaveChanged)
-			{
-                m_sizeMayHaveChanged = false;
-                m_encodedSize = 0;
-                m_value.ForEach((T element) => m_encodedSize += EncodingUtility.GetEncodedSize(element));
-            }
-            return m_encodedSize;
-        }
+        #endregion
     }
 }

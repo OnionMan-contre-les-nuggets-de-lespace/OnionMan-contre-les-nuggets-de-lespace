@@ -260,7 +260,7 @@ namespace OnionMan.Network
             return (T)decodedValue;
         }
 
-        public static int GetEncodedSize<T>(T value = default)
+        public static int GetSizeOf<T>(T value = default)
         {
             // string are too specific
             if (typeof(T) == typeof(string))
