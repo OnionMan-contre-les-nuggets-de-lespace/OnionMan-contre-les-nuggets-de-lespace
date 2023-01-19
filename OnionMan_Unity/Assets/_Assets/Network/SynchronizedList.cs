@@ -159,7 +159,7 @@ namespace OnionMan.Network
             EncodingUtility.PutEncodedValueInBuffer(m_propertyID, buffer, ref offset);                           // Put ID
             foreach (T t in m_value)                                                                             // For each element in list :
             {
-                EncodingUtility.PutEncodedValueInBuffer(GetTSize(t), buffer, ref offset);           // Put Size
+                EncodingUtility.PutEncodedValueInBuffer(GetTSize(t), buffer, ref offset);                        // Put Size
                 EncodingUtility.PutEncodedValueInBuffer(t, buffer, ref offset);                                  // Put Data
             }
         }

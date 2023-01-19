@@ -20,16 +20,16 @@ namespace OnionMan.Network
         private uint m_objectID;
 
         private Dictionary<ushort, ISynchronizedProperty> m_synchronizedProperties = new Dictionary<ushort, ISynchronizedProperty>();
-		private int m_encodedObjectSize;
+		private int m_encodedPropertiesSize;
 
 		public ObjectNeedSyncResult NeedSync()
         {
-            m_encodedObjectSize = 0;
+            m_encodedPropertiesSize = 0;
             foreach (ISynchronizedProperty property in GetPropertiesToSync())
 			{
-                m_encodedObjectSize += property.GetEncodedPropertySize();
+                m_encodedPropertiesSize += property.GetEncodedPropertySize();
 			}
-            return new ObjectNeedSyncResult(enabled && m_encodedObjectSize > 0, m_encodedObjectSize);
+            return new ObjectNeedSyncResult(enabled && m_encodedPropertiesSize > 0, sizeof(int) + sizeof(uint) + m_encodedPropertiesSize); // Size + ID + EncodedProperties
         }
 
         public IEnumerable<byte> EncodeObject(bool forSync = true)
@@ -103,8 +103,14 @@ namespace OnionMan.Network
         }
 
 		public void PutEncodedObjectToBuffer(byte[] buffer, ref int offset)
-		{
+        {
+            EncodingUtility.PutEncodedValueInBuffer(m_encodedPropertiesSize + sizeof(uint), buffer, ref offset); // Put Size
+            EncodingUtility.PutEncodedValueInBuffer(m_objectID, buffer, ref offset);                             // Put ID
 
-		}
+            foreach (ISynchronizedProperty property in m_synchronizedProperties.Values)
+            {
+                property.PutEncodedPoropertyToBuffer(buffer, ref offset);                                        // Put all Properties
+            }
+        }
 	}
 }

@@ -55,9 +55,7 @@ namespace OnionMan.Network
             {
                 synchronizedObject.PutEncodedObjectToBuffer(encodedObjects, ref offset);
             }
-
-            encodedObjects = encodedObjects.Concat(synchronizedObject.EncodeObject());
-            return encodedObjects.ToArray();
+            return encodedObjects;
         }
 
         public void DecodeObjects(byte[] encodedObjects)
