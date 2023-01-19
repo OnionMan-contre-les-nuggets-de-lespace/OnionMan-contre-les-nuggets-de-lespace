@@ -42,15 +42,26 @@ namespace OnionMan.Network
         [SerializeField]
         private List<T> m_value = new List<T>();
 
+        private bool m_hasFixedSize = false;
+        private int m_fixedSize = 0;
+
         private List<T> m_previousValue = new List<T>();
+        private bool m_sizeMayHaveChanged = true;
+        private int m_encodedSize;
 
         private Action<List<T>> m_onValueChanged;
 
-        public SynchronizedList(List<T> initialValue, ushort propertyID)
+		public SynchronizedList(List<T> initialValue, ushort propertyID)
         {
             m_value = DeepCopy(initialValue);
             m_propertyID = propertyID; 
             m_previousValue = new List<T>();
+
+            m_hasFixedSize = EncodingUtility.HasFixedEncodedSize<T>();
+            if (m_hasFixedSize)
+            {
+                m_fixedSize = EncodingUtility.GetEncodedSize<T>();
+            }
         }
 
         public IEnumerable<byte> EncodeProperty(bool forSync = true)
@@ -149,8 +160,25 @@ namespace OnionMan.Network
                 return;
             }
 
+            m_sizeMayHaveChanged = true;
             m_previousValue = DeepCopy(m_value);
             m_needSync = true;
+        }
+
+        public int GetEncodedPropertySize()
+        {
+            if (m_hasFixedSize)
+            {
+                return m_fixedSize * m_value.Count;
+            }
+
+            if (m_sizeMayHaveChanged)
+			{
+                m_sizeMayHaveChanged = false;
+                m_encodedSize = 0;
+                m_value.ForEach((T element) => m_encodedSize += EncodingUtility.GetEncodedSize(element));
+            }
+            return m_encodedSize;
         }
     }
 }

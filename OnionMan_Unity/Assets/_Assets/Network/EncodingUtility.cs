@@ -12,8 +12,9 @@ namespace OnionMan.Network
         {
             switch (value)
             {
-                //Misc
-                case string stringValue:
+				#region Base Types
+				//Misc
+				case string stringValue:
                     return Encoding.UTF8.GetBytes(stringValue);
                 case bool boolValue:
                     return BitConverter.GetBytes(boolValue);
@@ -37,9 +38,10 @@ namespace OnionMan.Network
                     return BitConverter.GetBytes(ulongValue);
                 case ushort ushortValue:
                     return BitConverter.GetBytes(ushortValue);
-
-                //Vectors
-                case Vector3 vector3Value:
+				#endregion
+				#region Derived Types
+				//Vectors
+				case Vector3 vector3Value:
                     return Encode(vector3Value.x)
                         .Concat(Encode(vector3Value.y))
                         .Concat(Encode(vector3Value.z));
@@ -62,8 +64,8 @@ namespace OnionMan.Network
                         .Concat(Encode(quaternionValue.y))
                         .Concat(Encode(quaternionValue.z))
                         .Concat(Encode(quaternionValue.w));
-
-                default:
+				#endregion
+				default:
                     throw new NotImplementedException($"The type {typeof(T)} cannot be encoded yet, u looser");
             }
         }
@@ -192,7 +194,6 @@ namespace OnionMan.Network
                 return Encode(value).Count();
             }
 
-            object decodedValue;
             T defaultObj = GetDefaultObjOfType<T>();
 
             switch (defaultObj)
@@ -238,6 +239,46 @@ namespace OnionMan.Network
 
                 case Quaternion:
                     return sizeof(float) * 4;
+                #endregion
+                default:
+                    throw new NotImplementedException($"The size of {typeof(T)} cannot be found yet");
+            }
+        }
+        public static bool HasFixedEncodedSize<T>()
+        {
+            // string are too specific
+            if (typeof(T) == typeof(string))
+            {
+                return false;
+            }
+
+            T defaultObj = GetDefaultObjOfType<T>();
+
+            switch (defaultObj)
+            {
+                #region Base Types
+                //Misc
+                case bool:
+                case char:
+
+                //Numbers
+                case double:
+                case float:
+                case int:
+                case long:
+                case short:
+                case uint:
+                case ulong:
+                case ushort:
+                #endregion
+                #region Derived Types
+                //Vectors
+                case Vector3:
+                case Vector3Int:
+                case Vector2:
+                case Vector2Int:
+                case Quaternion:
+                    return true;
                 #endregion
                 default:
                     throw new NotImplementedException($"The size of {typeof(T)} cannot be found yet");

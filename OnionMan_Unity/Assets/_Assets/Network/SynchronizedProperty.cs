@@ -36,7 +36,7 @@ namespace OnionMan.Network
             set => m_onValueChanged = value;
         }
 
-        [SerializeField]
+		[SerializeField]
         private T m_value;
         [SerializeField]
         private ushort m_propertyID;
@@ -44,12 +44,21 @@ namespace OnionMan.Network
         [SerializeField] //Temp
         private bool m_needSync = false;
 
+        private bool m_hasFixedSize = false;
+        private int m_fixedSize = 0;
+
         private Action<T> m_onValueChanged;
 
-        public SynchronizedProperty(T value, ushort ID)
+		public SynchronizedProperty(T value, ushort ID)
         {
             m_value = value;
             m_propertyID = ID;
+
+            m_hasFixedSize = EncodingUtility.HasFixedEncodedSize<T>();
+            if (m_hasFixedSize)
+			{
+                m_fixedSize = EncodingUtility.GetEncodedSize<T>();
+			}
         }
 
         public IEnumerable<byte> EncodeProperty(bool forSync = true)
@@ -77,5 +86,14 @@ namespace OnionMan.Network
             }
             Debug.LogWarning($"SyncProp<{typeof(T)}> Decoded Value : {decodedValue}");
         }
-    }
+
+		public int GetEncodedPropertySize()
+		{
+			if (m_hasFixedSize)
+			{
+                return m_fixedSize;
+			}
+            return EncodingUtility.GetEncodedSize(m_value);
+		}
+	}
 }
