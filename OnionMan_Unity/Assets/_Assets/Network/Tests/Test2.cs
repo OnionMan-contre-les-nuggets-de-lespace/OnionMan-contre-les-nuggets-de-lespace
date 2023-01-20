@@ -16,6 +16,9 @@ public class Test2 : SynchronizedMonoBehaviour
 
     public override void LoadProperties()
     {
+        SP0.Init();
+        SP1.Init();
+        SP3.Init();
         AddSynchronizedProperty(SP0);
         AddSynchronizedProperty(SP1);
         AddSynchronizedProperty(SP3);

@@ -365,8 +365,8 @@ namespace OnionMan.Network
 
         public static void PutToBuffer(byte[] toBuffer, byte[] fromBuffer, ref int offset)
 		{
-            for (int i = 0; offset < fromBuffer.Length; offset++, i++)
-			{
+            for (int i = 0; i < fromBuffer.Length; offset++, i++)
+            {
                 toBuffer[offset] = fromBuffer[i];
 			}
 		}

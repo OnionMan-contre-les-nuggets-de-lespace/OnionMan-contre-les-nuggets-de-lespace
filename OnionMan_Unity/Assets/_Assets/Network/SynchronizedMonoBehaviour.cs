@@ -32,6 +32,16 @@ namespace OnionMan.Network
             return new ObjectNeedSyncResult(enabled && m_encodedPropertiesSize > 0, sizeof(int) + sizeof(uint) + m_encodedPropertiesSize); // Size + ID + EncodedProperties
         }
 
+        public void PutEncodedObjectToBuffer(byte[] buffer, ref int offset, bool forSync = true)
+        {
+            EncodingUtility.PutEncodedValueInBuffer(m_encodedPropertiesSize + sizeof(uint), buffer, ref offset); // Put Size
+            EncodingUtility.PutEncodedValueInBuffer(m_objectID, buffer, ref offset);                             // Put ID
+
+            foreach (ISynchronizedProperty property in GetPropertiesToSync())
+            {
+                property.PutEncodedPoropertyToBuffer(buffer, ref offset, forSync);                               // Put all Properties
+            }
+        }
         public IEnumerable<byte> EncodeObject(bool forSync = true)
         {
             IEnumerable<byte> encodedObject = EncodingUtility.Encode(m_objectID);
@@ -102,15 +112,5 @@ namespace OnionMan.Network
             NetworkManager.Instance.AddSynchronizedObject(this);
         }
 
-		public void PutEncodedObjectToBuffer(byte[] buffer, ref int offset)
-        {
-            EncodingUtility.PutEncodedValueInBuffer(m_encodedPropertiesSize + sizeof(uint), buffer, ref offset); // Put Size
-            EncodingUtility.PutEncodedValueInBuffer(m_objectID, buffer, ref offset);                             // Put ID
-
-            foreach (ISynchronizedProperty property in m_synchronizedProperties.Values)
-            {
-                property.PutEncodedPoropertyToBuffer(buffer, ref offset);                                        // Put all Properties
-            }
-        }
 	}
 }

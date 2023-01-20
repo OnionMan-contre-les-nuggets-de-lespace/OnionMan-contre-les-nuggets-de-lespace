@@ -8,12 +8,12 @@ namespace OnionMan.Network
     {
         public uint ObjectID {get;}
 
-        public ObjectNeedSyncResult NeedSync();
-
         public Dictionary<ushort, ISynchronizedProperty> Properties { get; }
 
+        public ObjectNeedSyncResult NeedSync();
+
+        public void PutEncodedObjectToBuffer(byte[] buffer, ref int offset, bool forSync = true);
         public IEnumerable<byte> EncodeObject(bool forSync = true);
-        public void PutEncodedObjectToBuffer(byte[] buffer, ref int offset);
 
         public void DecodeObject(byte[] encodedProperties, ref int offset, int size);
 

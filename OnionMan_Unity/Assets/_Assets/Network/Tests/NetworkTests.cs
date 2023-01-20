@@ -4,6 +4,7 @@ using UnityEngine;
 
 using OnionMan.Network;
 using System.Linq;
+using static UnityEditor.PlayerSettings;
 
 public class NetworkTests : SynchronizedMonoBehaviour
 {
@@ -53,6 +54,12 @@ public class NetworkTests : SynchronizedMonoBehaviour
 
     public override void LoadProperties()
     {
+        SP0.Init();
+        SP1.Init();
+        SP2.Init();
+        SP3.Init();
+        SP4.Init();
+        SP5.Init();
         AddSynchronizedProperty(SP0);
         AddSynchronizedProperty(SP1);
         AddSynchronizedProperty(SP2);
