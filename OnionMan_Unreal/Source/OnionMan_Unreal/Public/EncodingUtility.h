@@ -9,12 +9,10 @@ namespace OnionMan:: Network
     /**
      *
      */
-    UCLASS()
-        class ONIONMAN_UNREAL_API EncodingUtility
+    //UCLASS()
+    class ONIONMAN_UNREAL_API EncodingUtility
     {
     public:
-        EncodingUtility();
-        ~EncodingUtility();
 
         template<typename T>
         static void PutEncodedValueInBuffer(T value, TArray<uint8>& buffer, int& offset);
@@ -35,7 +33,7 @@ namespace OnionMan:: Network
         template<typename T>
         static bool HasFixedEncodedSize();
 
-        FString GetBytesAsString(TArray<uint8> bytes);
-        TArray<uint8> GetStringAsBytes(FString stringifiedBytes);
+        static FString GetBytesAsString(TArray<uint8> bytes);
+        static TArray<uint8> GetStringAsBytes(FString stringifiedBytes);
     };
 }
