@@ -15,13 +15,13 @@ USynchronizedProperty<T>::~USynchronizedProperty(){
 }
 
 template <typename T>
-bool USynchronizedProperty<T>::NeedSync() override
+bool USynchronizedProperty<T>::NeedSync()
 {
     return m_needSync;
 }
 
 template <typename T>
-uint16 USynchronizedProperty<T>::PropertyID() override
+uint16 USynchronizedProperty<T>::PropertyID()
 {
     return m_propertyID;
 }
@@ -33,7 +33,7 @@ T USynchronizedProperty<T>::Value()
 }
 
 template <typename T>
-void USynchronizedProperty<T>::Init() override
+void USynchronizedProperty<T>::Init()
 {
     m_hasFixedSize = EncodingUtility::HasFixedEncodedSize<T>();
     if (m_hasFixedSize)
@@ -47,7 +47,7 @@ void USynchronizedProperty<T>::Init() override
 }
 
 template <typename T>
-int USynchronizedProperty<T>::GetEncodedPropertySize() override
+int USynchronizedProperty<T>::GetEncodedPropertySize()
 {
     if (m_hasFixedSize)
     {
@@ -63,7 +63,7 @@ int USynchronizedProperty<T>::GetEncodedPropertySize() override
 }
 
 template <typename T>
-void USynchronizedProperty<T>::PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override
+void USynchronizedProperty<T>::PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync)
 {
     if (forSync)
     {
@@ -76,7 +76,7 @@ void USynchronizedProperty<T>::PutEncodedPropertyToBuffer(TArray<uint8>& buffer,
 }
 
 template <typename T>
-TArray<uint8> USynchronizedProperty<T>::EncodeProperty<T>(bool forSync = true) override
+TArray<uint8> USynchronizedProperty<T>::EncodeProperty(bool forSync)
 {
     if (forSync)
     {
@@ -91,7 +91,7 @@ TArray<uint8> USynchronizedProperty<T>::EncodeProperty<T>(bool forSync = true) o
 }
 
 template <typename T>
-void USynchronizedProperty<T>::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override
+void USynchronizedProperty<T>::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize)
 {
     T decodedValue = EncodingUtility::Decode<T>(encodedProperty, offset, propertySize);
     if (!m_value.Equals(decodedValue))
