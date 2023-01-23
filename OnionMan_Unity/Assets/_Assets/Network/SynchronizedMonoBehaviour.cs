@@ -96,7 +96,9 @@ namespace OnionMan.Network
 
         public void AddSynchronizedProperty(ISynchronizedProperty synchronizedProperty)
         {
-            ushort propID = synchronizedProperty.PropertyID;
+			synchronizedProperty.Init();
+
+			ushort propID = synchronizedProperty.PropertyID;
             if (m_synchronizedProperties.ContainsKey(propID))
             {
                 throw new InvalidDataException($"The ID {propID} is already used by {m_synchronizedProperties[propID]}");

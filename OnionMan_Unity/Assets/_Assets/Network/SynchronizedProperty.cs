@@ -91,8 +91,12 @@ namespace OnionMan.Network
             {
                 m_needSync = false;
             }
-            IEnumerable<byte> encodedProperty = EncodingUtility.Encode(m_propertyID).Concat(EncodingUtility.Encode(m_value));
-            encodedProperty = EncodingUtility.Encode(encodedProperty.Count()).Concat(encodedProperty);
+            byte[] encodedProperty = new byte[GetEncodedPropertySize()];
+            int offset = 0;
+			EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), encodedProperty, ref offset); // Put Size
+			EncodingUtility.PutEncodedValueInBuffer(m_propertyID, encodedProperty, ref offset);                           // Put ID
+			EncodingUtility.PutEncodedValueInBuffer(m_value, encodedProperty, ref offset);                                // Put Data
+
             return encodedProperty;
         }
 

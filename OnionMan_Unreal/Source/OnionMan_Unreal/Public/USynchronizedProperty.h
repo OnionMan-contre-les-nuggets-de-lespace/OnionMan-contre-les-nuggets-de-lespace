@@ -3,13 +3,43 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ISynchronizedPropertyBase.h"
 
 /**
  * 
  */
-class ONIONMAN_UNREAL_API USynchronizedProperty
+template<typename T>
+class ONIONMAN_UNREAL_API USynchronizedProperty : public ISynchronizedPropertyBase
 {
+private:
+	T m_value;
+	uint16 m_propertyID;
+
+	bool m_needSync = false;
+
+	bool m_hasFixedSize = false;
+	int m_fixedSize = 0;
+
+	// Action<T> m_onValueChanged;
+	bool m_sizeMayHaveChanged = true;
+	int m_encodedSize;
+
 public:
-	USynchronizedProperty();
+	USynchronizedProperty(T value, uint16 propertyID);
 	~USynchronizedProperty();
+
+	bool NeedSync() override;
+
+    uint16 PropertyID() override;
+
+    void Init() override;
+
+    int GetEncodedPropertySize() override;
+
+    void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override;
+    TArray<uint8> EncodeProperty(bool forSync = true) override;
+
+    void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
+
+	T Value();
 };

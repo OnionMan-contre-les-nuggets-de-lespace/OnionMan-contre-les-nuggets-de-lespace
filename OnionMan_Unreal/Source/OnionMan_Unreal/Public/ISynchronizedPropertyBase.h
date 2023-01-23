@@ -20,16 +20,16 @@ class ISynchronizedPropertyBase
     GENERATED_BODY()
 public:
 
-    virtual bool NeedSync();
+    virtual bool NeedSync() = 0;
 
-    virtual uint16 PropertyID();
+    virtual uint16 PropertyID() = 0;
 
-    virtual void Init();
+    virtual void Init() = 0;
 
-    virtual int GetEncodedPropertySize();
+    virtual int GetEncodedPropertySize() = 0;
 
-    virtual void PutEncodedPoropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true);
-    virtual TArray<uint8> EncodeProperty(bool forSync = true);
+    virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) = 0;
+    virtual TArray<uint8> EncodeProperty(bool forSync = true) = 0;
 
-    virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize);
+    virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) = 0;
 };
