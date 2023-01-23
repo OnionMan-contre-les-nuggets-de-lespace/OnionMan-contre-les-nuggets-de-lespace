@@ -31,6 +31,8 @@ public:
 	bool NeedSync() override;
 
     uint16 PropertyID() override;
+	
+	T Value();
 
     void Init() override;
 
@@ -41,5 +43,4 @@ public:
 
     void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
 
-	T Value();
 };
