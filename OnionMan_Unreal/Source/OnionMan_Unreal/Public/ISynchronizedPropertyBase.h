@@ -22,7 +22,7 @@ public:
 
     virtual bool NeedSync() = 0;
 
-    virtual uint16 PropertyID() = 0;
+    virtual const uint16 PropertyID() const = 0 ;
 
     virtual void Init() = 0;
 

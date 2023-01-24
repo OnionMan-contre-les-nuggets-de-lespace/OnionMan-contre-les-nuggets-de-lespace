@@ -53,7 +53,7 @@ namespace OnionMan.Network
 
 		public SynchronizedList(List<T> initialValue, ushort propertyID)
         {
-            m_value = DeepCopy(initialValue);
+            m_value = Copy(initialValue);
             m_propertyID = propertyID; 
             m_previousValue = new List<T>();
 
@@ -138,14 +138,15 @@ namespace OnionMan.Network
 
             if (!ListEquals(m_value, decodedList))
             {
-                m_value = DeepCopy(decodedList);
-                m_previousValue = DeepCopy(decodedList);
+                m_value = Copy(decodedList);
+                m_previousValue = Copy(decodedList);
                 if (m_onValueChanged != null)
                 {
                     m_onValueChanged(m_value);
                 }
             }
         }
+        
 		private void CheckNeedSync()
         {
             if (m_needSync)
@@ -160,7 +161,7 @@ namespace OnionMan.Network
             }
 
             m_sizeMayHaveChanged = true;
-            m_previousValue = DeepCopy(m_value);
+            m_previousValue = Copy(m_value);
             m_needSync = true;
         }
 
@@ -197,7 +198,7 @@ namespace OnionMan.Network
             return true;
         }
 
-        private static List<T> DeepCopy(List<T> listToCopy)
+        private static List<T> Copy(List<T> listToCopy)
         {
             if (listToCopy == null)
             {

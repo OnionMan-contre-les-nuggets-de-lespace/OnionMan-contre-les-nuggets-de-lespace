@@ -27,9 +27,21 @@ uint16 USynchronizedProperty<T>::PropertyID()
 }
 
 template <typename T>
-T USynchronizedProperty<T>::Value()
+T USynchronizedProperty<T>::GetValue()
 {
     return m_value;
+}
+
+template <typename T>
+void USynchronizedProperty<T>::SetValue(T value)
+{
+    if (m_value != value)
+    {
+        m_value = value;
+        m_needSync = true;
+
+        m_sizeMayHaveChanged = true;
+    }
 }
 
 template <typename T>

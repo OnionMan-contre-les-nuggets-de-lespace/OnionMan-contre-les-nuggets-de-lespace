@@ -30,9 +30,10 @@ public:
 
 	bool NeedSync() override;
 
-    uint16 PropertyID() override;
+    const uint16 PropertyID() const override ;
 	
-	T Value();
+	const T& GetValue() const;
+	void SetValue(T value);
 
     void Init() override;
 
