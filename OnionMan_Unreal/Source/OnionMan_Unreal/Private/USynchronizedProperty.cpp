@@ -2,6 +2,9 @@
 
 
 #include "USynchronizedProperty.h"
+#include "EncodingUtility.h"
+
+using namespace OnionMan::Network;
 
 template <typename T>
 USynchronizedProperty<T>::USynchronizedProperty(T value, uint16 propertyID)
@@ -21,13 +24,13 @@ bool USynchronizedProperty<T>::NeedSync()
 }
 
 template <typename T>
-uint16 USynchronizedProperty<T>::PropertyID()
+const uint16 USynchronizedProperty<T>::PropertyID() const
 {
     return m_propertyID;
 }
 
 template <typename T>
-T USynchronizedProperty<T>::GetValue()
+const T& USynchronizedProperty<T>::GetValue() const
 {
     return m_value;
 }

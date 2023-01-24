@@ -8,6 +8,7 @@
 /**
  * 
  */
+template <typename T>
 class ONIONMAN_UNREAL_API USynchronizedList : public ISynchronizedPropertyBase
 {
 private:
@@ -25,8 +26,12 @@ private:
 	bool m_sizeMayHaveChanged = true;
 	int m_encodedSize;
 
+	int GetTSize(T element); 
+	static bool ListEquals(TArray<T> self, TArray<T> other) const; 
+	static TArray<T> Copy(TArray<T> listToCopy) const;
+
 public:
-	USynchronizedList(TArray<T> initialValue, ushort propertyID);
+	USynchronizedList(TArray<T> initialValue, uint16 propertyID);
 	~USynchronizedList();
 
 	bool NeedSync() override;
