@@ -29,6 +29,7 @@ private:
 	int GetTSize(T element); 
 	static bool ListEquals(TArray<T> self, TArray<T> other) const; 
 	static TArray<T> Copy(TArray<T> listToCopy) const;
+	void CheckNeedSync();
 
 public:
 	USynchronizedList(TArray<T> initialValue, uint16 propertyID);
@@ -46,7 +47,7 @@ public:
     int GetEncodedPropertySize() override;
 
     void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override;
-    TArray<uint8> EncodeProperty(bool forSync = true) override;
+    const TArray<uint8>& EncodeProperty(bool forSync = true) override;
 
     void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
 };

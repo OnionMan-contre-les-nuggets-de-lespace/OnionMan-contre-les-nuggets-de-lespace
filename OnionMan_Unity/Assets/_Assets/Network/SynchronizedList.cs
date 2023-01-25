@@ -112,16 +112,17 @@ namespace OnionMan.Network
                 m_needSync = false;
             }
 
-            IEnumerable<byte> encodedList = EncodingUtility.Encode(m_propertyID);
-            foreach (T value in m_value)
-            {
-                IEnumerable<byte> encodedValue = EncodingUtility.Encode(value);
-                encodedList = 
-                    encodedList
-                    .Concat(EncodingUtility.Encode(encodedValue.Count()))
-                    .Concat(encodedValue);
+            int propertySize = GetEncodedPropertySize();
+            int offset = 0;
+			byte[] encodedList = new byte[propertySize];
+            EncodingUtility.PutEncodedValueInBuffer(propertySize, encodedList, ref offset);
+            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, encodedList, ref offset);
+
+            foreach (T item in m_value)
+			{
+				EncodingUtility.PutEncodedValueInBuffer(GetTSize(item), encodedList, ref offset);
+				EncodingUtility.PutEncodedValueInBuffer(item, encodedList, ref offset);
             }
-            encodedList = EncodingUtility.Encode(encodedList.Count()).Concat(encodedList);
             return encodedList;
         }
 
