@@ -9,13 +9,18 @@
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ONIONMAN_UNREAL_API UUSynchronizedActorComponent : public UActorComponent, public ISynchronizedObjectBase
+class ONIONMAN_UNREAL_API USynchronizedActorComponent : public UActorComponent, public ISynchronizedObjectBase
 {
 	GENERATED_BODY()
 
+private:
+	TMap<uint16, ISynchronizedPropertyBase&> m_synchronizedProperties;
+	uint32 m_objectID;
+	int m_encodedPropertiesSize;
+
 public:	
 	// Sets default values for this component's properties
-	UUSynchronizedActorComponent();
+	USynchronizedActorComponent();
 
 protected:
 	// Called when the game starts
@@ -25,5 +30,16 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+    const uint32 ObjectID() const override;
+
+    const TMap<uint16, ISynchronizedPropertyBase&> Properties() const override;
+
+    ObjectNeedSyncResult NeedSync() override;
+
+    void PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override;
+    TArray<uint8>& EncodeObject(bool forSync = true) override;
+
+    void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) override;
+
+    virtual void LoadProperties() override;
 };
