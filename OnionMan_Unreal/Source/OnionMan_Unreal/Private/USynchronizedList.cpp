@@ -29,7 +29,7 @@ static bool USynchronizedList<T>::ListEquals(TArray<T> self, TArray<T> other)
         return false;
     }
 
-    for (int i = 0; i < self.Count; i++)
+    for (int i = 0; i < self.Num(); i++)
     {
         if (self[i] != other[i])
         {
@@ -57,7 +57,8 @@ TArray<T> USynchronizedList<T>::Copy(TArray<T> listToCopy)
     return copy;
 }
 
-void CheckNeedSync()
+template<typename T>
+void USynchronizedList<T>::CheckNeedSync()
 {
     if (m_needSync)
     {
@@ -194,7 +195,7 @@ void USynchronizedList<T>::DecodeProperty(TArray<uint8>& encodedProperty, int& o
 {
     int propertyStartOffset = offset;
     TArray<T> decodedList {};
-    
+
     while (offset < propertyStartOffset + propertySize) 
     {
         int itemSize = EncodingUtility::Decode<int>(encodedProperty, offset);

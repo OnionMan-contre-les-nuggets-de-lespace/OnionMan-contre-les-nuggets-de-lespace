@@ -4,7 +4,7 @@
 #include "USynchronizedActorComponent.h"
 
 // Sets default values for this component's properties
-UUSynchronizedActorComponent::UUSynchronizedActorComponent()
+USynchronizedActorComponent::UUSynchronizedActorComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
@@ -15,7 +15,7 @@ UUSynchronizedActorComponent::UUSynchronizedActorComponent()
 
 
 // Called when the game starts
-void UUSynchronizedActorComponent::BeginPlay()
+void USynchronizedActorComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -25,7 +25,7 @@ void UUSynchronizedActorComponent::BeginPlay()
 
 
 // Called every frame
-void UUSynchronizedActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void USynchronizedActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 

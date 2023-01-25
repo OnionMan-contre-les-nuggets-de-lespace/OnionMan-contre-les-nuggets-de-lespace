@@ -27,7 +27,7 @@ private:
 	int m_encodedSize;
 
 	int GetTSize(T element); 
-	static bool ListEquals(TArray<T> self, TArray<T> other) const; 
+	static bool ListEquals(TArray<T> self, TArray<T> other); 
 	static TArray<T> Copy(TArray<T> listToCopy) const;
 	void CheckNeedSync();
 
@@ -40,7 +40,7 @@ public:
     const uint16 PropertyID() const override;
 	
 	const TArray<T>& GetValue() const;
-	void SetValue(T value);
+	void SetValue(TArray<T> value);
 
     void Init() override;
 

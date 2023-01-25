@@ -47,16 +47,16 @@ class ONIONMAN_UNREAL_API ISynchronizedObjectBase
 {
     GENERATED_BODY()
 public:
-    const uint32 ObjectID() const = 0;
+    virtual const uint32 ObjectID() const = 0;
 
-    const TMap<uint16, ISynchronizedPropertyBase&> Properties() const = 0;
+    virtual const TMap<uint16, ISynchronizedPropertyBase&> Properties() const = 0;
 
-    ObjectNeedSyncResult NeedSync() = 0;
+    virtual ObjectNeedSyncResult NeedSync() = 0;
 
-    void PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) = 0;
-    TArray<uint8>& EncodeObject(bool forSync = true) = 0;
+    virtual void PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) = 0;
+    virtual TArray<uint8>& EncodeObject(bool forSync = true) = 0;
 
-    void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) = 0;
+    virtual void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) = 0;
 
-    void LoadProperties() = 0;
+    virtual void LoadProperties() = 0;
 };

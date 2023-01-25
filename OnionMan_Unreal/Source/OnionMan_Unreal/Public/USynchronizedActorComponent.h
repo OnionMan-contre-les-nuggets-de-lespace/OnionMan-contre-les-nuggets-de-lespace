@@ -41,5 +41,5 @@ public:
 
     void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) override;
 
-    virtual void LoadProperties() override;
+    virtual void LoadProperties() override = 0;
 };
