@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ISynchronizedObjectBase.h"
 #include "Components/ActorComponent.h"
+#include "ISynchronizedPropertyBase.h"
 #include "USynchronizedActorComponent.generated.h"
 
 
@@ -42,4 +43,7 @@ public:
     void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) override;
 
     virtual void LoadProperties() override = 0;
+
+	void AddSynchronizedProperty(ISynchronizedObjectBase& synchronizedProperty);
+	TArray<ISynchronizedObjectBase&> GetPropertiesToSync();
 };
