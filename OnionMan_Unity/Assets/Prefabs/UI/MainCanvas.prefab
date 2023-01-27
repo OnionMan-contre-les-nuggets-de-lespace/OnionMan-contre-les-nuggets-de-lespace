@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3654114696884788310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1680,7 +1680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6523520803849942980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1751,6 +1751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75892d8fb22dec74882fe8ef260ec0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTransform: {fileID: 0}
   possiblePlayerPoses:
   - {fileID: 5105612826264327322}
   - {fileID: 2423297453910943006}
@@ -1761,6 +1762,11 @@ MonoBehaviour:
   horizontalSpeed: 10
   verticalDownSpeed: 10
   verticalUpSpeed: 5
+  startBurgerLayer: 0
+  checkDistance: 0
+  whatToSideCheck:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!61 &4718207106941177889
 BoxCollider2D:
   m_ObjectHideFlags: 0
