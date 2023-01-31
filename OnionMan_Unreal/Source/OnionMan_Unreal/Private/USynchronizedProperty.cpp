@@ -6,12 +6,11 @@
 
 using namespace OnionMan::Network;
 
-template <typename T>
-USynchronizedProperty<T>::USynchronizedProperty(T value, uint16 propertyID)
+template<typename T>
+USynchronizedProperty<T>::USynchronizedProperty()
 {
-    m_propertyID = propertyID;
-    m_value = value;
 }
+
 template <typename T>
 USynchronizedProperty<T>::~USynchronizedProperty(){
 
@@ -29,23 +28,6 @@ const uint16 USynchronizedProperty<T>::PropertyID() const
     return m_propertyID;
 }
 
-template <typename T>
-const T& USynchronizedProperty<T>::GetValue() const
-{
-    return m_value;
-}
-
-template <typename T>
-void USynchronizedProperty<T>::SetValue(T value)
-{
-    if (m_value != value)
-    {
-        m_value = value;
-        m_needSync = true;
-
-        m_sizeMayHaveChanged = true;
-    }
-}
 
 template <typename T>
 void USynchronizedProperty<T>::Init()
@@ -72,7 +54,7 @@ int USynchronizedProperty<T>::GetEncodedPropertySize()
     if (m_sizeMayHaveChanged)
     {
         m_sizeMayHaveChanged = false;
-        m_encodedSize = sizeof(int) + sizeof(uint16) + EncodingUtility::GetSizeOf<T>(m_value); // Size + ID + Data
+        m_encodedSize = sizeof(int) + sizeof(uint16) + EncodingUtility::GetSizeOf<T>(&m_value); // Size + ID + Data
     }
     return m_encodedSize;
 }
@@ -91,25 +73,10 @@ void USynchronizedProperty<T>::PutEncodedPropertyToBuffer(TArray<uint8>& buffer,
 }
 
 template <typename T>
-TArray<uint8> USynchronizedProperty<T>::EncodeProperty(bool forSync)
-{
-    if (forSync)
-    {
-        m_needSync = false;
-    }
-    TArray<uint8> encodedProperty;
-    encodedProperty.Reserve(GetEncodedPropertySize());
-    encodedProperty.Append(EncodingUtility::Encode<int>(GetEncodedPropertySize() - sizeof(int)));
-    encodedProperty.Append(EncodingUtility::Encode<uint16>(m_propertyID));
-    encodedProperty.Append(EncodingUtility::Encode<T>(m_value));
-    return encodedProperty;
-}
-
-template <typename T>
 void USynchronizedProperty<T>::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize)
 {
     T decodedValue = EncodingUtility::Decode<T>(encodedProperty, offset, propertySize);
-    if (!m_value.Equals(decodedValue))
+    if (m_value != decodedValue)
     {
         m_value = decodedValue;
         // if (m_onValueChanged != null)

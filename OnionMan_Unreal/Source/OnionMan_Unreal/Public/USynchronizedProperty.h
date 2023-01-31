@@ -5,12 +5,18 @@
 #include "CoreMinimal.h"
 #include "ISynchronizedPropertyBase.h"
 
+#include "USynchronizedProperty.generated.h"
+
 /**
- * 
+ *
  */
 template<typename T>
+UCLASS()
 class ONIONMAN_UNREAL_API USynchronizedProperty : public ISynchronizedPropertyBase
 {
+	GENERATED_BODY()
+
+
 private:
 	T m_value;
 	uint16 m_propertyID;
@@ -25,23 +31,39 @@ private:
 	int m_encodedSize;
 
 public:
-	USynchronizedProperty(T value, uint16 propertyID);
+	USynchronizedProperty();
+	USynchronizedProperty(T value, uint16 propertyID)
+	{
+		m_value = value;
+		m_propertyID = propertyID;
+	}
 	~USynchronizedProperty();
 
 	bool NeedSync() override;
 
-    const uint16 PropertyID() const override ;
-	
-	const T& GetValue() const;
-	void SetValue(T value);
+	const uint16 PropertyID() const override;
 
-    void Init() override;
+	const T& GetValue() const
+	{
+		return m_value;
+	}
+	void SetValue(T value)
+	{
+		if (m_value != value)
+		{
+			m_value = value;
+			m_needSync = true;
 
-    int GetEncodedPropertySize() override;
+			m_sizeMayHaveChanged = true;
+		}
+	}
 
-    void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override;
-    TArray<uint8> EncodeProperty(bool forSync = true) override;
+	void Init() override;
 
-    void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
+	int GetEncodedPropertySize() override;
+
+	void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override;
+
+	void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
 
 };

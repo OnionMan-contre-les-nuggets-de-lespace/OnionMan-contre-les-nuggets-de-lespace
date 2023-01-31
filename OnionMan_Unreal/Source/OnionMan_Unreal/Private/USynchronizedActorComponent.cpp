@@ -4,6 +4,9 @@
 #include "USynchronizedActorComponent.h"
 #include "ISynchronizedPropertyBase.h"
 #include "EncodingUtility.h"
+#include <NetworkManager.h>
+
+#include "LogUtils.h"
 
 using namespace OnionMan::Network;
 
@@ -24,6 +27,7 @@ void USynchronizedActorComponent::BeginPlay()
 	Super::BeginPlay();
 
 	LoadProperties();
+	NetworkManager::Instance().AddSynchronizedObject(*this);
 	// ...
 	
 }
@@ -43,7 +47,7 @@ const uint32 USynchronizedActorComponent::ObjectID() const
 	return m_objectID;
 }
 
-const TMap<uint16, ISynchronizedPropertyBase&> USynchronizedActorComponent::Properties() const
+const TMap<uint16, ISynchronizedPropertyBase*>& USynchronizedActorComponent::Properties() const
 {
 	return m_synchronizedProperties;
 }
@@ -51,38 +55,27 @@ const TMap<uint16, ISynchronizedPropertyBase&> USynchronizedActorComponent::Prop
 ObjectNeedSyncResult USynchronizedActorComponent::NeedSync()
 {
 	m_encodedPropertiesSize = 0;
-	for (ISynchronizedPropertyBase& property : GetPropertiesToSync())
+
+	TArray<ISynchronizedPropertyBase*> propertiesToSync{};
+	GetPropertiesToSync(propertiesToSync);
+	for (ISynchronizedPropertyBase* property : propertiesToSync)
 	{
-		m_encodedPropertiesSize += property.GetEncodedPropertySize();
+		m_encodedPropertiesSize += property->GetEncodedPropertySize();
 	}
-	return ObjectNeedSyncResult(enabled && m_encodedPropertiesSize > 0, sizeof(int) + sizeof(uint32) + m_encodedPropertiesSize); // Size + ID + EncodedProperties
+	return ObjectNeedSyncResult(/*enabled &&*/ m_encodedPropertiesSize > 0, sizeof(int) + sizeof(uint32) + m_encodedPropertiesSize); // Size + ID + EncodedProperties
 }
 
-void USynchronizedActorComponent::PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true)
+void USynchronizedActorComponent::PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync)
 {
 	EncodingUtility::PutEncodedValueInBuffer<int>(m_encodedPropertiesSize + sizeof(uint32), buffer, offset); // Put Size
 	EncodingUtility::PutEncodedValueInBuffer<uint32>(m_objectID, buffer, offset);                            // Put ID
 
-	for (ISynchronizedObjectBase& property : GetPropertiesToSync())
+	TArray<ISynchronizedPropertyBase*> propertiesToSync{};
+	GetPropertiesToSync(propertiesToSync);
+	for (ISynchronizedPropertyBase* property : propertiesToSync)
 	{
-		property.PutEncodedPoropertyToBuffer(buffer, offset, forSync);                                       // Put all Properties
+		property->PutEncodedPropertyToBuffer(buffer, offset, forSync);                                       // Put all Properties
 	}
-}
-
-TArray<uint8>& USynchronizedActorComponent::EncodeObject(bool forSync = true)
-{
-	TArray<uint8> encodedObject{}
-	encodedObject.Reserve(m_encodedPropertiesSize + sizeof(int) + sizeof(uint32)); = EncodingUtility.Encode(m_objectID);
-
-	encodedObject.Append(EncodingUtility::Encode<int>(m_encodedPropertiesSize + sizeof(uint32))); // Put Size
-	encodedObject.Append(EncodingUtility::Encode<uint32>(m_objectID)); 							  // Put ID
-
-	for (ISynchronizedObjectBase& property : GetPropertiesToSync())
-	{
-		encodedObject.Append(property.EncodeProperty(forSync));									  // Put all Properties
-	}
-
-	return encodedObject;
 }
 
 void USynchronizedActorComponent::DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size)
@@ -96,42 +89,50 @@ void USynchronizedActorComponent::DecodeObject(TArray<uint8>& encodedProperties,
 		uint16 propertyID = EncodingUtility::Decode<uint16>(encodedProperties, offset);
 		int dataSize = propertySize - sizeof(uint16);
 
-		if (m_synchronizedProperties.TryGetValue(propertyID, out ISynchronizedProperty synchronizedProperty))
+		if (m_synchronizedProperties.Contains(propertyID))
 		{
-			synchronizedProperty.DecodeProperty(encodedProperties, offset, dataSize);
+			ISynchronizedPropertyBase* synchronizedProperty = m_synchronizedProperties[propertyID];
+			synchronizedProperty->DecodeProperty(encodedProperties, offset, dataSize);
 			if (offset - porpertyStartOffset != propertySize)
 			{
-				// Debug.LogError("Offset Overflow !");
+				LOG_ERROR("Offset Overflow !");
 			}
 		}
 		else
 		{
-			throw "There are no object with ID " << propertyID;
+			LOG_ERROR("There are no object with ID %i", propertyID)
 		}
 	}
 }
 
-TArray<ISynchronizedPropertyBase&> USynchronizedActorComponent::GetPropertiesToSync()
+void USynchronizedActorComponent::LoadProperties()
 {
-	TArray<ISynchronizedPropertyBase&> propertiesToSync{};
-	for (ISynchronizedPropertyBase& prop : m_synchronizedProperties.Values)
+}
+
+
+void USynchronizedActorComponent::GetPropertiesToSync(TArray<ISynchronizedPropertyBase*>& result)
+{
+	for (ISynchronizedPropertyBase* prop : m_propertiesArray)
 	{
-		if (prop.NeedSync())
+		if (prop->NeedSync())
 		{
-			propertiesToSync.Add(prop);
+			result.Add(prop);
 		}
 	}
-	return propertiesToSync;
 }
 
-void USynchronizedActorComponent::AddSynchronizedProperty(ISynchronizedObjectBase& synchronizedProperty)
+void USynchronizedActorComponent::AddSynchronizedProperty(ISynchronizedPropertyBase* synchronizedProperty)
 {
-	synchronizedProperty.Init();
+	synchronizedProperty->Init();
 
-	uint16 propID = synchronizedProperty.PropertyID();
+	uint16 propID = synchronizedProperty->PropertyID();
 	if (m_synchronizedProperties.Contains(propID))
 	{
-		throw "The ID " << propID << " is already used by " << m_synchronizedProperties[propID];
+		LOG_ERROR("The ID %i is already used", propID);
 	}
-	m_synchronizedProperties.Add(propID, synchronizedProperty);
+	else 
+	{
+		m_synchronizedProperties.Add(propID, synchronizedProperty);
+		m_propertiesArray.Add(synchronizedProperty);
+	}
 }

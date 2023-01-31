@@ -20,15 +20,15 @@ namespace OnionMan.Network
         private uint m_objectID;
 
         private Dictionary<ushort, ISynchronizedProperty> m_synchronizedProperties = new Dictionary<ushort, ISynchronizedProperty>();
-		private int m_encodedPropertiesSize;
+        private int m_encodedPropertiesSize;
 
-		public ObjectNeedSyncResult NeedSync()
+        public ObjectNeedSyncResult NeedSync()
         {
             m_encodedPropertiesSize = 0;
             foreach (ISynchronizedProperty property in GetPropertiesToSync())
-			{
+            {
                 m_encodedPropertiesSize += property.GetEncodedPropertySize();
-			}
+            }
             return new ObjectNeedSyncResult(enabled && m_encodedPropertiesSize > 0, sizeof(int) + sizeof(uint) + m_encodedPropertiesSize); // Size + ID + EncodedProperties
         }
 
@@ -96,9 +96,9 @@ namespace OnionMan.Network
 
         public void AddSynchronizedProperty(ISynchronizedProperty synchronizedProperty)
         {
-			synchronizedProperty.Init();
+            synchronizedProperty.Init();
 
-			ushort propID = synchronizedProperty.PropertyID;
+            ushort propID = synchronizedProperty.PropertyID;
             if (m_synchronizedProperties.ContainsKey(propID))
             {
                 throw new InvalidDataException($"The ID {propID} is already used by {m_synchronizedProperties[propID]}");
@@ -114,5 +114,5 @@ namespace OnionMan.Network
             NetworkManager.Instance.AddSynchronizedObject(this);
         }
 
-	}
+    }
 }

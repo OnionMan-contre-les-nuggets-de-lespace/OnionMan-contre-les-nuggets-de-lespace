@@ -1,11 +1,7 @@
-templateFunction = """
-    template<> 
-    void EncodingUtility::PutEncodedValueInBuffer<typeuh>(typeuh value, TArray<uint8>& buffer, int& offset)
-    {
-        PutToBuffer(buffer, (uint8*)&value, offset, sizeof(typeuh));
-    }"""
+templateFunction = """template<>
+static int GetSizeOf<TYPE>(TYPE* value);"""
 
-typeName = "typeuh"
+typeName = "TYPE"
 
 types = [
     "FString", 

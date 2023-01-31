@@ -7,7 +7,7 @@
 namespace OnionMan::Network 
 {
 #pragma region PutEncodedValueInBuffer
-
+    /*
     template<typename T>
     void EncodingUtility::PutEncodedValueInBuffer(T value, TArray<uint8>& buffer, int& offset)
     {
@@ -117,139 +117,174 @@ namespace OnionMan::Network
         PutEncodedValueInBuffer(value.Z, buffer, offset);
         PutEncodedValueInBuffer(value.W, buffer, offset);
     }
-
+    */
 #pragma endregion
 
 #pragma region Encode
+    /*
     template <typename T> 
-    TArray<uint8> EncodingUtility::Encode(T value)
+    static void EncodingUtility::Encode(T value, TArray<uint8>& encodedValue)
     {
         throw "The type " << T << "cannot be encoded yet";
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<FString>(FString value)
+    static void EncodingUtility::Encode<FString>(FString value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (const uint8*)TCHAR_TO_UTF8(*value), value.Len() };
+        encodedValue = TArray<uint8>{ (const uint8*)TCHAR_TO_UTF8(*value), value.Len() };
     }
 
     template<> 
-    static TArray<uint8> EncodingUtility::Encode<bool>(bool value)
+    static void EncodingUtility::Encode<bool>(bool value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(bool) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(bool) };
     }
 
     template<> 
-    static TArray<uint8> EncodingUtility::Encode<char>(char value)
+    static void EncodingUtility::Encode<char>(char value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(char) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(char) };
     }
 
     template<> 
-    static TArray<uint8> EncodingUtility::Encode<double>(double value)
+    static void EncodingUtility::Encode<double>(double value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(double) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(double) };
     }
 
     template<> 
-    static TArray<uint8> EncodingUtility::Encode<float>(float value)
+    static void EncodingUtility::Encode<float>(float value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(float) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(float) };
     }
 
     template<> 
-    static TArray<uint8> EncodingUtility::Encode<int>(int value)
+    static void EncodingUtility::Encode<int>(int value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(int) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(int) };
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<long>(long value)
+    static void EncodingUtility::Encode<long>(long value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(long) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(long) };
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<short>(short value)
+    static void EncodingUtility::Encode<short>(short value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(short) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(short) };
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<uint32>(uint32 value)
+    static void EncodingUtility::Encode<uint32>(uint32 value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(uint32) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(uint32) };
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<uint64>(uint64 value)
+    static void EncodingUtility::Encode<uint64>(uint64 value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(uint64) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(uint64) };
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<uint16>(uint16 value)
+    static void EncodingUtility::Encode<uint16>(uint16 value, TArray<uint8>& encodedValue)
     {
-        return TArray<uint8>{ (uint8*)&value, sizeof(uint16) };
+        encodedValue = TArray<uint8>{ (uint8*)&value, sizeof(uint16) };
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<FVector3f>(FVector3f value)
+    static void EncodingUtility::Encode<FVector3f>(FVector3f value, TArray<uint8>& encodedValue)
     {
-        TArray<uint8> encodedQuat{};
-        encodedQuat.Reserve(3 * sizeof(float));
-        encodedQuat.Append(Encode(value.X));
-        encodedQuat.Append(Encode(value.Y));
-        encodedQuat.Append(Encode(value.Z));
-        return encodedQuat;
+        encodedValue.Empty();
+        encodedValue.Reserve(3 * sizeof(float));
+
+        TArray<uint8> encodedElement{};
+
+        Encode(value.X, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Y, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Z, encodedElement);
+        encodedValue.Append(encodedElement);
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<FIntVector>(FIntVector value)
+    static void EncodingUtility::Encode<FIntVector>(FIntVector value, TArray<uint8>& encodedValue)
     {
-        TArray<uint8> encodedQuat{};
-        encodedQuat.Reserve(3 * sizeof(int));
-        encodedQuat.Append(Encode(value.X));
-        encodedQuat.Append(Encode(value.Y));
-        encodedQuat.Append(Encode(value.Z));
-        return encodedQuat;
+        encodedValue.Empty();
+        encodedValue.Reserve(3 * sizeof(int));
+
+        TArray<uint8> encodedElement{};
+
+        Encode(value.X, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Y, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Z, encodedElement);
+        encodedValue.Append(encodedElement);
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<FVector2f>(FVector2f value)
+    static void EncodingUtility::Encode<FVector2f>(FVector2f value, TArray<uint8>& encodedValue)
     {
-        TArray<uint8> encodedQuat{};
-        encodedQuat.Reserve(2 * sizeof(float));
-        encodedQuat.Append(Encode(value.X));
-        encodedQuat.Append(Encode(value.Y));
-        return encodedQuat;
+        encodedValue.Empty();
+        encodedValue.Reserve(2 * sizeof(float));
+
+        TArray<uint8> encodedElement{};
+
+        Encode(value.X, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Y, encodedElement);
+        encodedValue.Append(encodedElement);
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<FIntVector2>(FIntVector2 value)
+    static void EncodingUtility::Encode<FIntVector2>(FIntVector2 value, TArray<uint8>& encodedValue)
     {
-        TArray<uint8> encodedQuat{};
-        encodedQuat.Reserve(2 * sizeof(int));
-        encodedQuat.Append(Encode(value.X));
-        encodedQuat.Append(Encode(value.Y));
-        return encodedQuat;
+        encodedValue.Empty();
+        encodedValue.Reserve(2 * sizeof(int));
+
+        TArray<uint8> encodedElement{};
+
+        Encode(value.X, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Y, encodedElement);
+        encodedValue.Append(encodedElement);
     }
 
     template<>
-    static TArray<uint8> EncodingUtility::Encode<FQuat4f>(FQuat4f value)
+    static void EncodingUtility::Encode<FQuat4f>(FQuat4f value, TArray<uint8>& encodedValue)
     {
-        TArray<uint8> encodedQuat{};
-        encodedQuat.Reserve(4 * sizeof(float));
-        encodedQuat.Append(Encode(value.X));
-        encodedQuat.Append(Encode(value.Y));
-        encodedQuat.Append(Encode(value.Z));
-        encodedQuat.Append(Encode(value.W));
-        return encodedQuat;
-    }
+        encodedValue.Empty();
+        encodedValue.Reserve(4 * sizeof(float));
 
+        TArray<uint8> encodedElement{};
+
+        Encode(value.X, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Y, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.Z, encodedElement);
+        encodedValue.Append(encodedElement);
+
+        Encode(value.W, encodedElement);
+        encodedValue.Append(encodedElement);
+    }
+    */
 #pragma endregion
 
 #pragma region Decode
+/*
     template <typename T>
     static T EncodingUtility::Decode(TArray<uint8> bytes, int& offset, int size)
     {
@@ -391,7 +426,7 @@ namespace OnionMan::Network
             Decode<float>(bytes, offset),
             Decode<float>(bytes, offset));
     }
-
+    */
 #pragma endregion
 
 #pragma region PutToBuffer
@@ -411,68 +446,74 @@ namespace OnionMan::Network
         }
     }
 #pragma endregion
-
+/*
 #pragma region GetSizeOf
 
     template<typename T>
-    static int EncodingUtility::GetSizeOf(T value)
+    static int EncodingUtility::GetSizeOf(T* value)
     {
         return sizeof(T);
     }
 
     template<>
-    static int EncodingUtility::GetSizeOf<FString>(FString value)
+    static int EncodingUtility::GetSizeOf<FString>(FString* value)
     {
-        return Encode(value).Num();
+        TArray<uint8> encodedString;
+        int offset = 0;
+        PutEncodedValueInBuffer(*value, encodedString, offset);
+        return encodedString.Num();
     }
 
     template<>
-    static int EncodingUtility::GetSizeOf<FVector3f>(FVector3f value)
+    static int EncodingUtility::GetSizeOf<FVector3f>(FVector3f* value)
     {
         return 3 * sizeof(float);
     }
 
     template<>
-    static int EncodingUtility::GetSizeOf<FIntVector>(FIntVector value)
+    static int EncodingUtility::GetSizeOf<FIntVector>(FIntVector* value)
     {
         return 3 * sizeof(int);
     }
 
     template<>
-    static int EncodingUtility::GetSizeOf<FVector2f>(FVector2f value)
+    static int EncodingUtility::GetSizeOf<FVector2f>(FVector2f* value)
     {
         return 2 * sizeof(float);
     }
 
     template<>
-    static int EncodingUtility::GetSizeOf<FIntVector2>(FIntVector2 value)
+    static int EncodingUtility::GetSizeOf<FIntVector2>(FIntVector2* value)
     {
         return 2 * sizeof(int);
     }
 
     template<>
-    static int EncodingUtility::GetSizeOf<FQuat4f>(FQuat4f value)
+    static int EncodingUtility::GetSizeOf<FQuat4f>(FQuat4f* value)
     {
         return 4 * sizeof(float);
     }
 
 #pragma endregion
-
+*/
+/*
 #pragma region HasFixedEncodedSize
     template<typename T>
     static bool EncodingUtility::HasFixedEncodedSize()
     {
         return true;
     }
+
     template<>
     static bool EncodingUtility::HasFixedEncodedSize<FString>()
     {
         return false;
     }
+    */
 #pragma endregion
 
 #pragma region Debug
-    FString EncodingUtility::GetBytesAsString(TArray<uint8> bytes)
+    FString EncodingUtility::GetBytesAsString(const TArray<uint8>& bytes)
     {
         FString returnValue;
         int byteCount = bytes.Num();
@@ -483,19 +524,17 @@ namespace OnionMan::Network
         return returnValue;
     }
 
-    TArray<uint8> EncodingUtility::GetStringAsBytes(FString stringifiedBytes)
+    void EncodingUtility::GetStringAsBytes(FString stringifiedBytes, TArray<uint8>& bytes)
     {
         TArray<FString> splittedString;
         stringifiedBytes.ParseIntoArray(splittedString, TEXT("|"), true);
 
-        TArray<uint8> bytes;
+        bytes.Empty();
         bytes.SetNumUninitialized(splittedString.Num());
         for (int i = 0; i < splittedString.Num(); i++)
         {
             bytes[i] = FCString::Atoi(*splittedString[i]);
         }
-
-        return bytes;
     }
 #pragma endregion
 }
