@@ -5,18 +5,13 @@
 #include "CoreMinimal.h"
 #include "ISynchronizedPropertyBase.h"
 
-#include "USynchronizedProperty.generated.h"
 
 /**
  *
  */
 template<typename T>
-UCLASS()
 class ONIONMAN_UNREAL_API USynchronizedProperty : public ISynchronizedPropertyBase
 {
-	GENERATED_BODY()
-
-
 private:
 	T m_value;
 	uint16 m_propertyID;

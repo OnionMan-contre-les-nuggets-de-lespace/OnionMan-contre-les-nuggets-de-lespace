@@ -12,6 +12,7 @@ void UNetworkTestComponent::LoadProperties()
 {
 	AddSynchronizedProperty(&SP0);
 	AddSynchronizedProperty(&SP1);
+	//AddSynchronizedProperty(&SP2);
 }
 
 

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "USynchronizedActorComponent.h"
 #include "USynchronizedProperty.h"
+#include "SynchronizedFStringProperty.h"
 #include "NetworkTestComponent.generated.h"
 
 /**
@@ -21,9 +22,16 @@ private:
 
 public:
 	USynchronizedProperty<int> SP0{9, 12};
-	USynchronizedProperty<FString> SP1{"Waw", 32};
+	USynchronizedProperty<FString> SP1{ "Waw", 32 };
+	//USynchronizedFStringProperty SP2{ "Waw", 2 };
 
 	void LoadProperties() override;
+
+	//UFUNCTION(BlueprintCallable)
+	/*USynchronizedFStringProperty* GetSP2()
+	{
+		return &SP2;
+	}*/
 
 
 	// Called every frame
