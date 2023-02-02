@@ -58,7 +58,7 @@ void NetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
     }
 
     outEncodedObjects.Empty();
-    outEncodedObjects.Reserve(encodedObjectsTotalSize);
+    outEncodedObjects.SetNumUninitialized(encodedObjectsTotalSize);
     int offset = 0;
 
     for(TTuple<ISynchronizedObjectBase*, int> obj : objectsToSync)
@@ -85,7 +85,7 @@ void NetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
             synchronizedObject->DecodeObject(encodedObjects, offset, objectDataSize);
             if (offset - initialOffset != objectSize)
             {
-                //Debug.LogError("Offset Overflow !");
+                LOG_ERROR("Offset Overflow !")
             }
         }
         else
