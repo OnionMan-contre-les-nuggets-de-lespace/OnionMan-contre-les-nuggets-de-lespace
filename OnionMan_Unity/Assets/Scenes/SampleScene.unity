@@ -1215,16 +1215,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 1671623277}
   possiblePlayerPoses:
-  - {fileID: 295816523}
-  - {fileID: 123398310}
-  - {fileID: 120095641}
-  - {fileID: 704583344}
-  - {fileID: 697483986}
   - {fileID: 1685881298}
+  - {fileID: 697483986}
+  - {fileID: 704583344}
+  - {fileID: 120095641}
+  - {fileID: 123398310}
+  - {fileID: 295816523}
   horizontalSpeed: 0.05
   verticalDownSpeed: 0.05
   verticalUpSpeed: 0.01
-  startBurgerFloor: 0
+  startBurgerFloor: 5
   checkDistance: 20
   whatIsLadder:
     serializedVersion: 2

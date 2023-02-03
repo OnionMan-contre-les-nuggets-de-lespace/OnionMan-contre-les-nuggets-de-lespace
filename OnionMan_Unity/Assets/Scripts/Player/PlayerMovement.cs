@@ -35,6 +35,9 @@ public class PlayerMovement : Subject
     private Transform currentPlayerPos;
     private Transform playerTargetedPos;
 
+    private int currentPlayerFloor;
+    private int targetFloor;
+
     private RaycastHit2D[] sideCheckBuffer = new RaycastHit2D[1];
 
     public enum MovementDirection
@@ -55,14 +58,18 @@ public class PlayerMovement : Subject
         playerTransform.position = possiblePlayerPoses[startBurgerFloor].position;
         playerTargetedPos = possiblePlayerPoses[startBurgerFloor];
         currentPlayerPos = possiblePlayerPoses[startBurgerFloor];
+        currentPlayerFloor = startBurgerFloor;
 
         isAtDestination = true;
     }
 
     public void GetPlayerTargetedPos(int i)
     {
+        StopCoroutine(MoveCoroutine()); ///Deplacement avec Coroutine
+
         if (playerTargetedPos != possiblePlayerPoses[i])
         {
+            targetFloor = i;
             isAtDestination = false;
 
             playerTargetedPos = possiblePlayerPoses[i];
@@ -71,29 +78,32 @@ public class PlayerMovement : Subject
             targetIsLeft = playerTargetedPos.position.x > playerTransform.position.x;
             targetIsRight = playerTargetedPos.position.x < playerTransform.position.x;
 
-            if(targetIsAbove)
-            {
-                if(LeftCheck(whatIsLadder))
-                {
-                    movementDirection = MovementDirection.LEFT;
-                }
-                else if(RightCheck(whatIsLadder))
-                {
-                    movementDirection = MovementDirection.RIGHT;
-                }
-            }
+            ///Deplacement avec Trigger + Update
+            //if(targetIsAbove)
+            //{
+            //    if(LeftCheck(whatIsLadder))
+            //    {
+            //        movementDirection = MovementDirection.LEFT;
+            //    }
+            //    else if(RightCheck(whatIsLadder))
+            //    {
+            //        movementDirection = MovementDirection.RIGHT;
+            //    }
+            //}
 
-            if(targetIsBelow)
-            {
-                if (LeftCheck(whatIsPole))
-                {
-                    movementDirection = MovementDirection.LEFT;
-                }
-                else if (RightCheck(whatIsPole))
-                {
-                    movementDirection = MovementDirection.RIGHT;
-                }
-            }
+            //if(targetIsBelow)
+            //{
+            //    if (LeftCheck(whatIsPole))
+            //    {
+            //        movementDirection = MovementDirection.LEFT;
+            //    }
+            //    else if (RightCheck(whatIsPole))
+            //    {
+            //        movementDirection = MovementDirection.RIGHT;
+            //    }
+            //}
+
+            StartCoroutine(MoveCoroutine());///Deplacement avec Coroutine
 
             doHorizontalMove = true;
             isAtDestination = false;
@@ -102,7 +112,6 @@ public class PlayerMovement : Subject
 
     private void Update()
     {
-
         if(!isAtDestination)
         {
             int left = -1;
@@ -125,24 +134,25 @@ public class PlayerMovement : Subject
 
             }
 
+            ///Deplacement avec Trigger + Update
 
-            if (Mathf.Abs(playerTargetedPos.position.y - playerTransform.position.y) < 0.1f) //Is a the right floor
-            {
-                if (playerTargetedPos.position.x > playerTransform.position.x)
-                {
-                    movementDirection = MovementDirection.RIGHT;
-                }
-                else if (playerTargetedPos.position.x < playerTransform.position.x)
-                {
-                    movementDirection = MovementDirection.LEFT;
-                }
-            }
+            //if (Mathf.Abs(playerTargetedPos.position.y - playerTransform.position.y) < 0.1f) //Is a the right floor
+            //{
+            //    if (playerTargetedPos.position.x > playerTransform.position.x)
+            //    {
+            //        movementDirection = MovementDirection.RIGHT;
+            //    }
+            //    else if (playerTargetedPos.position.x < playerTransform.position.x)
+            //    {
+            //        movementDirection = MovementDirection.LEFT;
+            //    }
+            //}
 
-            if(Vector2.Distance(playerTransform.position, playerTargetedPos.position) < 0.1f)
-            {
-                isAtDestination = true;
-                NotifyObservers();
-            }
+            //if(Vector2.Distance(playerTransform.position, playerTargetedPos.position) < 0.1f)
+            //{
+            //    isAtDestination = true;
+            //    NotifyObservers();
+            //}
         }
         
 
@@ -202,21 +212,9 @@ public class PlayerMovement : Subject
         //}
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    IEnumerator MoveCoroutine()
     {
-        if (collision.transform.CompareTag("Ladder") && targetIsAbove)
-        {
-            movementDirection = MovementDirection.UP;
-        }
-        if (collision.transform.CompareTag("Pole") && targetIsBelow)
-        {
-            movementDirection = MovementDirection.DOWN;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.transform.CompareTag("Ladder") && targetIsAbove)
+        if (targetIsAbove)
         {
             if (LeftCheck(whatIsLadder))
             {
@@ -226,8 +224,104 @@ public class PlayerMovement : Subject
             {
                 movementDirection = MovementDirection.RIGHT;
             }
+
+            Transform targetLadderTransform = sideCheckBuffer[0].transform;
+
+            yield return new WaitUntil(() => Mathf.Abs(targetLadderTransform.position.x - playerTransform.position.x) < 0.1f);
+
+            movementDirection = MovementDirection.UP;
+
+            currentPlayerFloor++;
+
+            yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor].position.y - playerTransform.position.y) < 0.1f);
+
+            if (currentPlayerFloor == targetFloor)
+            {
+                if (playerTargetedPos.position.x > playerTransform.position.x)
+                {
+                    movementDirection = MovementDirection.RIGHT;
+                }
+                else if (playerTargetedPos.position.x < playerTransform.position.x)
+                {
+                    movementDirection = MovementDirection.LEFT;
+                }
+
+                yield return new WaitUntil(() => Vector2.Distance(playerTransform.position, playerTargetedPos.position) < 0.1f);
+                isAtDestination = true;
+                NotifyObservers();
+            }
+            else
+            {
+                StopCoroutine(MoveCoroutine());
+                StartCoroutine(MoveCoroutine());
+            }
         }
+
+        if (targetIsBelow)
+        {
+            if (LeftCheck(whatIsPole))
+            {
+                movementDirection = MovementDirection.LEFT;
+            }
+            else if (RightCheck(whatIsPole))
+            {
+                movementDirection = MovementDirection.RIGHT;
+            }
+
+            yield return new WaitUntil(() => Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) < 0.1f);
+
+            movementDirection = MovementDirection.DOWN;
+
+            yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.y - playerTransform.position.y) < 0.1f);
+
+            currentPlayerFloor = targetFloor;
+
+            if (playerTargetedPos.position.x > playerTransform.position.x)
+            {
+                movementDirection = MovementDirection.RIGHT;
+            }
+            else if (playerTargetedPos.position.x < playerTransform.position.x)
+            {
+                movementDirection = MovementDirection.LEFT;
+            }
+
+            yield return new WaitUntil(() => Vector2.Distance(playerTransform.position, playerTargetedPos.position) < 0.1f);
+            isAtDestination = true;
+            NotifyObservers();
+        }
+
+
+        yield return null;
     }
+
+    /// Deplacement avec Trigger + Update
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.transform.CompareTag("Ladder") && targetIsAbove)
+    //    {
+    //        movementDirection = MovementDirection.UP;
+    //    }
+    //    if (collision.transform.CompareTag("Pole") && targetIsBelow)
+    //    {
+    //        movementDirection = MovementDirection.DOWN;
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if(collision.transform.CompareTag("Ladder") && targetIsAbove)
+    //    {
+    //        if (LeftCheck(whatIsLadder))
+    //        {
+    //            movementDirection = MovementDirection.LEFT;
+    //        }
+    //        else if (RightCheck(whatIsLadder))
+    //        {
+    //            movementDirection = MovementDirection.RIGHT;
+    //        }
+    //    }
+    //}
 
     private void HorizontalMove(int directionMultiplicator)
     {
