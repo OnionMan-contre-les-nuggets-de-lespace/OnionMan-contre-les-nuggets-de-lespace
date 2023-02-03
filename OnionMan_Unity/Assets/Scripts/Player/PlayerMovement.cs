@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Subject
 {
     //[SerializeField] private RectTransform[] possiblePlayerPoses;
     [SerializeField] private Transform playerTransform;
@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void GetPlayerTargetedPos(int i)
     {
-        //StopCoroutine(DoMoveCoroutine());
         if (playerTargetedPos != possiblePlayerPoses[i])
         {
             isAtDestination = false;
@@ -94,80 +93,10 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            //StartCoroutine(DoMoveCoroutine());
             doHorizontalMove = true;
             isAtDestination = false;
         }
-        //playerRectTransform.position = possiblePlayerPoses[i].position;
     }
-
-    //IEnumerator DoMoveCoroutine()
-    //{
-    //    int left = -1;
-    //    int right = 1;
-
-    //    if(targetIsAbove)
-    //    {
-    //        if(LeftCheck(whatIsLadder))
-    //        {
-    //            while(Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) > 0.1f)
-    //            {
-    //                HorizontalMove(left);
-    //            }
-    //        }
-
-    //        if(RightCheck(whatIsLadder))
-    //        {
-    //            while (Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) > 0.1f)
-    //            {
-    //                HorizontalMove(right);
-    //            }
-    //        }
-
-    //        while (Mathf.Abs(playerTargetedPos.position.y - playerTransform.position.y) > 0.1f)
-    //        {
-    //            VerticalUpMove();
-    //        }
-    //    }
-
-    //    if(targetIsBelow)
-    //    {
-    //        if (LeftCheck(whatIsPole))
-    //        {
-    //            while (Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) > 0.1f)
-    //            {
-    //                HorizontalMove(left);
-    //            }
-    //        }
-
-    //        if (RightCheck(whatIsPole))
-    //        {
-    //            while (Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) > 0.1f)
-    //            {
-    //                HorizontalMove(right);
-    //            }
-    //        }
-
-    //        while(Mathf.Abs(playerTargetedPos.position.y - playerTransform.position.y) > 0.1f)
-    //        {
-    //            VerticalDownMove();
-    //        }
-    //    }
-
-    //    while (Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) > 0.1f)
-    //    {
-    //        if (targetIsLeft)
-    //        {
-    //            HorizontalMove(left);
-    //        }
-    //        else if (targetIsRight)
-    //        {
-    //            HorizontalMove(right);
-    //        }
-    //    }
-
-    //    yield return null;
-    //}
 
     private void Update()
     {
@@ -210,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
             if(Vector2.Distance(playerTransform.position, playerTargetedPos.position) < 0.1f)
             {
                 isAtDestination = true;
+                NotifyObservers();
             }
         }
         
@@ -282,6 +212,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.transform.CompareTag("Ladder") && targetIsAbove)
+        {
+            if (LeftCheck(whatIsLadder))
+            {
+                movementDirection = MovementDirection.LEFT;
+            }
+            else if (RightCheck(whatIsLadder))
+            {
+                movementDirection = MovementDirection.RIGHT;
+            }
+        }
+    }
+
     private void HorizontalMove(int directionMultiplicator)
     {
         Vector2 tempPos = new Vector2(playerTransform.position.x + (horizontalSpeed * directionMultiplicator), playerTransform.position.y);
@@ -325,16 +270,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (LeftCheck(whatIsLadder))
         {
-            //if (sideCheckBuffer[0].transform.CompareTag("Ladder"))
-            //{
-            //    Gizmos.color = Color.green;
-            //}
-            //else
-            //{
-            //    Gizmos.color = Color.blue;
-            //}
-            //Gizmos.DrawRay(playerTransform.position, Vector2.left * checkDistance);
-
             Gizmos.color = Color.green;
 
             Gizmos.DrawRay(playerTransform.position, Vector2.left * checkDistance);

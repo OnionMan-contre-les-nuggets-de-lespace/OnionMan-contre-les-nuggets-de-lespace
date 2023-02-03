@@ -817,6 +817,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ladder (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Size.y
+      value: 0.52240145
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.010181859
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
 --- !u!4 &870553445 stripped
@@ -990,6 +998,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ladder (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Size.y
+      value: 0.24669671
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.009185255
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
 --- !u!4 &1497949970 stripped
@@ -1087,6 +1103,14 @@ PrefabInstance:
     - target: {fileID: 3213592049840653078, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
       propertyPath: m_Name
       value: Ladder (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Size.y
+      value: 0.24256614
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0112505555
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
@@ -1197,9 +1221,9 @@ MonoBehaviour:
   - {fileID: 704583344}
   - {fileID: 697483986}
   - {fileID: 1685881298}
-  horizontalSpeed: 0.1
-  verticalDownSpeed: 0.1
-  verticalUpSpeed: 0.05
+  horizontalSpeed: 0.05
+  verticalDownSpeed: 0.05
+  verticalUpSpeed: 0.01
   startBurgerFloor: 0
   checkDistance: 20
   whatIsLadder:
@@ -1325,6 +1349,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ladder (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4552262
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.01959236
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
 --- !u!4 &1918690330 stripped
@@ -1423,6 +1455,14 @@ PrefabInstance:
     - target: {fileID: 3213592049840653078, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
       propertyPath: m_Name
       value: Ladder
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Size.y
+      value: 0.37818938
+      objectReference: {fileID: 0}
+    - target: {fileID: 6036741708333174120, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.014814436
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
