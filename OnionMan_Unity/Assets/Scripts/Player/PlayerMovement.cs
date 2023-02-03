@@ -55,6 +55,8 @@ public class PlayerMovement : Subject
         playerTransform.position = possiblePlayerPoses[startBurgerFloor].position;
         playerTargetedPos = possiblePlayerPoses[startBurgerFloor];
         currentPlayerPos = possiblePlayerPoses[startBurgerFloor];
+
+        isAtDestination = true;
     }
 
     public void GetPlayerTargetedPos(int i)

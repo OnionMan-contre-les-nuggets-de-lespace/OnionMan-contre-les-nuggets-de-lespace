@@ -1762,9 +1762,12 @@ MonoBehaviour:
   horizontalSpeed: 10
   verticalDownSpeed: 10
   verticalUpSpeed: 5
-  startBurgerLayer: 0
+  startBurgerFloor: 0
   checkDistance: 0
-  whatToSideCheck:
+  whatIsLadder:
+    serializedVersion: 2
+    m_Bits: 0
+  whatIsPole:
     serializedVersion: 2
     m_Bits: 0
 --- !u!61 &4718207106941177889
