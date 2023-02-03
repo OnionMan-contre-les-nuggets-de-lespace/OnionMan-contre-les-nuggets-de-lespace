@@ -29,7 +29,6 @@ public:
     virtual int GetEncodedPropertySize() = 0;
 
     virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) = 0;
-    virtual TArray<uint8> EncodeProperty(bool forSync = true) = 0;
 
     virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) = 0;
 };

@@ -49,12 +49,11 @@ class ONIONMAN_UNREAL_API ISynchronizedObjectBase
 public:
     virtual const uint32 ObjectID() const = 0;
 
-    virtual const TMap<uint16, ISynchronizedPropertyBase&> Properties() const = 0;
+    virtual const TMap<uint16, ISynchronizedPropertyBase*>& Properties() const = 0;
 
     virtual ObjectNeedSyncResult NeedSync() = 0;
 
     virtual void PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) = 0;
-    virtual TArray<uint8>& EncodeObject(bool forSync = true) = 0;
 
     virtual void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) = 0;
 
