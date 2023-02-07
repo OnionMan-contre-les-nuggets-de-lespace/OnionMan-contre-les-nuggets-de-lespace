@@ -14,13 +14,20 @@ public:
     IWaveEvent(/* args */);
     ~IWaveEvent();
 
+    inline float GetTime()
+    {
+        return m_time;
+    }
+
     inline bool IsFinished()
     {
         return m_isFinished;
     }
-
+    
     virtual void Load();
-    virtual void Update();
+    virtual void Start();
+    virtual void Update(float deltaTime);
+    virtual void OnWaveEnd();
 
 protected:
     void Finish();
@@ -38,9 +45,18 @@ IWaveEvent::~IWaveEvent()
 
 void IWaveEvent::Load()
 {
+    m_isFinished = false;
 }
 
-void IWaveEvent::Update()
+void IWaveEvent::Start()
+{
+}
+
+void IWaveEvent::Update(float deltaTime)
+{
+}
+
+void IWaveEvent::OnWaveEnd()
 {
 }
 
