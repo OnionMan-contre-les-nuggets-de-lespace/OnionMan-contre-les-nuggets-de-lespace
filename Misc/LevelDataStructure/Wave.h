@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#pragma once
+// #pragma once
 
-#include "CoreMinimal.h"
+// #include "CoreMinimal.h"
 #include "IWaveEvent.h"
 #include "LevelAsset.h"
 
@@ -13,7 +13,7 @@ private:
 
     TArray<IWaveEvent*> m_eventsThatStarted;
 
-    ULevelAsset* m_levelAsset
+    ULevelAsset* m_levelAsset;
 
     bool m_isFinished = false;
     int m_eventToStartIndex = 0;
@@ -27,9 +27,13 @@ public:
         return m_isFinished;
     }
 
-    void Load();
+    void Load(ULevelAsset* level);
     void Update(float deltaTime);
     void FinishWave();
+
+    // Editor
+    void EditorLoad(float time);
+    void EditorUnload();
 };
 
 Wave::Wave(/* args */)
@@ -45,7 +49,7 @@ void Wave::Load(ULevelAsset* level)
 {
     m_levelAsset = level;
 
-    m_waveEvents.Sort([](IWaveEvent* event1, IWaveEvent* event2){event1->GetTime() < event2->GetTime()});
+    m_waveEvents.Sort([](IWaveEvent* event1, IWaveEvent* event2){return event1->GetTime() < event2->GetTime();});
 
     for (IWaveEvent* event : m_waveEvents)
     {
@@ -55,19 +59,22 @@ void Wave::Load(ULevelAsset* level)
 
 void Wave::Update(float deltaTime)
 {
-    while (m_levelAsset->CurrentTime() >= m_waveEvents[m_eventToStartIndex]->GetTime())
+    // Starts the new events
+    float currentTime = m_levelAsset->CurrentTime();
+    int eventsCount = m_waveEvents.Num();
+    while (m_eventToStartIndex <= eventsCount && currentTime >= m_waveEvents[m_eventToStartIndex]->GetTime())
     {
         IWaveEvent* eventToStart = m_waveEvents[m_eventToStartIndex];
         m_eventsThatStarted.Add(eventToStart);
 
         eventToStart->Start();
 
-
         m_eventToStartIndex++;
     }
 
+    // Updates all started evants
     bool allEventFinished = true;
-    for (IWaveEvent* event : m_eventThatStarted)
+    for (IWaveEvent* event : m_eventsThatStarted)
     {
         if (event->IsFinished())
         {
@@ -77,17 +84,34 @@ void Wave::Update(float deltaTime)
         event->Update(deltaTime);
     }
 
-    if (allEventFinished && m_eventThatStarted.Num() == m_waveEvents.Num()) // All events started and finished
+    // Checks wether the wave is finished by checking wether all events started and finished
+    if (allEventFinished && m_eventsThatStarted.Num() == m_waveEvents.Num()) 
     {
         m_isFinished = true;
     }
     
 }
 
-inline void Wave::FinishWave()
+void Wave::FinishWave()
 {
     for (IWaveEvent* event : m_waveEvents)
     {
         event->OnWaveEnd();
+    }
+}
+
+void Wave::EditorLoad(float time)
+{
+    for (IWaveEvent* event : m_waveEvents)
+    {
+        event->EditorLoad(time);
+    }
+}
+
+void Wave::EditorUnload()
+{
+    for (IWaveEvent* event : m_waveEvents)
+    {
+        event->EditorUnload();
     }
 }

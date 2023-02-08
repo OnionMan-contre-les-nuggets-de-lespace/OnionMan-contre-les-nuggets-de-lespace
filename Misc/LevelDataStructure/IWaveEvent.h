@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#pragma once
+// #pragma once
 
-#include "CoreMinimal.h"
+// #include "CoreMinimal.h"
 
 class IWaveEvent
 {
+
 private:
     float m_time = 0.0f;
     bool m_isFinished = false;
@@ -28,6 +29,10 @@ public:
     virtual void Start();
     virtual void Update(float deltaTime);
     virtual void OnWaveEnd();
+
+    // Editor
+    virtual void EditorLoad(float time);
+    virtual void EditorUnload();
 
 protected:
     void Finish();
@@ -57,6 +62,14 @@ void IWaveEvent::Update(float deltaTime)
 }
 
 void IWaveEvent::OnWaveEnd()
+{
+}
+
+void IWaveEvent::EditorLoad(float time)
+{
+}
+
+void IWaveEvent::EditorUnload()
 {
 }
 

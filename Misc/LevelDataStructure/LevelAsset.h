@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#pragma once
+// #pragma once
 
-#include "CoreMinimal.h"
-#include "Wave.h"
+// #include "CoreMinimal.h"
+// #include "Wave.h"
 
 class ULevelAsset
 {
 private:
-    float m_currentTime = 0.0f
+    float m_currentTime = 0.0f;
 
     TArray<Wave*> m_waves;
 
@@ -53,6 +53,6 @@ void ULevelAsset::Update(float deltaTime)
         m_currentWaveIndex++;
         m_currentWave = m_waves[m_currentWaveIndex];
 
-        m_currentWave->Load();
+        m_currentWave->Load(this);
     }
 }
