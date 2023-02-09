@@ -1,14 +1,49 @@
-#include "IWaveEvent.h"
+#include "BaseWaveEvent.h"
+#include "Components/SplineComponent.h"
+#include "EnemyActor.h"
 
-class SpawnEnemyEvent : public IWaveEvent
+struct SpawnedEnnemy
 {
 private:
-    /* data */
+    AEnemyActor* m_enemyObject;
+    float m_spawnTime;
+
+public:
+    SpawnedEnnemy(AEnemyActor* enemy, float spawnTime)
+    {
+        m_enemyObject = enemy;
+        m_spawnTime = spawnTime;
+    }
+
+    AEnemyActor* Enemy() const
+    {
+        return m_enemyObject;
+    }
+
+    float SpawnTime() const
+    {
+        return m_spawnTime;
+    }
+};
+
+
+
+class SpawnEnemyEvent : public BaseWaveEvent
+{
+private:
+    AEnemyActor* m_enemyPrefab;
+    
+    int m_numberOfEnemiesToSpawn = 1;
+    float m_timeBetweenSpawns = 0.0f;
+
+    //Cache 
+    TArray<SpawnedEnnemy> m_spawnedEnemies;
+
 public:
     SpawnEnemyEvent(/* args */);
     ~SpawnEnemyEvent();
     
-    virtual void Load() override;
+    virtual void Load(ULevelAsset* level) override;
     virtual void Start() override;
     virtual void Update(float deltaTime) override;
     virtual void OnWaveEnd() override;
@@ -19,43 +54,54 @@ public:
 
 protected:
     virtual void OnFinish() override;
+    virtual void SpawnEnemy();
+
 };
 
 SpawnEnemyEvent::SpawnEnemyEvent(/* args */)
 {
+    
 }
 
 SpawnEnemyEvent::~SpawnEnemyEvent()
 {
 }
 
-void SpawnEnemyEvent::Load()
+void SpawnEnemyEvent::Load(ULevelAsset* level)
 {
-    IWaveEvent::Load();
+    BaseWaveEvent::Load(level);
+    m_spawnedEnemies.Reserve(sizeof(SpawnedEnnemy) * m_numberOfEnemiesToSpawn);
     // Request enemies from pool
 }
 
 void SpawnEnemyEvent::Start()
 {
-    IWaveEvent::Start();
+    BaseWaveEvent::Start();
     //Spawn the first one and start a timer to spawn the next ones
 }
 
 void SpawnEnemyEvent::Update(float deltaTime)
 {
-    IWaveEvent::Update(deltaTime);
+    BaseWaveEvent::Update(deltaTime);
     //Update the position of all spawned enemies
+    for (SpawnedEnnemy spawned : m_spawnedEnemies)
+    {
+        if (spawned.Enemy()->IsAlive())
+        {
+            spawned.Enemy()->Move(m_levelAsset->CurrentWaveTime() - spawned.SpawnTime());
+        }
+    }
 }
 
 void SpawnEnemyEvent::OnWaveEnd()
 {
-    IWaveEvent::OnWaveEnd();
+    BaseWaveEvent::OnWaveEnd();
     //Release the enemies
 }
 
 void SpawnEnemyEvent::EditorLoad(float time)
 {
-    IWaveEvent::EditorLoad(time);
+    BaseWaveEvent::EditorLoad(time);
     // Display the spline
 
     if (time < GetTime())
@@ -66,12 +112,17 @@ void SpawnEnemyEvent::EditorLoad(float time)
 
 void SpawnEnemyEvent::EditorUnload()
 {
-    IWaveEvent::EditorUnload();
-    //Unload all enemies
+    BaseWaveEvent::EditorUnload();
+    //Unload all enemies and save the spline
 }
 
 void SpawnEnemyEvent::OnFinish()
 {
-    IWaveEvent::OnFinish();
+    BaseWaveEvent::OnFinish();
     //Do nothing maybe
+}
+
+void SpawnEnemyEvent::SpawnEnemy()
+{
+
 }

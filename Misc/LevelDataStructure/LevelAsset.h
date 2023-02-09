@@ -8,7 +8,8 @@
 class ULevelAsset
 {
 private:
-    float m_currentTime = 0.0f;
+    float m_currentLevelTime = 0.0f;
+    float m_currentWaveTime = 0.0f;
 
     TArray<Wave*> m_waves;
 
@@ -19,9 +20,13 @@ public:
     ULevelAsset(/* args */);
     ~ULevelAsset();
 
-    inline float CurrentTime()
+    inline const float CurrentLevelTime() const
     {
-        return m_currentTime;
+        return m_currentLevelTime;
+    }
+    inline const float CurrentWaveTime() const
+    {
+        return m_currentWaveTime;
     }
 
     void Load();
@@ -43,7 +48,9 @@ void ULevelAsset::Load()
 
 void ULevelAsset::Update(float deltaTime)
 {
-    m_currentTime += deltaTime;
+    m_currentLevelTime += deltaTime;
+    m_currentWaveTime += deltaTime;
+
     m_currentWave->Update(deltaTime);
 
     if (m_currentWave->IsFinished())
@@ -53,6 +60,7 @@ void ULevelAsset::Update(float deltaTime)
         m_currentWaveIndex++;
         m_currentWave = m_waves[m_currentWaveIndex];
 
+        m_currentWaveTime = 0.0f;
         m_currentWave->Load(this);
     }
 }

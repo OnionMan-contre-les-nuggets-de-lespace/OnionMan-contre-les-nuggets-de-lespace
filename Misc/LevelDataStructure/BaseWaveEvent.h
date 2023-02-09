@@ -4,16 +4,17 @@
 
 // #include "CoreMinimal.h"
 
-class IWaveEvent
+class BaseWaveEvent
 {
-
+protected:
+    ULevelAsset* m_levelAsset;
 private:
     float m_time = 0.0f;
     bool m_isFinished = false;
 
 public:
-    IWaveEvent(/* args */);
-    ~IWaveEvent();
+    BaseWaveEvent(/* args */);
+    ~BaseWaveEvent();
 
     inline float GetTime()
     {
@@ -25,7 +26,7 @@ public:
         return m_isFinished;
     }
     
-    virtual void Load();
+    virtual void Load(ULevelAsset* level);
     virtual void Start();
     virtual void Update(float deltaTime);
     virtual void OnWaveEnd();
@@ -39,46 +40,47 @@ protected:
     virtual void OnFinish();
 };
 
-IWaveEvent::IWaveEvent(/* args */)
+BaseWaveEvent::BaseWaveEvent(/* args */)
 {
     m_isFinished = false;
 }
 
-IWaveEvent::~IWaveEvent()
+BaseWaveEvent::~BaseWaveEvent()
 {
 }
 
-void IWaveEvent::Load()
+void BaseWaveEvent::Load(ULevelAsset* level)
 {
+    m_levelAsset = level;
     m_isFinished = false;
 }
 
-void IWaveEvent::Start()
+void BaseWaveEvent::Start()
 {
 }
 
-void IWaveEvent::Update(float deltaTime)
+void BaseWaveEvent::Update(float deltaTime)
 {
 }
 
-void IWaveEvent::OnWaveEnd()
+void BaseWaveEvent::OnWaveEnd()
 {
 }
 
-void IWaveEvent::EditorLoad(float time)
+void BaseWaveEvent::EditorLoad(float time)
 {
 }
 
-void IWaveEvent::EditorUnload()
+void BaseWaveEvent::EditorUnload()
 {
 }
 
-void IWaveEvent::Finish()
+void BaseWaveEvent::Finish()
 {
     m_isFinished = true;
     OnFinish();
 }
 
-void IWaveEvent::OnFinish()
+void BaseWaveEvent::OnFinish()
 {
 }

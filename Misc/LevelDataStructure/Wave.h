@@ -9,9 +9,9 @@
 class Wave
 {
 private:
-    TArray<IWaveEvent*> m_waveEvents;
+    TArray<BaseWaveEvent*> m_waveEvents;
 
-    TArray<IWaveEvent*> m_eventsThatStarted;
+    TArray<BaseWaveEvent*> m_eventsThatStarted;
 
     ULevelAsset* m_levelAsset;
 
@@ -49,22 +49,22 @@ void Wave::Load(ULevelAsset* level)
 {
     m_levelAsset = level;
 
-    m_waveEvents.Sort([](IWaveEvent* event1, IWaveEvent* event2){return event1->GetTime() < event2->GetTime();});
+    m_waveEvents.Sort([](BaseWaveEvent* event1, BaseWaveEvent* event2){return event1->GetTime() < event2->GetTime();});
 
-    for (IWaveEvent* event : m_waveEvents)
+    for (BaseWaveEvent* event : m_waveEvents)
     {
-        event->Load();
+        event->Load(level);
     }
 }
 
 void Wave::Update(float deltaTime)
 {
     // Starts the new events
-    float currentTime = m_levelAsset->CurrentTime();
+    float currentWaveTime = m_levelAsset->CurrentWaveTime();
     int eventsCount = m_waveEvents.Num();
-    while (m_eventToStartIndex <= eventsCount && currentTime >= m_waveEvents[m_eventToStartIndex]->GetTime())
+    while (m_eventToStartIndex <= eventsCount && currentWaveTime >= m_waveEvents[m_eventToStartIndex]->GetTime())
     {
-        IWaveEvent* eventToStart = m_waveEvents[m_eventToStartIndex];
+        BaseWaveEvent* eventToStart = m_waveEvents[m_eventToStartIndex];
         m_eventsThatStarted.Add(eventToStart);
 
         eventToStart->Start();
@@ -74,7 +74,7 @@ void Wave::Update(float deltaTime)
 
     // Updates all started evants
     bool allEventFinished = true;
-    for (IWaveEvent* event : m_eventsThatStarted)
+    for (BaseWaveEvent* event : m_eventsThatStarted)
     {
         if (event->IsFinished())
         {
@@ -85,7 +85,7 @@ void Wave::Update(float deltaTime)
     }
 
     // Checks wether the wave is finished by checking wether all events started and finished
-    if (allEventFinished && m_eventsThatStarted.Num() == m_waveEvents.Num()) 
+    if (allEventFinished && m_eventsThatStarted.Num() == eventsCount) 
     {
         m_isFinished = true;
     }
@@ -94,7 +94,7 @@ void Wave::Update(float deltaTime)
 
 void Wave::FinishWave()
 {
-    for (IWaveEvent* event : m_waveEvents)
+    for (BaseWaveEvent* event : m_waveEvents)
     {
         event->OnWaveEnd();
     }
@@ -102,7 +102,7 @@ void Wave::FinishWave()
 
 void Wave::EditorLoad(float time)
 {
-    for (IWaveEvent* event : m_waveEvents)
+    for (BaseWaveEvent* event : m_waveEvents)
     {
         event->EditorLoad(time);
     }
@@ -110,7 +110,7 @@ void Wave::EditorLoad(float time)
 
 void Wave::EditorUnload()
 {
-    for (IWaveEvent* event : m_waveEvents)
+    for (BaseWaveEvent* event : m_waveEvents)
     {
         event->EditorUnload();
     }
