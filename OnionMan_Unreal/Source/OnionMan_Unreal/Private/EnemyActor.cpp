@@ -11,9 +11,9 @@ AEnemyActor::AEnemyActor()
 
 }
 
-void AEnemyActor::TakeDamage(float DamageAmount)
+void AEnemyActor::TakeDamage(float damageAmount)
 {
-	m_currentHealth -= DamageAmount;
+	m_currentHealth -= damageAmount;
 	if (m_currentHealth <= 0)
 	{
 		// Destroy l'objet ou renvoyer dans la pool
@@ -48,5 +48,26 @@ void AEnemyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+bool AEnemyActor::IsAlive()
+{
+	return m_currentHealth > 0.0f;
+}
+
+void AEnemyActor::Move(float deltaTime, float timeSinceSpawn)
+{
+}
+
+void AEnemyActor::EditorLoad(float timeSinceSpawn)
+{
+}
+
+void AEnemyActor::EditorUpdate(float newTimeSinceSpawn)
+{
+}
+
+void AEnemyActor::EditorUnload()
+{
 }
 
