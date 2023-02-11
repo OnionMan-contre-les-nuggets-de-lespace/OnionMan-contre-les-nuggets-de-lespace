@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/SplineComponent.h"
 #include "EnemyActor.generated.h"
 
 UCLASS()
@@ -27,8 +26,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		float m_contactDamage;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		USplineComponent* m_trajectory; 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		bool IsArmored;
 	// Create Property Weapons ! (donc un script C++ weapon)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
@@ -40,6 +37,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
 		void TakeDamage(float DamageAmount);
+
+	bool IsAlive();
+
+	virtual void Move(float deltaTime, float timeSinceSpawn);
+
+
+	// Editor
+	virtual void EditorLoad(float timeSinceSpawn);
+	virtual void EditorUpdate(float newTimeSinceSpawn);
+	virtual void EditorUnload();
 
 protected:
 	// Called when the game starts or when spawned
