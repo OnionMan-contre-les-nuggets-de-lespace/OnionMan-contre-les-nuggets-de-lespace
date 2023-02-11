@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SpawnEnemyEvent.h"
+#include "Level/SpawnEnemyEvent.h"
 
 USpawnEnemyEvent::USpawnEnemyEvent(/* args */)
 {
@@ -24,13 +24,13 @@ void USpawnEnemyEvent::Start()
 
 void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
 {
-    UBaseWaveEvent::Update(deltaTime);
+    UBaseWaveEvent::Update(deltaTime, currentWaveTime);
     //Update the position of all spawned enemies
     for (SpawnedEnnemy spawned : m_spawnedEnemies)
     {
         if (spawned.Enemy()->IsAlive())
         {
-            spawned.Enemy()->Move(currentWaveTime - spawned.SpawnTime());
+            spawned.Enemy()->Move(deltaTime, currentWaveTime - spawned.SpawnTime());
         }
     }
 }

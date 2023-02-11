@@ -5,9 +5,9 @@
 #include "CoreMinimal.h"
 
 #include "BaseWaveEvent.h"
-#include "EnemyActor.h"
+#include "Enemies/EnemyActor.h"
 
-#include "SpawnEnemyEvent.generated.h"S
+#include "SpawnEnemyEvent.generated.h"
 
 struct SpawnedEnnemy
 {
