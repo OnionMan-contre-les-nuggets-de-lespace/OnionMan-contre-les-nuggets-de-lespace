@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Level/SpawnEnemyEvent.h"
+#include "Level/Events/SpawnEnemyEvent.h"
 
 USpawnEnemyEvent::USpawnEnemyEvent(/* args */)
 {
@@ -20,11 +20,25 @@ void USpawnEnemyEvent::Start()
 {
     UBaseWaveEvent::Start();
     //Spawn the first one and start a timer to spawn the next ones
+    m_spawnTimer = m_timeBetweenSpawns;
 }
 
 void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
 {
     UBaseWaveEvent::Update(deltaTime, currentWaveTime);
+    //Spawn the new enemies
+    if (m_spawnedEnemiesCount < m_numberOfEnemiesToSpawn) 
+    {
+        if (m_spawnTimer >= m_timeBetweenSpawns) 
+        {
+            m_spawnTimer = 0;
+            AEnemyActor* newEnemy = SpawnEnemy();
+            m_spawnedEnemies.Add(SpawnedEnnemy{ newEnemy, currentWaveTime });
+            m_spawnedEnemiesCount++;
+        }
+        m_spawnTimer += deltaTime;
+    }
+
     //Update the position of all spawned enemies
     for (SpawnedEnnemy spawned : m_spawnedEnemies)
     {
@@ -64,7 +78,7 @@ void USpawnEnemyEvent::OnFinish()
     //Do nothing maybe
 }
 
-void USpawnEnemyEvent::SpawnEnemy()
+AEnemyActor* USpawnEnemyEvent::SpawnEnemy()
 {
 
 }

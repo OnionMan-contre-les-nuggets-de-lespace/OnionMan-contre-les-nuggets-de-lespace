@@ -42,13 +42,13 @@ class ONIONMAN_UNREAL_API USpawnEnemyEvent : public UBaseWaveEvent
 	GENERATED_BODY()
 
 private:
-    AEnemyActor* m_enemyPrefab;
-
     int m_numberOfEnemiesToSpawn = 1;
     float m_timeBetweenSpawns = 0.0f;
 
     //Cache 
     TArray<SpawnedEnnemy> m_spawnedEnemies;
+    int m_spawnedEnemiesCount = 0;
+    float m_spawnTimer = 0.0f;
 
 public:
     USpawnEnemyEvent(/* args */);
@@ -64,5 +64,5 @@ public:
 
 protected:
     virtual void OnFinish() override;
-    virtual void SpawnEnemy();
+    virtual AEnemyActor* SpawnEnemy();
 };

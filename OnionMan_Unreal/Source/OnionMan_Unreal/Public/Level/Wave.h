@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-#include "BaseWaveEvent.h"
+#include "Events/BaseWaveEvent.h"
 
 #include "Wave.generated.h"
 

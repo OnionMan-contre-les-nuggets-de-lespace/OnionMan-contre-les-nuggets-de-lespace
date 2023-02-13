@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Level/BaseWaveEvent.h"
+#include "Level/Events/BaseWaveEvent.h"
 
 UBaseWaveEvent::UBaseWaveEvent(/* args */)
 {
