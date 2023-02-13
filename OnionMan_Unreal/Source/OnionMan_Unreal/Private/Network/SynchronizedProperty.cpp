@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "USynchronizedProperty.h"
-#include "EncodingUtility.h"
+#include "Network/SynchronizedProperty.h"
+#include "Network/EncodingUtility.h"
 
 using namespace OnionMan::Network;
 
@@ -11,9 +11,11 @@ USynchronizedProperty<T>::USynchronizedProperty()
 {
 }
 
-template <typename T>
-USynchronizedProperty<T>::~USynchronizedProperty(){
-
+template<typename T>
+USynchronizedProperty<T>::USynchronizedProperty(T value, uint16 propertyID)
+{
+    m_value = value;
+    m_propertyID = propertyID;
 }
 
 template <typename T>

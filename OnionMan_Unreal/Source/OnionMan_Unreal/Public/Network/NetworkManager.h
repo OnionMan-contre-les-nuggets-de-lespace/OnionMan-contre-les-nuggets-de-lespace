@@ -4,31 +4,29 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ISynchronizedObjectBase.h"
+#include "Network/ISynchronizedObjectBase.h"
 
-//#include "NetworkManager.generated.h"
+#include "NetworkManager.generated.h"
 
 /**
  * 
  */
-//UCLASS()
-class ONIONMAN_UNREAL_API NetworkManager
+UCLASS()
+class ONIONMAN_UNREAL_API UNetworkManager : public UObject
 {
-    //GENERATED_BODY();
+    GENERATED_BODY()
 private:
     TMap<uint32, ISynchronizedObjectBase*> m_synchronizedObjects{};
     TArray<ISynchronizedObjectBase*> m_objectsArray{};
 
 public:
     // Singleton stuff
-    static NetworkManager& Instance();
+    static UNetworkManager& Instance();
 
-    ~NetworkManager();
-
-    NetworkManager(const NetworkManager&) = delete;
-    NetworkManager& operator=(const NetworkManager&) = delete;
-    NetworkManager(NetworkManager&&) = delete;
-    NetworkManager& operator=(NetworkManager&&) = delete;
+    //UNetworkManager(const UNetworkManager&) = delete;
+    //UNetworkManager& operator=(const UNetworkManager&) = delete;
+    //UNetworkManager(UNetworkManager&&) = delete;
+    //UNetworkManager& operator=(UNetworkManager&&) = delete;
 
     // NetworkManager methods
     void AddSynchronizedObject(ISynchronizedObjectBase& obj);
@@ -38,5 +36,5 @@ public:
 
 
 private:
-    NetworkManager(); 
+    UNetworkManager(); 
 };

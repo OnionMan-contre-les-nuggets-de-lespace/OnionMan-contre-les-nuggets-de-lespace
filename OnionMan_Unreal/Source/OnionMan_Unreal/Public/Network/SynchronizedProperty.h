@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ISynchronizedPropertyBase.h"
+#include "Network/ISynchronizedPropertyBase.h"
 
 
 /**
@@ -27,22 +27,18 @@ private:
 
 public:
 	USynchronizedProperty();
-	USynchronizedProperty(T value, uint16 propertyID)
-	{
-		m_value = value;
-		m_propertyID = propertyID;
-	}
-	~USynchronizedProperty();
+	USynchronizedProperty(T value, uint16 propertyID);
 
 	bool NeedSync() override;
 
 	const uint16 PropertyID() const override;
 
-	const T& GetValue() const
+	inline const T& GetValue() const
 	{
 		return m_value;
 	}
-	void SetValue(T value)
+
+	inline void SetValue(T value)
 	{
 		if (m_value != value)
 		{

@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "USynchronizedActorComponent.h"
-#include "USynchronizedProperty.h"
-#include "SynchronizedFStringProperty.h"
+#include "Network/SynchronizedActorComponent.h"
+#include "Network/SynchronizedProperty.h"
+#include "Network/SynchronizedFStringProperty.h"
 #include "NetworkTestComponent.generated.h"
 
 /**
@@ -21,8 +21,8 @@ private:
 	
 
 public:
-	USynchronizedProperty<int> SP0{9, 12};
-	USynchronizedProperty<FString> SP1{ "Waw", 32 };
+	//USynchronizedProperty<int> SP0{9, 12};
+	//USynchronizedProperty<FString> SP1{ "Waw", 32 };
 	//USynchronizedFStringProperty SP2{ "Waw", 2 };
 
 	void LoadProperties() override;

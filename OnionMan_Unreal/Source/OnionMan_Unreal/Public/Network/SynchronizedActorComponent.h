@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ISynchronizedObjectBase.h"
+#include "Network/ISynchronizedObjectBase.h"
 #include "Components/ActorComponent.h"
-#include "ISynchronizedPropertyBase.h"
-#include "USynchronizedActorComponent.generated.h"
+#include "Network/ISynchronizedPropertyBase.h"
+#include "SynchronizedActorComponent.generated.h"
 
 
 UCLASS(Abstract/*, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) */)

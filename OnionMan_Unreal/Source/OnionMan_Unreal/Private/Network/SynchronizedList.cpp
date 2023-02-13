@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "USynchronizedList.h"
-#include "EncodingUtility.h"
+#include "Network/SynchronizedList.h"
+#include "Network/EncodingUtility.h"
 
 using namespace OnionMan::Network;
 

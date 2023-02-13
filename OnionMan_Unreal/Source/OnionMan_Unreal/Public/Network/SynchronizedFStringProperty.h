@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ISynchronizedPropertyBase.h"
+#include "Network/ISynchronizedPropertyBase.h"
 
 #include "SynchronizedFStringProperty.generated.h"
 

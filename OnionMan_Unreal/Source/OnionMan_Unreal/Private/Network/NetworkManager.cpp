@@ -1,28 +1,24 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "NetworkManager.h"
-#include "EncodingUtility.h"
+#include "Network/NetworkManager.h"
+#include "Network/EncodingUtility.h"
 #include "LogUtils.h"
 
 using namespace OnionMan::Network;
 
-NetworkManager::NetworkManager()
-{
-}
-
-NetworkManager::~NetworkManager()
+UNetworkManager::UNetworkManager()
 {
 }
 
 // Dans le fichier source
-NetworkManager& NetworkManager::Instance()
+UNetworkManager& UNetworkManager::Instance()
 {
-    static NetworkManager s_instance{};
+    static UNetworkManager s_instance{};
     return s_instance;
 }
 
-void NetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
+void UNetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
 {
 	uint32 objID = obj.ObjectID();
 	if (m_synchronizedObjects.Contains(objID))
@@ -33,7 +29,7 @@ void NetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
 	m_objectsArray.Add(&obj);
 }
 
-void NetworkManager::GetObjectsToSync(TArray<TTuple<ISynchronizedObjectBase*, int>>& outObjectsToSync)
+void UNetworkManager::GetObjectsToSync(TArray<TTuple<ISynchronizedObjectBase*, int>>& outObjectsToSync)
 {
     outObjectsToSync.Empty();
     for (ISynchronizedObjectBase* synchronizedObject : m_objectsArray)
@@ -46,7 +42,7 @@ void NetworkManager::GetObjectsToSync(TArray<TTuple<ISynchronizedObjectBase*, in
     }
 }
 
-void NetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
+void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
 {
     TArray<TTuple<ISynchronizedObjectBase*, int>> objectsToSync{};
     GetObjectsToSync(objectsToSync);
@@ -67,7 +63,7 @@ void NetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
     }
 }
 
-void NetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
+void UNetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
 {
     int offset = 0;
     int bufferSize = encodedObjects.Num();

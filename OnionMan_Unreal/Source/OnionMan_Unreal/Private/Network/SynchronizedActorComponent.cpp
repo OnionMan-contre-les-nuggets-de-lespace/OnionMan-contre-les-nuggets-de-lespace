@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "USynchronizedActorComponent.h"
-#include "ISynchronizedPropertyBase.h"
-#include "EncodingUtility.h"
-#include <NetworkManager.h>
+#include "Network/SynchronizedActorComponent.h"
+#include "Network/ISynchronizedPropertyBase.h"
+#include "Network/EncodingUtility.h"
+#include "Network/NetworkManager.h"
 
 #include "LogUtils.h"
 
@@ -24,10 +24,10 @@ USynchronizedActorComponent::USynchronizedActorComponent()
 // Called when the game starts
 void USynchronizedActorComponent::BeginPlay()
 {
-	Super::BeginPlay();
+	UActorComponent::BeginPlay();
 
 	LoadProperties();
-	NetworkManager::Instance().AddSynchronizedObject(*this);
+	UNetworkManager::Instance().AddSynchronizedObject(*this);
 	// ...
 	
 }
@@ -36,7 +36,7 @@ void USynchronizedActorComponent::BeginPlay()
 // Called every frame
 void USynchronizedActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	UActorComponent::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
 }
