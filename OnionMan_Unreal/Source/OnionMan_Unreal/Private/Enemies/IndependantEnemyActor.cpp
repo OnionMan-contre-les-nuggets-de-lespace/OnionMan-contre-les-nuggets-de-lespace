@@ -16,6 +16,14 @@ void AIndependantEnemyActor::EditorLoad(float timeSinceSpawn)
 {
 }
 
+void AIndependantEnemyActor::EditorLoadAtPosition(float timeSinceSpawn, FVector3f startPosition)
+{
+}
+
+void AIndependantEnemyActor::EditorUpdateAtPosition(float timeSinceSpawn, FVector3f startPosition)
+{
+}
+
 void AIndependantEnemyActor::EditorUpdate(float newTimeSinceSpawn)
 {
 }

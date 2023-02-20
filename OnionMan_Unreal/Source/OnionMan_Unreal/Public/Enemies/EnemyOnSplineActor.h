@@ -28,7 +28,8 @@ public:
 
 	// Editor
 	virtual void EditorLoad(float timeSinceSpawn) override;
+	virtual void EditorLoadOnSpline(float timeSinceSpawn, USplineComponent* trajectory);
 	virtual void EditorUpdate(float newTimeSinceSpawn) override;
-	virtual void EditorUnload() override;
-	
+	virtual void EditorUpdateOnSpline(float newTimeSinceSpawn, USplineComponent* trajectory);
+	virtual void EditorUnload() override;	
 };
