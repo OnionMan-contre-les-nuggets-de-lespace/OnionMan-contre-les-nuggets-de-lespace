@@ -48,6 +48,8 @@ public:
 	virtual void EditorUpdate(float newTimeSinceSpawn);
 	virtual void EditorUnload();
 
+	virtual void EditorSave(); // Possibly useless
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

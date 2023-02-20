@@ -71,3 +71,6 @@ void AEnemyActor::EditorUnload()
 {
 }
 
+void AEnemyActor::EditorSave()
+{
+}
