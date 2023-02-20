@@ -19,6 +19,9 @@ private:
     float m_time = 0.0f;
     bool m_isFinished = false;
 
+protected:
+    bool m_isEditorLoaded = false;
+
 public:
     UBaseWaveEvent(/* args */);
 
@@ -38,8 +41,10 @@ public:
     virtual void OnWaveEnd();
 
     // Editor
-    virtual void EditorLoad(float time);
+    virtual void EditorLoad(float timeSinceStart);
+    virtual void EditorUpdate(float newtimeSinceStart);
     virtual void EditorUnload();
+    virtual void EditorSave();
 
 protected:
     void Finish();

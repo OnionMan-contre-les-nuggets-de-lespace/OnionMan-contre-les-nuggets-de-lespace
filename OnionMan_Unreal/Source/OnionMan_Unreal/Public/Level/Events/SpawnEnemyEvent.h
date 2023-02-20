@@ -41,7 +41,7 @@ class ONIONMAN_UNREAL_API USpawnEnemyEvent : public UBaseWaveEvent
 {
 	GENERATED_BODY()
 
-private:
+protected:
     int m_numberOfEnemiesToSpawn = 1;
     float m_timeBetweenSpawns = 0.0f;
 
@@ -59,8 +59,11 @@ public:
     virtual void OnWaveEnd() override;
 
     // Editor
-    virtual void EditorLoad(float time) override;
+    virtual void EditorLoad(float timeSinceStart) override;
+    virtual void EditorUpdate(float newTimeSinceStart);
     virtual void EditorUnload() override;
+
+    virtual void EditorSave() override;
 
 protected:
     virtual void OnFinish() override;

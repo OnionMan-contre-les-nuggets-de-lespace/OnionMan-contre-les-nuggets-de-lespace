@@ -2,6 +2,7 @@
 
 
 #include "Level/Events/SpawnEnemyEvent.h"
+#include "SpawnEnemyEvent.h"
 
 USpawnEnemyEvent::USpawnEnemyEvent(/* args */)
 {
@@ -55,21 +56,43 @@ void USpawnEnemyEvent::OnWaveEnd()
     //Release the enemies
 }
 
-void USpawnEnemyEvent::EditorLoad(float time)
+void USpawnEnemyEvent::EditorLoad(float timeSinceStart)
 {
-    UBaseWaveEvent::EditorLoad(time);
+    UBaseWaveEvent::EditorLoad(timeSinceStart);
     // Display the spline
-
-    if (time < GetTime())
+    if(m_isEditorLoaded)
     {
-        // Display all enemies on the spline
+        return;
+    }
+}
+
+void USpawnEnemyEvent::EditorUpdate(float newTimeSinceStart)
+{
+    UBaseWaveEvent::EditorUpdate(newTimeSinceStart);
+    if(!m_isEditorLoaded)
+    {
+        return;
     }
 }
 
 void USpawnEnemyEvent::EditorUnload()
 {
     UBaseWaveEvent::EditorUnload();
-    //Unload all enemies and save the spline
+    if(!m_isEditorLoaded)
+    {
+        return;
+    }
+    //Unload all enemies
+}
+
+void USpawnEnemyEvent::EditorSave()
+{
+    UBaseWaveEvent::EditorSave()
+    if(!m_isEditorLoaded)
+    {
+        return;
+    }
+    // Save values
 }
 
 void USpawnEnemyEvent::OnFinish()

@@ -25,12 +25,38 @@ void UBaseWaveEvent::OnWaveEnd()
 {
 }
 
-void UBaseWaveEvent::EditorLoad(float time)
+void UBaseWaveEvent::EditorLoad(float timeSinceStart)
 {
+    if(m_isEditorLoaded)
+    {
+        return;
+    }
+    m_isEditorLoaded = true;
+}
+
+void UBaseWaveEvent::EditorUpdate(float newtimeSinceStart)
+{
+    if(!m_isEditorLoaded)
+    {
+        return;
+    }
 }
 
 void UBaseWaveEvent::EditorUnload()
 {
+    if(!m_isEditorLoaded)
+    {
+        return;
+    }
+    m_isEditorLoaded = false;
+}
+
+void UBaseWaveEvent::EditorSave()
+{
+    if(!m_isEditorLoaded)
+    {
+        return;
+    }
 }
 
 void UBaseWaveEvent::Finish()
