@@ -65,18 +65,50 @@ void UWave::FinishWave()
     }
 }
 
-void UWave::EditorLoad(float time)
+void UWave::EditorLoad(float timeSinceWaveStart)
 {
+    if (m_isEditorLoaded)
+    {
+        return;
+    }
     for (UBaseWaveEvent* event : m_waveEvents)
     {
-        event->EditorLoad(time);
+        event->EditorLoad(timeSinceWaveStart);
+    }
+}
+
+void UWave::EditorUpdate(float newtimeSinceWaveStart)
+{
+    if (!m_isEditorLoaded)
+    {
+        return;
+    }
+    for (UBaseWaveEvent* event : m_waveEvents)
+    {
+        event->EditorUpdate(newtimeSinceWaveStart);
     }
 }
 
 void UWave::EditorUnload()
 {
+    if (!m_isEditorLoaded)
+    {
+        return;
+    }
     for (UBaseWaveEvent* event : m_waveEvents)
     {
         event->EditorUnload();
+    }
+}
+
+void UWave::EditorSave()
+{
+    if (!m_isEditorLoaded)
+    {
+        return;
+    }
+    for (UBaseWaveEvent* event : m_waveEvents)
+    {
+        event->EditorSave();
     }
 }

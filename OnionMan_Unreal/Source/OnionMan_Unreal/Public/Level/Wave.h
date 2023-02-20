@@ -16,6 +16,9 @@ UCLASS()
 class ONIONMAN_UNREAL_API UWave : public UObject
 {
 	GENERATED_BODY()
+protected:
+    bool m_isEditorLoaded = false;
+
 private:
     TArray<UBaseWaveEvent*> m_waveEvents;
 
@@ -37,6 +40,9 @@ public:
     void FinishWave();
 
     // Editor
-    void EditorLoad(float time);
+    void EditorLoad(float timeSinceWaveStart);
+    void EditorUpdate(float newtimeSinceWaveStart);
     void EditorUnload();
+
+    void EditorSave();
 };
