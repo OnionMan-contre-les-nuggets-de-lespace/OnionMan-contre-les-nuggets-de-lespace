@@ -80,5 +80,5 @@ void USpawnEnemyEvent::OnFinish()
 
 AEnemyActor* USpawnEnemyEvent::SpawnEnemy()
 {
-
+    return nullptr;
 }
