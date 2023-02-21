@@ -15,10 +15,10 @@ class ONIONMAN_UNREAL_API USynchronizedActorComponent : public UActorComponent, 
 	GENERATED_BODY()
 
 private:
-	TMap<uint16, ISynchronizedPropertyBase*> m_synchronizedProperties;
+	TMap<uint16, ISynchronizedPropertyBase*> m_synchronizedProperties{};
 	uint32 m_objectID;
 	int m_encodedPropertiesSize;
-	TArray<ISynchronizedPropertyBase*> m_propertiesArray;
+	TArray<ISynchronizedPropertyBase*> m_propertiesArray{};
 
 public:	
 	// Sets default values for this component's properties
