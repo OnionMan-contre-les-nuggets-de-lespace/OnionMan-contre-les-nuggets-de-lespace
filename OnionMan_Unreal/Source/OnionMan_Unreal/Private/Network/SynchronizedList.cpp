@@ -73,9 +73,8 @@ int USynchronizedList<T>::GetEncodedPropertySize()
         m_encodedSize = sizeof(int) + sizeof(uint16); // Property size + PropertyID
         for (T element : m_value) 
         {
-            m_encodedSize += sizeof(int) + GetTSize(element);
+            m_encodedSize += sizeof(int) + GetTSize(element); // each element size + Data
         }
-        m_value.ForEach((T element) = > ); // each element size + Data
     }
     return m_encodedSize;
 }
