@@ -18,7 +18,7 @@ public:
 	void Spawn(FVector3f startPosition);
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
-		virtual void Move(float deltaTime, float timeSinceSpawn) override;
+	virtual void Move(float deltaTime, float timeSinceSpawn) override;
 
 
 	// Editor
