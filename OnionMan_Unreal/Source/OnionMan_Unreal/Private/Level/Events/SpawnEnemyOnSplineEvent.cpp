@@ -20,10 +20,10 @@ void USpawnEnemyOnSplineEvent::EditorLoad(float timeSinceStart)
 		bool hidden = timeSinceStart < GetTime() + spawnTime;
 
 		spawnedEnemy->SetHidden(hidden);
-		spawnedEnnemy->EditorLoadOnSpline(timeSinceStart - spawnTime, m_spline);
+		spawnedEnemy->EditorLoadOnSpline(timeSinceStart - spawnTime, m_spline);
 		if (!hidden)
 		{
-			spawnedEnnemy->EditorUpdateOnSpline(timeSinceStart - spawnTime, m_spline);
+			spawnedEnemy->EditorUpdateOnSpline(timeSinceStart - spawnTime, m_spline);
 		}
 		m_editorEnemies.Add(spawnedEnemy);
 	}
@@ -42,12 +42,12 @@ void USpawnEnemyOnSplineEvent::EditorUpdate(float newTimeSinceStart)
 		AEnemyOnSplineActor* enemy = m_editorEnemies[i];
 
         float spawnTime = GetTime() + i * m_timeBetweenSpawns;
-		bool hidden = timeSinceStart < spawnTime;
+		bool hidden = newTimeSinceStart < spawnTime;
 
 		enemy->SetHidden(hidden);
 		if (!hidden)
 		{
-			spawnedEnnemy->EditorUpdateOnSpline(timeSinceStart - spawnTime, m_spline);
+			enemy->EditorUpdateOnSpline(newTimeSinceStart - spawnTime, m_spline);
 		}
 	}
 }
@@ -65,6 +65,7 @@ void USpawnEnemyOnSplineEvent::EditorUnload()
 		AEnemyOnSplineActor* enemy = m_editorEnemies[i];
 		// @TODO Destroy Enemy
 	}
+	m_editorEnemies.Empty();
 }
 
 void USpawnEnemyOnSplineEvent::EditorSave()

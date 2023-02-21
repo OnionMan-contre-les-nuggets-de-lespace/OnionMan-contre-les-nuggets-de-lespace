@@ -2,7 +2,6 @@
 
 
 #include "Level/Events/SpawnEnemyEvent.h"
-#include "SpawnEnemyEvent.h"
 
 USpawnEnemyEvent::USpawnEnemyEvent(/* args */)
 {
@@ -87,7 +86,7 @@ void USpawnEnemyEvent::EditorUnload()
 
 void USpawnEnemyEvent::EditorSave()
 {
-    UBaseWaveEvent::EditorSave()
+    UBaseWaveEvent::EditorSave();
     if(!m_isEditorLoaded)
     {
         return;

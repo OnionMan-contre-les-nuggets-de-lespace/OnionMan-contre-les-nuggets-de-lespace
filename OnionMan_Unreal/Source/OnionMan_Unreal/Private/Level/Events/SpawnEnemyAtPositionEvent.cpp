@@ -26,10 +26,10 @@ void USpawnEnemyAtPositionEvent::EditorLoad(float timeSinceStart)
 		bool hidden = timeSinceStart < spawnTime;
 
 		spawnedEnemy->SetHidden(hidden);
-		spawnedEnnemy->EditorLoadAtPosition(timeSinceStart - spawnTime, m_startPosition);
+		spawnedEnemy->EditorLoadAtPosition(timeSinceStart - spawnTime, m_startPosition);
 		if (!hidden)
 		{
-			spawnedEnnemy->EditorUpdateAtPosition(timeSinceStart - spawnTime, m_startPosition);
+			spawnedEnemy->EditorUpdateAtPosition(timeSinceStart - spawnTime, m_startPosition);
 		}
 		m_editorEnemies.Add(spawnedEnemy);
 	}
@@ -49,14 +49,14 @@ void USpawnEnemyAtPositionEvent::EditorUpdate(float newTimeSinceStart)
 		AIndependantEnemyActor* enemy = m_editorEnemies[i];
 
         float spawnTime = GetTime() + i * m_timeBetweenSpawns;
-		bool hidden = timeSinceStart < spawnTime;
+		bool hidden = newTimeSinceStart < spawnTime;
 
 		enemy->SetHidden(hidden);
 		if (!hidden)
 		{
-			enemy->EditorUpdateAtPosition(timeSinceStart - spawnTime, m_startPosition);
+			enemy->EditorUpdateAtPosition(newTimeSinceStart - spawnTime, m_startPosition);
 		}
-		m_editorEnemies.Add(spawnedEnemy);
+		m_editorEnemies.Add(enemy);
 	}
 }
 
@@ -73,7 +73,7 @@ void USpawnEnemyAtPositionEvent::EditorUnload()
 		AIndependantEnemyActor* enemy = m_editorEnemies[i];
 		// @TODO Destroy enemy
 	}
-    m_editorEnemies.Clear();
+    m_editorEnemies.Empty();
 }
 
 void USpawnEnemyAtPositionEvent::EditorSave()
