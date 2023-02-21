@@ -25,7 +25,7 @@ namespace OnionMan:: Network
         template<>
         static void PutEncodedValueInBuffer<FString>(FString value, TArray<uint8>& buffer, int& offset)
         {
-            PutToBuffer(buffer, (const uint8*)TCHAR_TO_UTF8(*value), offset, value.Len());
+            PutToBuffer(buffer, (const uint8*)TCHAR_TO_UTF8(*value), offset, value.Len() * sizeof(TCHAR));
         }
 
         template<>
@@ -35,9 +35,9 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static void PutEncodedValueInBuffer<char>(char value, TArray<uint8>& buffer, int& offset)
+        static void PutEncodedValueInBuffer<TCHAR>(TCHAR value, TArray<uint8>& buffer, int& offset)
         {
-            PutToBuffer(buffer, (uint8*)&value, offset, sizeof(char));
+            PutToBuffer(buffer, (uint8*)&value, offset, sizeof(TCHAR));
         }
 
         template<>
@@ -131,14 +131,14 @@ namespace OnionMan:: Network
     
 #pragma region Decode
         template <typename T>
-        static T Decode(TArray<uint8> bytes, int& offset, int size = -1)
+        static T Decode(TArray<uint8>& bytes, int& offset, int size = -1)
         {
             LOG_ERROR("The type %s cannot be decoded yet", internal::GetTypeNameHelper<T>::GetTypeName());
             return NULL;
         }
 
         template<>
-        static FString Decode<FString>(TArray<uint8> bytes, int& offset, int size)
+        static FString Decode<FString>(TArray<uint8>& bytes, int& offset, int size)
         {
             if (size == -1)
             {
@@ -152,7 +152,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static bool Decode<bool>(TArray<uint8> bytes, int& offset, int size)
+        static bool Decode<bool>(TArray<uint8>& bytes, int& offset, int size)
         {
             bool decodedValue = *((bool*)(bytes.GetData() + offset));
             offset += sizeof(bool);
@@ -160,7 +160,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static char Decode<char>(TArray<uint8> bytes, int& offset, int size)
+        static char Decode<char>(TArray<uint8>& bytes, int& offset, int size)
         {
             char decodedValue = *((char*)(bytes.GetData() + offset));
             offset += sizeof(char);
@@ -168,7 +168,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static double Decode<double>(TArray<uint8> bytes, int& offset, int size)
+        static double Decode<double>(TArray<uint8>& bytes, int& offset, int size)
         {
             double decodedValue = *((double*)(bytes.GetData() + offset));
             offset += sizeof(double);
@@ -176,7 +176,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static float Decode<float>(TArray<uint8> bytes, int& offset, int size)
+        static float Decode<float>(TArray<uint8>& bytes, int& offset, int size)
         {
             float decodedValue = *((float*)(bytes.GetData() + offset));
             offset += sizeof(float);
@@ -184,7 +184,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static int Decode<int>(TArray<uint8> bytes, int& offset, int size)
+        static int Decode<int>(TArray<uint8>& bytes, int& offset, int size)
         {
             int decodedValue = *((int*)(bytes.GetData() + offset));
             offset += sizeof(int);
@@ -192,7 +192,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static long Decode<long>(TArray<uint8> bytes, int& offset, int size)
+        static long Decode<long>(TArray<uint8>& bytes, int& offset, int size)
         {
             long decodedValue = *((long*)(bytes.GetData() + offset));
             offset += sizeof(long);
@@ -200,7 +200,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static short Decode<short>(TArray<uint8> bytes, int& offset, int size)
+        static short Decode<short>(TArray<uint8>& bytes, int& offset, int size)
         {
             short decodedValue = *((short*)(bytes.GetData() + offset));
             offset += sizeof(short);
@@ -208,7 +208,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static uint32 Decode<uint32>(TArray<uint8> bytes, int& offset, int size)
+        static uint32 Decode<uint32>(TArray<uint8>& bytes, int& offset, int size)
         {
             uint32 decodedValue = *((uint32*)(bytes.GetData() + offset));
             offset += sizeof(uint32);
@@ -216,7 +216,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static uint64 Decode<uint64>(TArray<uint8> bytes, int& offset, int size)
+        static uint64 Decode<uint64>(TArray<uint8>& bytes, int& offset, int size)
         {
             uint64 decodedValue = *((uint64*)(bytes.GetData() + offset));
             offset += sizeof(uint64);
@@ -224,7 +224,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static uint16 Decode<uint16>(TArray<uint8> bytes, int& offset, int size)
+        static uint16 Decode<uint16>(TArray<uint8>& bytes, int& offset, int size)
         {
             uint16 decodedValue = *((uint16*)(bytes.GetData() + offset));
             offset += sizeof(uint16);
@@ -232,7 +232,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static FVector3f Decode<FVector3f>(TArray<uint8> bytes, int& offset, int size)
+        static FVector3f Decode<FVector3f>(TArray<uint8>& bytes, int& offset, int size)
         {
             return FVector3f(
                 Decode<float>(bytes, offset),
@@ -241,7 +241,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static FIntVector Decode<FIntVector>(TArray<uint8> bytes, int& offset, int size)
+        static FIntVector Decode<FIntVector>(TArray<uint8>& bytes, int& offset, int size)
         {
             return FIntVector(
                 Decode<int>(bytes, offset),
@@ -250,7 +250,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static FVector2f Decode<FVector2f>(TArray<uint8> bytes, int& offset, int size)
+        static FVector2f Decode<FVector2f>(TArray<uint8>& bytes, int& offset, int size)
         {
             return FVector2f(
                 Decode<float>(bytes, offset),
@@ -258,7 +258,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static FIntVector2 Decode<FIntVector2>(TArray<uint8> bytes, int& offset, int size)
+        static FIntVector2 Decode<FIntVector2>(TArray<uint8>& bytes, int& offset, int size)
         {
             return FIntVector2(
                 Decode<int>(bytes, offset),
@@ -266,7 +266,7 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static FQuat4f Decode<FQuat4f>(TArray<uint8> bytes, int& offset, int size)
+        static FQuat4f Decode<FQuat4f>(TArray<uint8>& bytes, int& offset, int size)
         {
             return FQuat4f(
                 Decode<float>(bytes, offset),
