@@ -18,14 +18,14 @@ public:
 	void Spawn(FVector3f startPosition);
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
-		virtual void Move(float deltaTime, float timeSinceSpawn) override;
+	virtual void Move(float deltaTime, float timeSinceSpawn) override;
 
 
 	// Editor
 	virtual void EditorLoad(float timeSinceSpawn) override;
 	virtual void EditorLoadAtPosition(float timeSinceSpawn, FVector3f startPosition);
 	virtual void EditorUpdate(float newTimeSinceSpawn) override;
-	virtual void EditorUpdateAtPosition(float timeSinceSpawn, FVector3f startPosition);
+	virtual void EditorUpdateAtPosition(float newTimeSinceSpawn, FVector3f startPosition);
 	virtual void EditorUnload() override;
 	
 };

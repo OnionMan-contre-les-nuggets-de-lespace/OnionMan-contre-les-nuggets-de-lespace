@@ -10,18 +10,22 @@ void AEnemyOnSplineActor::Spawn(USplineComponent* trajectory)
 
 void AEnemyOnSplineActor::Move(float deltaTime, float timeSinceSpawn)
 {
+	AEnemyActor::Move(deltaTime, timeSinceSpawn);
 }
 
 void AEnemyOnSplineActor::EditorLoad(float timeSinceSpawn)
 {
+	AEnemyActor::EditorLoad(timeSinceSpawn);
 }
+
 void AEnemyOnSplineActor::EditorLoadOnSpline(float timeSinceSpawn, USplineComponent* trajectory)
 {
-	EditorLoad(timeSinceSpawn)
+	EditorLoad(timeSinceSpawn);
 }
 
 void AEnemyOnSplineActor::EditorUpdate(float newTimeSinceSpawn)
 {
+	AEnemyActor::EditorUpdate(newTimeSinceSpawn);
 }
 
 void AEnemyOnSplineActor::EditorUpdateOnSpline(float newTimeSinceSpawn, USplineComponent* trajectory)
@@ -31,4 +35,5 @@ void AEnemyOnSplineActor::EditorUpdateOnSpline(float newTimeSinceSpawn, USplineC
 
 void AEnemyOnSplineActor::EditorUnload()
 {
+	AEnemyActor::EditorUnload();
 }
