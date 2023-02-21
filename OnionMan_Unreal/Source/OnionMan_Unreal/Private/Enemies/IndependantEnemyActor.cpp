@@ -28,7 +28,7 @@ void AIndependantEnemyActor::EditorUpdate(float newTimeSinceSpawn)
     AEnemyActor::EditorUpdate(newTimeSinceSpawn);
 }
 
-void AIndependantEnemyActor::EditorUpdateAtPosition(float timeSinceSpawn, FVector3f startPosition)
+void AIndependantEnemyActor::EditorUpdateAtPosition(float newTimeSinceSpawn, FVector3f startPosition)
 {
     EditorUpdate(newTimeSinceSpawn);
 }
