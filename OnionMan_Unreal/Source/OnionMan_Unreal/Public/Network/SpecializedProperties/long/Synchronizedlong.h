@@ -21,6 +21,23 @@ public:
 	USynchronizedlong();
 	USynchronizedlong(long value, uint16 propertyID);
 
+    UFUNCTION(BlueprintCallable)
+    inline const long GetValue() const
+    {
+        return m_value;
+    }
+
+    UFUNCTION(BlueprintCallable)
+    inline void GetValue(long& newValue)
+    {
+        if (m_value != value)
+        {
+            m_value = value;
+            m_sizeMayHaveChanged = true;
+            m_needSync = true;
+        }
+    }
+
 	virtual void Init() override;
 	virtual int GetEncodedPropertySize() override;
 	virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;

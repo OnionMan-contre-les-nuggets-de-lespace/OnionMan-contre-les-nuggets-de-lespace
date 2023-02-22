@@ -21,6 +21,23 @@ public:
 	USynchronizedbool();
 	USynchronizedbool(bool value, uint16 propertyID);
 
+    UFUNCTION(BlueprintCallable)
+    inline const bool GetValue() const
+    {
+        return m_value;
+    }
+
+    UFUNCTION(BlueprintCallable)
+    inline void GetValue(bool& newValue)
+    {
+        if (m_value != value)
+        {
+            m_value = value;
+            m_sizeMayHaveChanged = true;
+            m_needSync = true;
+        }
+    }
+
 	virtual void Init() override;
 	virtual int GetEncodedPropertySize() override;
 	virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;
