@@ -3,31 +3,43 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "../SpecializedSynchronizedProperty.h"
+#include "../../SpecializedSynchronizedProperty.h"
 
-#include "TYPENAMESynchronizedProperty.generated.h"
+#include "SynchronizedTYPENAME.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API UTYPENAMESynchronizedProperty : USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedTYPENAME : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
 	TYPENAME m_value;
 
 public:
-	UTYPENAMESynchronizedProperty();
-	UTYPENAMESynchronizedProperty(TYPENAME value, uint16 propertyID);
+	USynchronizedTYPENAME();
+	USynchronizedTYPENAME(TYPENAME value, uint16 propertyID);
 
-	UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable)
+    inline const TYPENAME GetValue() const
+    {
+        return m_value;
+    }
+
+    UFUNCTION(BlueprintCallable)
+    inline void GetValue(TYPENAME& newValue)
+    {
+        if (m_value != value)
+        {
+            m_value = value;
+            m_sizeMayHaveChanged = true;
+            m_needSync = true;
+        }
+    }
+
 	virtual void Init() override;
-	UFUNCTION(BlueprintCallable)
 	virtual int GetEncodedPropertySize() override;
-	UFUNCTION(BlueprintCallable)
 	virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;
-	UFUNCTION(BlueprintCallable)
 	virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
 };
-
