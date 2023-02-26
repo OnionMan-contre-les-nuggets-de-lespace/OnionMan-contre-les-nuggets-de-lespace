@@ -53,6 +53,23 @@ protected:
 	// Generic functions that will be called from the specialized classes 
 #pragma region Generic
 	template<typename T>
+	const T& GetValueGeneric(const T& value) const
+	{
+		return value;
+	}
+
+	template<typename T>
+	void SetValueGeneric(const T& value, T& outValue)
+	{
+		if (outValue != value)
+		{
+			outValue = value;
+			m_sizeMayHaveChanged = true;
+			m_needSync = true;
+		}
+	}
+
+	template<typename T>
 	void InitGeneric()
 	{
 		m_hasFixedSize = EncodingUtility::HasFixedEncodedSize<T>();

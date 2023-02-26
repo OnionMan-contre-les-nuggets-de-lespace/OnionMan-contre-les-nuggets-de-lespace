@@ -30,9 +30,9 @@ public:
     UFUNCTION(BlueprintCallable)
     inline void GetValue(float& newValue)
     {
-        if (m_value != value)
+        if (m_value != newValue)
         {
-            m_value = value;
+            m_value = newValue;
             m_sizeMayHaveChanged = true;
             m_needSync = true;
         }
