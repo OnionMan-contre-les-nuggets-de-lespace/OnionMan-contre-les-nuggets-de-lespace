@@ -24,20 +24,15 @@ public:
 	USynchronizedTYPENAME(TYPENAME value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const TYPENAME GetValue() const
+    inline const TYPENAME& GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<TYPENAME>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
     inline void GetValue(TYPENAME& newValue)
     {
-        if (m_value != value)
-        {
-            m_value = value;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        GetValueGeneric<TYPENAME>(newValue, m_value);
     }
 
 	virtual void Init() override;
