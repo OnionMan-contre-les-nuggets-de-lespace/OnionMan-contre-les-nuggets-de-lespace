@@ -23,14 +23,12 @@ public:
 	USynchronizedFIntVector2();
 	USynchronizedFIntVector2(FIntVector2 value, uint16 propertyID);
 
-    UFUNCTION(BlueprintCallable)
-    inline const FIntVector2& GetValue() const
+    inline FIntVector2 GetValue() const
     {
         return GetValueGeneric<FIntVector2>(m_value);
     }
 
-    UFUNCTION(BlueprintCallable)
-    inline void GetValue(FIntVector2& newValue)
+    inline void SetValue(FIntVector2& newValue)
     {
         SetValueGeneric<FIntVector2>(newValue, m_value);
     }

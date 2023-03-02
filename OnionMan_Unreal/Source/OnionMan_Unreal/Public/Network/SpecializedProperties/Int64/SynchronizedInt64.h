@@ -6,32 +6,32 @@
 #include "../../SpecializedSynchronizedProperty.h"
 
 
-#include "Synchronizedshort.generated.h"
+#include "SynchronizedInt64.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedshort : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedInt64 : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
-	short m_value;
+	int64 m_value;
 
 public:
-	USynchronizedshort();
-	USynchronizedshort(short value, uint16 propertyID);
+	USynchronizedInt64();
+	USynchronizedInt64(int64 value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const short& GetValue() const
+    inline int64 GetValue() const
     {
-        return GetValueGeneric<short>(m_value);
+        return GetValueGeneric<int64>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(short& newValue)
+    inline void SetValue(int64& newValue)
     {
-        SetValueGeneric<short>(newValue, m_value);
+        SetValueGeneric<int64>(newValue, m_value);
     }
 
 	virtual void Init() override;

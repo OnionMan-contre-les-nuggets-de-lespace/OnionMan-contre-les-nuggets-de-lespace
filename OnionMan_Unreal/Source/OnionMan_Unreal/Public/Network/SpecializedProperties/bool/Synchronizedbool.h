@@ -6,30 +6,30 @@
 #include "../../SpecializedSynchronizedProperty.h"
 
 
-#include "Synchronizedbool.generated.h"
+#include "SynchronizedBool.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedbool : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedBool : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
 	bool m_value;
 
 public:
-	USynchronizedbool();
-	USynchronizedbool(bool value, uint16 propertyID);
+	USynchronizedBool();
+	USynchronizedBool(bool value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const bool& GetValue() const
+    inline bool GetValue() const
     {
         return GetValueGeneric<bool>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(bool& newValue)
+    inline void SetValue(bool& newValue)
     {
         SetValueGeneric<bool>(newValue, m_value);
     }

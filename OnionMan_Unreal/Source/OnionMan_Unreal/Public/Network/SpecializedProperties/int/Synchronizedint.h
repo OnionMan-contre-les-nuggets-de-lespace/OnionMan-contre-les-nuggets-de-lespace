@@ -6,30 +6,30 @@
 #include "../../SpecializedSynchronizedProperty.h"
 
 
-#include "Synchronizedint.generated.h"
+#include "SynchronizedInt.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedint : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedInt : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
 	int m_value;
 
 public:
-	USynchronizedint();
-	USynchronizedint(int value, uint16 propertyID);
+	USynchronizedInt();
+	USynchronizedInt(int value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const int& GetValue() const
+    inline int GetValue() const
     {
         return GetValueGeneric<int>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(int& newValue)
+    inline void SetValue(int& newValue)
     {
         SetValueGeneric<int>(newValue, m_value);
     }

@@ -6,30 +6,30 @@
 #include "../../SpecializedSynchronizedProperty.h"
 
 
-#include "Synchronizeddouble.generated.h"
+#include "SynchronizedDouble.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizeddouble : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedDouble : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
 	double m_value;
 
 public:
-	USynchronizeddouble();
-	USynchronizeddouble(double value, uint16 propertyID);
+	USynchronizedDouble();
+	USynchronizedDouble(double value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const double& GetValue() const
+    inline double GetValue() const
     {
         return GetValueGeneric<double>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(double& newValue)
+    inline void SetValue(double& newValue)
     {
         SetValueGeneric<double>(newValue, m_value);
     }

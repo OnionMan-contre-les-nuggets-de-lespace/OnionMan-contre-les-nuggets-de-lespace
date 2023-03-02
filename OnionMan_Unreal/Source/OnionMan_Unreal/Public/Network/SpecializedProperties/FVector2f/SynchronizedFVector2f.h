@@ -24,13 +24,13 @@ public:
 	USynchronizedFVector2f(FVector2f value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const FVector2f& GetValue() const
+    inline FVector2f GetValue() const
     {
         return GetValueGeneric<FVector2f>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(FVector2f& newValue)
+    inline void SetValue(FVector2f& newValue)
     {
         SetValueGeneric<FVector2f>(newValue, m_value);
     }

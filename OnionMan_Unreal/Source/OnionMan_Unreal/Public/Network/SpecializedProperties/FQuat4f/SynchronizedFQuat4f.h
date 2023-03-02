@@ -24,13 +24,13 @@ public:
 	USynchronizedFQuat4f(FQuat4f value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const FQuat4f& GetValue() const
+    inline FQuat4f GetValue() const
     {
         return GetValueGeneric<FQuat4f>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(FQuat4f& newValue)
+    inline void SetValue(FQuat4f& newValue)
     {
         SetValueGeneric<FQuat4f>(newValue, m_value);
     }

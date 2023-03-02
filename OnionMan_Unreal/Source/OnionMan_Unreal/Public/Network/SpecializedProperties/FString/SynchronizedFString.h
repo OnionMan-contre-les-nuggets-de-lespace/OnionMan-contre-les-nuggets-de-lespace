@@ -23,13 +23,13 @@ public:
 	USynchronizedFString(FString value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const FString& GetValue() const
+    inline FString GetValue() const
     {
         return GetValueGeneric<FString>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(FString& newValue)
+    inline void SetValue(FString& newValue)
     {
         SetValueGeneric<FString>(newValue, m_value);
     }

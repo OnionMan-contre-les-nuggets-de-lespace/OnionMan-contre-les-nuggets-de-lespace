@@ -6,30 +6,30 @@
 #include "../../SpecializedSynchronizedProperty.h"
 
 
-#include "Synchronizedfloat.generated.h"
+#include "SynchronizedFloat.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedfloat : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedFloat : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
 	float m_value;
 
 public:
-	USynchronizedfloat();
-	USynchronizedfloat(float value, uint16 propertyID);
+	USynchronizedFloat();
+	USynchronizedFloat(float value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const float& GetValue() const
+    inline float GetValue() const
     {
         return GetValueGeneric<float>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(float& newValue)
+    inline void SetValue(float& newValue)
     {
         SetValueGeneric<float>(newValue, m_value);
     }

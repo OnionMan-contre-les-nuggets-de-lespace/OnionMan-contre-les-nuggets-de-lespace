@@ -6,7 +6,7 @@ class Type:
         self.AdditionalIncludes = additionalIncludes
         self.IgnoreReflection = ignoreReflection
 
-reflectionMacroToIgnore = ["UFUNCTION(BlueprintCallable)"]
+reflectionMacroToIgnore = ["UFUNCTION(BlueprintCallable)\n    "]
 
 headerIncludes = """// Fill out your copyright notice in the Description page of Project Settings.
 
