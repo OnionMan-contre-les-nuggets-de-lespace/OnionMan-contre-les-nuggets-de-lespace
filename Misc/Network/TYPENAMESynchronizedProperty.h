@@ -5,37 +5,32 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
-#include "SynchronizedTYPENAME.generated.h"
+#include "SynchronizedCLASSNAME.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedTYPENAME : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedCLASSNAME : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
 	TYPENAME m_value;
 
 public:
-	USynchronizedTYPENAME();
-	USynchronizedTYPENAME(TYPENAME value, uint16 propertyID);
+	USynchronizedCLASSNAME();
+	USynchronizedCLASSNAME(TYPENAME value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const TYPENAME GetValue() const
+    inline TYPENAME GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<TYPENAME>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(TYPENAME& newValue)
+    inline void SetValue(TYPENAME& newValue)
     {
-        if (m_value != value)
-        {
-            m_value = value;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        SetValueGeneric<TYPENAME>(newValue, m_value);
     }
 
 	virtual void Init() override;
