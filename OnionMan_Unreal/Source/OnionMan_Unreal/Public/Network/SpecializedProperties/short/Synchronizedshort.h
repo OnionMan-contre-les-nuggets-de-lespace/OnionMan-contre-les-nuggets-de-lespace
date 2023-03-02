@@ -31,7 +31,7 @@ public:
     UFUNCTION(BlueprintCallable)
     inline void GetValue(short& newValue)
     {
-        GetValueGeneric<short>(newValue, m_value);
+        SetValueGeneric<short>(newValue, m_value);
     }
 
 	virtual void Init() override;

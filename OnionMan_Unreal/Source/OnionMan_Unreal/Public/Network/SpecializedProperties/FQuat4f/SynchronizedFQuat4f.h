@@ -32,7 +32,7 @@ public:
     UFUNCTION(BlueprintCallable)
     inline void GetValue(FQuat4f& newValue)
     {
-        GetValueGeneric<FQuat4f>(newValue, m_value);
+        SetValueGeneric<FQuat4f>(newValue, m_value);
     }
 
 	virtual void Init() override;

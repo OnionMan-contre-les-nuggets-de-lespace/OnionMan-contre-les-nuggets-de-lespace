@@ -31,7 +31,7 @@ public:
     UFUNCTION(BlueprintCallable)
     inline void GetValue(float& newValue)
     {
-        GetValueGeneric<float>(newValue, m_value);
+        SetValueGeneric<float>(newValue, m_value);
     }
 
 	virtual void Init() override;

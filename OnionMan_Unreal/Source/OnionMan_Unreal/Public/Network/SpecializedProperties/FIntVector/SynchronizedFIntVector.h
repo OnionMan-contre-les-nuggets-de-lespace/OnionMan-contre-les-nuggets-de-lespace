@@ -32,7 +32,7 @@ public:
     UFUNCTION(BlueprintCallable)
     inline void GetValue(FIntVector& newValue)
     {
-        GetValueGeneric<FIntVector>(newValue, m_value);
+        SetValueGeneric<FIntVector>(newValue, m_value);
     }
 
 	virtual void Init() override;
