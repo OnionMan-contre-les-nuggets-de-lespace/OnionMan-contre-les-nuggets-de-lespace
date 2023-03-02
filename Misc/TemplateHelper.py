@@ -44,7 +44,7 @@ public:
     UFUNCTION(BlueprintCallable)
     inline void GetValue(TYPENAME& newValue)
     {
-        GetValueGeneric<TYPENAME>(newValue, m_value);
+        SetValueGeneric<TYPENAME>(newValue, m_value);
     }
 
 	virtual void Init() override;
@@ -118,16 +118,19 @@ types = [
 
 
 for t in types:
-    realFileName = fileName.replace(typeName, t.Typename)
+    capitalizedType = t.Typename.capitalize()
+    realFileName = fileName.replace(typeName, capitalizedType)
+    print(realFileName)
 
-    if not os.path.exists(f"{headerPath}\{t.Typename}"):
-        os.makedirs(f"{headerPath}\{t.Typename}")
+
+    if not os.path.exists(f"{headerPath}\{capitalizedType}"):
+        os.makedirs(f"{headerPath}\{capitalizedType}")
 
     includes = headerIncludes
     for include in t.AdditionalIncludes:
         includes += f"{include}\n" 
-    print(includes + header.replace(typeName, t.Typename), file = open(f"{headerPath}\{t.Typename}\{realFileName}.h",'w',encoding='utf-8'))
+    print(includes + header.replace(typeName, t.Typename), file = open(f"{headerPath}\{capitalizedType}\{realFileName}.h",'w',encoding='utf-8'))
 
-    if not os.path.exists(f"{sourcePath}\{t.Typename}"):
-        os.makedirs(f"{sourcePath}\{t.Typename}")
-    print(source.replace(typeName, t.Typename), file = open(f"{sourcePath}\{t.Typename}\{realFileName}.cpp",'w',encoding='utf-8'))
+    if not os.path.exists(f"{sourcePath}\{capitalizedType}"):
+        os.makedirs(f"{sourcePath}\{capitalizedType}")
+    print(source.replace(typeName, t.Typename), file = open(f"{sourcePath}\{capitalizedType}\{realFileName}.cpp",'w',encoding='utf-8'))
