@@ -5,33 +5,34 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+#include "Runtime/Core/Public/Math/IntVector.h" 
 
-#include "Synchronizedint.generated.h"
+#include "SynchronizedFIntVector2.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedint : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedFIntVector2 : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
-	int m_value;
+	FIntVector2 m_value;
 
 public:
-	USynchronizedint();
-	USynchronizedint(int value, uint16 propertyID);
+	USynchronizedFIntVector2();
+	USynchronizedFIntVector2(FIntVector2 value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const int& GetValue() const
+    inline const FIntVector2& GetValue() const
     {
-        return GetValueGeneric<int>(m_value);
+        return GetValueGeneric<FIntVector2>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(int& newValue)
+    inline void GetValue(FIntVector2& newValue)
     {
-        GetValueGeneric<int>(newValue, m_value);
+        GetValueGeneric<FIntVector2>(newValue, m_value);
     }
 
 	virtual void Init() override;

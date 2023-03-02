@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+
 #include "Synchronizeduint32.generated.h"
 
 /**
@@ -22,20 +23,15 @@ public:
 	USynchronizeduint32(uint32 value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const uint32 GetValue() const
+    inline const uint32& GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<uint32>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
     inline void GetValue(uint32& newValue)
     {
-        if (m_value != value)
-        {
-            m_value = value;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        GetValueGeneric<uint32>(newValue, m_value);
     }
 
 	virtual void Init() override;

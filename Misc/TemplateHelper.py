@@ -1,12 +1,24 @@
 import os
 
-header = """// Fill out your copyright notice in the Description page of Project Settings.
+class Type:
+    def __init__(self, typeName : str, additionalIncludes : list[str]) -> None:
+        self.Typename = typeName
+        self.AdditionalIncludes = additionalIncludes
+
+
+
+headerIncludes = """// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+"""
+
+
+
+header = """
 #include "SynchronizedTYPENAME.generated.h"
 
 /**
@@ -86,32 +98,36 @@ fileName = "SynchronizedTYPENAME"
 typeName = "TYPENAME"
 
 types = [
-    "FString", 
-    "bool", 
-    "TCHAR", 
-    "double",
-    "float", 
-    "int", 
-    "long", 
-    "short", 
-    "uint32", 
-    "uint64",
-    "uint16",
-    # "FVector3f",
-    # "FIntVector", 
-    # "FVector2f", 
-    # "FIntVector2", 
-    # "FQuat4f"
+    Type("FString"    ,[]),
+    Type("bool"       ,[]),
+    Type("TCHAR"      ,[]),
+    Type("double"     ,[]),
+    Type("float"      ,[]),
+    Type("int"        ,[]),
+    Type("long"       ,[]),
+    Type("short"      ,[]),
+    Type("uint32"     ,[]),
+    Type("uint64"     ,[]),
+    Type("uint16"     ,[]),
+    Type("FVector3f"  ,["""#include "Runtime/Core/Public/Math/Vector.h" """]),
+    Type("FIntVector" ,["""#include "Runtime/Core/Public/Math/IntVector.h" """]),
+    Type("FVector2f"  ,["""#include "Runtime/Core/Public/Math/Vector.h" """]),
+    Type("FIntVector2",["""#include "Runtime/Core/Public/Math/IntVector.h" """]),
+    Type("FQuat4f"    ,["""#include "Runtime/Core/Public/Math/Quat.h" """])
     ]
 
 
 for t in types:
-    realFileName = fileName.replace(typeName, t)
+    realFileName = fileName.replace(typeName, t.Typename)
 
-    if not os.path.exists(f"{headerPath}\{t}"):
-        os.makedirs(f"{headerPath}\{t}")
-    print(header.replace(typeName, t), file = open(f"{headerPath}\{t}\{realFileName}.h",'w',encoding='utf-8'))
+    if not os.path.exists(f"{headerPath}\{t.Typename}"):
+        os.makedirs(f"{headerPath}\{t.Typename}")
 
-    if not os.path.exists(f"{sourcePath}\{t}"):
-        os.makedirs(f"{sourcePath}\{t}")
-    print(source.replace(typeName, t), file = open(f"{sourcePath}\{t}\{realFileName}.cpp",'w',encoding='utf-8'))
+    includes = headerIncludes
+    for include in t.AdditionalIncludes:
+        includes += f"{include}\n" 
+    print(includes + header.replace(typeName, t.Typename), file = open(f"{headerPath}\{t.Typename}\{realFileName}.h",'w',encoding='utf-8'))
+
+    if not os.path.exists(f"{sourcePath}\{t.Typename}"):
+        os.makedirs(f"{sourcePath}\{t.Typename}")
+    print(source.replace(typeName, t.Typename), file = open(f"{sourcePath}\{t.Typename}\{realFileName}.cpp",'w',encoding='utf-8'))

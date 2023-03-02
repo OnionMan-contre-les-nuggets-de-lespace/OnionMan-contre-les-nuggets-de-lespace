@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+
 #include "Synchronizedfloat.generated.h"
 
 /**
@@ -22,20 +23,15 @@ public:
 	USynchronizedfloat(float value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const float GetValue() const
+    inline const float& GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<float>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
     inline void GetValue(float& newValue)
     {
-        if (m_value != newValue)
-        {
-            m_value = newValue;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        GetValueGeneric<float>(newValue, m_value);
     }
 
 	virtual void Init() override;

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+
 #include "Synchronizedshort.generated.h"
 
 /**
@@ -22,20 +23,15 @@ public:
 	USynchronizedshort(short value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const short GetValue() const
+    inline const short& GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<short>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
     inline void GetValue(short& newValue)
     {
-        if (m_value != value)
-        {
-            m_value = value;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        GetValueGeneric<short>(newValue, m_value);
     }
 
 	virtual void Init() override;

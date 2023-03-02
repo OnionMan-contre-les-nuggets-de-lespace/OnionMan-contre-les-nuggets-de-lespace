@@ -5,33 +5,34 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+#include "Runtime/Core/Public/Math/Quat.h" 
 
-#include "Synchronizedint.generated.h"
+#include "SynchronizedFQuat4f.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedint : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedFQuat4f : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
-	int m_value;
+	FQuat4f m_value;
 
 public:
-	USynchronizedint();
-	USynchronizedint(int value, uint16 propertyID);
+	USynchronizedFQuat4f();
+	USynchronizedFQuat4f(FQuat4f value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const int& GetValue() const
+    inline const FQuat4f& GetValue() const
     {
-        return GetValueGeneric<int>(m_value);
+        return GetValueGeneric<FQuat4f>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(int& newValue)
+    inline void GetValue(FQuat4f& newValue)
     {
-        GetValueGeneric<int>(newValue, m_value);
+        GetValueGeneric<FQuat4f>(newValue, m_value);
     }
 
 	virtual void Init() override;

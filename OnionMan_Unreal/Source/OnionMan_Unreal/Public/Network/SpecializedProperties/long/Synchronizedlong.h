@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+
 #include "Synchronizedlong.generated.h"
 
 /**
@@ -22,20 +23,15 @@ public:
 	USynchronizedlong(long value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const long GetValue() const
+    inline const long& GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<long>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
     inline void GetValue(long& newValue)
     {
-        if (m_value != value)
-        {
-            m_value = value;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        GetValueGeneric<long>(newValue, m_value);
     }
 
 	virtual void Init() override;

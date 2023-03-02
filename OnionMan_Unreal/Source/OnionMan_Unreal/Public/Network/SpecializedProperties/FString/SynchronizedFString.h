@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+
 #include "SynchronizedFString.generated.h"
 
 /**
@@ -22,20 +23,15 @@ public:
 	USynchronizedFString(FString value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const FString GetValue() const
+    inline const FString& GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<FString>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
     inline void GetValue(FString& newValue)
     {
-        if (m_value != value)
-        {
-            m_value = value;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        GetValueGeneric<FString>(newValue, m_value);
     }
 
 	virtual void Init() override;

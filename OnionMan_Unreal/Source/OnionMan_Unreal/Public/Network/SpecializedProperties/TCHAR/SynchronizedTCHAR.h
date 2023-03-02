@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedProperty.h"
 
+
 #include "SynchronizedTCHAR.generated.h"
 
 /**
@@ -22,20 +23,15 @@ public:
 	USynchronizedTCHAR(TCHAR value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const TCHAR GetValue() const
+    inline const TCHAR& GetValue() const
     {
-        return m_value;
+        return GetValueGeneric<TCHAR>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
     inline void GetValue(TCHAR& newValue)
     {
-        if (m_value != value)
-        {
-            m_value = value;
-            m_sizeMayHaveChanged = true;
-            m_needSync = true;
-        }
+        GetValueGeneric<TCHAR>(newValue, m_value);
     }
 
 	virtual void Init() override;
