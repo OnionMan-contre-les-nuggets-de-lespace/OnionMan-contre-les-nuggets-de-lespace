@@ -1,11 +1,12 @@
 import os
 
 class Type:
-    def __init__(self, typeName : str, additionalIncludes : list[str]) -> None:
+    def __init__(self, typeName : str, additionalIncludes : list[str], ignoreReflection : bool) -> None:
         self.Typename = typeName
         self.AdditionalIncludes = additionalIncludes
+        self.IgnoreReflection = ignoreReflection
 
-
+reflectionMacroToIgnore = ["UFUNCTION(BlueprintCallable)"]
 
 headerIncludes = """// Fill out your copyright notice in the Description page of Project Settings.
 
@@ -18,31 +19,31 @@ headerIncludes = """// Fill out your copyright notice in the Description page of
 
 
 
-header = """
-#include "SynchronizedTYPENAME.generated.h"
+headerTemplate = """
+#include "SynchronizedCLASSNAME.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedTYPENAME : public USpecializedSynchronizedProperty
+class ONIONMAN_UNREAL_API USynchronizedCLASSNAME : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
 private:
 	TYPENAME m_value;
 
 public:
-	USynchronizedTYPENAME();
-	USynchronizedTYPENAME(TYPENAME value, uint16 propertyID);
+	USynchronizedCLASSNAME();
+	USynchronizedCLASSNAME(TYPENAME value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline const TYPENAME& GetValue() const
+    inline TYPENAME GetValue() const
     {
         return GetValueGeneric<TYPENAME>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(TYPENAME& newValue)
+    inline void SetValue(TYPENAME& newValue)
     {
         SetValueGeneric<TYPENAME>(newValue, m_value);
     }
@@ -53,37 +54,37 @@ public:
 	virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
 };
 """
-source = """#include "Network/SpecializedProperties/TYPENAME/SynchronizedTYPENAME.h"
+sourceTemplate = """#include "Network/SpecializedProperties/TYPENAME/SynchronizedCLASSNAME.h"
 
-USynchronizedTYPENAME::USynchronizedTYPENAME()
+USynchronizedCLASSNAME::USynchronizedCLASSNAME()
 {
 }
 
-USynchronizedTYPENAME::USynchronizedTYPENAME(TYPENAME value, uint16 propertyID) : 
+USynchronizedCLASSNAME::USynchronizedCLASSNAME(TYPENAME value, uint16 propertyID) : 
     USpecializedSynchronizedProperty::USpecializedSynchronizedProperty(propertyID)
 {
     m_value = value;
 }
 
-void USynchronizedTYPENAME::Init()
+void USynchronizedCLASSNAME::Init()
 {
     USpecializedSynchronizedProperty::Init();
     InitGeneric<TYPENAME>();
 }
 
-int USynchronizedTYPENAME::GetEncodedPropertySize()
+int USynchronizedCLASSNAME::GetEncodedPropertySize()
 {
     USpecializedSynchronizedProperty::GetEncodedPropertySize();
     return GetEncodedPropertySizeGeneric<TYPENAME>(m_value);
 }
 
-void USynchronizedTYPENAME::PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync)
+void USynchronizedCLASSNAME::PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync)
 {
     USpecializedSynchronizedProperty::PutEncodedPropertyToBuffer(buffer, offset, forSync);
     PutEncodedPropertyToBufferGeneric<TYPENAME>(m_value, buffer, offset, forSync);
 }
 
-void USynchronizedTYPENAME::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize)
+void USynchronizedCLASSNAME::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize)
 {
     USpecializedSynchronizedProperty::DecodeProperty(encodedProperty, offset, propertySize);
     DecodePropertyGeneric<TYPENAME>(m_value, encodedProperty, offset, propertySize);
@@ -96,29 +97,93 @@ sourcePath = r"OnionMan_Unreal\Source\OnionMan_Unreal\Private\Network\Specialize
 fileName = "SynchronizedTYPENAME"
 
 typeName = "TYPENAME"
+className = "CLASSNAME"
 
 types = [
-    Type("FString"    ,[]),
-    Type("bool"       ,[]),
-    Type("TCHAR"      ,[]),
-    Type("double"     ,[]),
-    Type("float"      ,[]),
-    Type("int"        ,[]),
-    Type("long"       ,[]),
-    Type("short"      ,[]),
-    Type("uint32"     ,[]),
-    Type("uint64"     ,[]),
-    Type("uint16"     ,[]),
-    Type("FVector3f"  ,["""#include "Runtime/Core/Public/Math/Vector.h" """]),
-    Type("FIntVector" ,["""#include "Runtime/Core/Public/Math/IntVector.h" """]),
-    Type("FVector2f"  ,["""#include "Runtime/Core/Public/Math/Vector.h" """]),
-    Type("FIntVector2",["""#include "Runtime/Core/Public/Math/IntVector.h" """]),
-    Type("FQuat4f"    ,["""#include "Runtime/Core/Public/Math/Quat.h" """])
+    Type(
+        "FString",
+        [],
+        False),
+
+    Type(
+        "bool",
+        [],
+        False),
+
+    # Type(
+    #     "TCHAR",
+    #     ["""#include "HAL/Platform.h" """],
+    #     False),
+
+    Type(
+        "double",
+        [],
+        False),
+
+    Type(
+        "float",
+        [],
+        False),
+
+    Type(
+        "int",
+        [],
+        False),
+
+    Type(
+        "int64",
+        [],
+        False),
+
+    Type(
+        "int16",
+        [],
+        True),
+
+    Type(
+        "uint32",
+        [],
+        True),
+
+    Type(
+        "uint64",
+        [],
+        True),
+
+    Type(
+        "uint16",
+        [],
+        True),
+
+    Type(
+        "FVector3f",
+        ["""#include "Runtime/Core/Public/Math/Vector.h" """],
+        False),
+
+    Type(
+        "FIntVector",
+        ["""#include "Runtime/Core/Public/Math/IntVector.h" """],
+        False),
+
+    Type(
+        "FVector2f",
+        ["""#include "Runtime/Core/Public/Math/Vector.h" """],
+        False),
+
+    Type(
+        "FIntVector2",
+        ["""#include "Runtime/Core/Public/Math/IntVector.h" """],
+        True),
+
+    Type(
+        "FQuat4f",
+        ["""#include "Runtime/Core/Public/Math/Quat.h" """],
+        False)
     ]
 
 
 for t in types:
-    capitalizedType = t.Typename.capitalize()
+    capitalizedType = t.Typename[0].upper() + t.Typename[1:]
     realFileName = fileName.replace(typeName, capitalizedType)
     print(realFileName)
 
@@ -129,8 +194,16 @@ for t in types:
     includes = headerIncludes
     for include in t.AdditionalIncludes:
         includes += f"{include}\n" 
-    print(includes + header.replace(typeName, t.Typename), file = open(f"{headerPath}\{capitalizedType}\{realFileName}.h",'w',encoding='utf-8'))
+    
+
+    header = includes + headerTemplate.replace(typeName, t.Typename).replace(className, capitalizedType)
+
+    if (t.IgnoreReflection):
+        for macro in reflectionMacroToIgnore:
+            header = header.replace(macro, '')
+
+    print(header, file = open(f"{headerPath}\{capitalizedType}\{realFileName}.h",'w',encoding='utf-8'))
 
     if not os.path.exists(f"{sourcePath}\{capitalizedType}"):
         os.makedirs(f"{sourcePath}\{capitalizedType}")
-    print(source.replace(typeName, t.Typename), file = open(f"{sourcePath}\{capitalizedType}\{realFileName}.cpp",'w',encoding='utf-8'))
+    print(sourceTemplate.replace(typeName, t.Typename).replace(className, capitalizedType), file = open(f"{sourcePath}\{capitalizedType}\{realFileName}.cpp",'w',encoding='utf-8'))
