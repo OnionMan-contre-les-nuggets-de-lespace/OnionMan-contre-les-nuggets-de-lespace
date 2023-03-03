@@ -31,6 +31,8 @@ private:
 
 
 public:
+	USpecializedSynchronizedList();
+	USpecializedSynchronizedList(uint16 propertyID);
 
 	// Inherited from ISynchronizedPropertyBase
 	UFUNCTION(BlueprintCallable)
@@ -101,8 +103,21 @@ protected:
 			toList.Add(item);
 		}
 	}
-#pragma endregion	// Generic functions that will be called from the specialized classes 
+#pragma endregion	
+// Generic functions that will be called from the specialized classes 
 #pragma region Generic
+	template<typename T>
+	const TArray<T>& GetValueGeneric(const TArray<T>& value) const
+	{
+		return value;
+	}
+
+	template<typename T>
+	void SetValueGeneric(TArray<T> value, TArray<T>& outValue)
+	{
+		outValue = value;
+	}
+	
 	template<typename T>
 	void InitGeneric()
 	{
@@ -139,19 +154,19 @@ protected:
 	}
 
 	template<typename T>
-	void PutEncodedPropertyToBufferGeneric(T& propertyValue, TArray<uint8>& buffer, int& offset, bool forSync)
+	void PutEncodedPropertyToBufferGeneric(TArray<T>& propertyValue, TArray<uint8>& buffer, int& offset, bool forSync)
 	{
 		if (forSync)
 		{
 			m_needSync = false;
 		}
 
-		EncodingUtility::PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), buffer, offset);   // Put Size
-		EncodingUtility::PutEncodedValueInBuffer(m_propertyID, buffer, offset);                             // Put ID
-		for (T item : m_value)                                                                              // For each element in list :
+		EncodingUtility::PutEncodedValueInBuffer<int>(GetEncodedPropertySize() - sizeof(int), buffer, offset); // Put Size
+		EncodingUtility::PutEncodedValueInBuffer<uint16>(m_propertyID, buffer, offset);                        // Put ID
+		for (T item : propertyValue)                                                                           // For each element in list :
 		{
-			EncodingUtility::PutEncodedValueInBuffer(GetTSize(item), buffer, offset);                       // Put Size
-			EncodingUtility::PutEncodedValueInBuffer(item, buffer, offset);                                 // Put Data
+			EncodingUtility::PutEncodedValueInBuffer<int>(GetTSize(item), buffer, offset);                     // Put Size
+			EncodingUtility::PutEncodedValueInBuffer<T>(item, buffer, offset);                                 // Put Data
 		}
 	}
 

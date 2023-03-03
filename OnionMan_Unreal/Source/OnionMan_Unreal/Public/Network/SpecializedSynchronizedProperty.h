@@ -33,8 +33,6 @@ public:
 	USpecializedSynchronizedProperty();
 	USpecializedSynchronizedProperty(uint16 propertyID);
 
-
-
 	// Inherited from ISynchronizedPropertyBase
 	UFUNCTION(BlueprintCallable)
 	virtual bool NeedSync() override;
