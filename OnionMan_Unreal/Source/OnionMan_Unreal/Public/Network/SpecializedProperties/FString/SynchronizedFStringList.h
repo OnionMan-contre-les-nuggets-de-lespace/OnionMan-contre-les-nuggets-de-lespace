@@ -3,33 +3,34 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "../../SpecializedSynchronizedProperty.h"
+#include "../../SpecializedSynchronizedList.h"
 
 
-#include "SynchronizedFString.generated.h"
+#include "SynchronizedFStringList.generated.h"
 
 /**
  * 
  */
-UCLASS(BlueprintType, EditInlineNew, DefaultToInstanced)
-class ONIONMAN_UNREAL_API USynchronizedFString : public USpecializedSynchronizedProperty
+UCLASS(BlueprintType)
+class ONIONMAN_UNREAL_API USynchronizedFStringList : public USpecializedSynchronizedList
 {
 	GENERATED_BODY()
 private:
-	FString m_value;
+	TArray<FString> m_value{};
+	TArray<FString> m_previousValue{};
 
 public:
-	USynchronizedFString();
-	USynchronizedFString(FString value, uint16 propertyID);
+	USynchronizedFStringList();
+	USynchronizedFStringList(TArray<FString>& initialValue, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline FString GetValue() const
+    inline void GetValue(TArray<FString>& outValue) const
     {
-        return GetValueGeneric<FString>(m_value);
+		outValue = m_value;
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(FString& newValue)
+    inline void SetValue(TArray<FString>& newValue)
     {
         SetValueGeneric<FString>(newValue, m_value);
     }
@@ -38,5 +39,8 @@ public:
 	virtual int GetEncodedPropertySize() override;
 	virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;
 	virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
+
+protected:
+	virtual void CheckNeedSync() override;
 };
 

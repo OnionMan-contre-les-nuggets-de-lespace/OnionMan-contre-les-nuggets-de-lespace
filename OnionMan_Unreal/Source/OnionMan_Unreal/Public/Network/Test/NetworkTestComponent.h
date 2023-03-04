@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Network/SynchronizedActorComponent.h"
 #include "Network/SynchronizedProperty.h"
+#include "../SpecializedSynchronizedProperty.h"
+#include "../SpecializedProperties/FString/SynchronizedFStringList.h"
 #include "../SpecializedProperties/FString/SynchronizedFString.h"
 #include "NetworkTestComponent.generated.h"
 
@@ -21,8 +23,12 @@ private:
 	
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Network")
-	USynchronizedFString* SP0{/* TEXT("WAAAAAAAW"), 25*/ };
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
+		USynchronizedFStringList* SP0 {/* TEXT("WAAAAAAAW"), 25*/
+	};
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
+		USynchronizedFString* SP1 {/* TEXT("WAAAAAAAW"), 25*/
+	};
 	//USynchronizedProperty<int> SP0{9, 12};
 	//USynchronizedProperty<FString> SP1{ "Waw", 32 };
 	//USynchronizedFStringProperty SP2{ "Waw", 2 };
