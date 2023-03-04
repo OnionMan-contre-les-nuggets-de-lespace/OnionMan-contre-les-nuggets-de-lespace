@@ -5,27 +5,35 @@
 #include "CoreMinimal.h"
 #include "../../SpecializedSynchronizedList.h"
 
-#include "TYPENAMESynchronizedList.generated.h"
 
+#include "SynchronizedCLASSNAMEList.generated.h"
 
-class UTYPENAMESynchronizedList : public USpecializedSynchronizedProperty
+/**
+ * 
+ */
+UCLASS(BlueprintType, EditInlineNew)
+class ONIONMAN_UNREAL_API USynchronizedCLASSNAMEList : public USpecializedSynchronizedList
 {
+	GENERATED_BODY()
 private:
-	TYPENAME m_value;
+	TArray<TYPENAME> m_value{};
+	TArray<TYPENAME> m_previousValue{};
 
 public:
-	UTYPENAMESynchronizedList(TArray<TYPENAME>& initialValue, uint16 propertyID);
+	USynchronizedCLASSNAMEList();
+	USynchronizedCLASSNAMEList(TArray<TYPENAME>& initialValue, uint16 propertyID);
 
-	const TArray<TYPENAME>& GetValue() const
-	{
-		return m_value;
-	}
+    UFUNCTION(BlueprintCallable)
+    inline void GetValue(TArray<TYPENAME>& outValue) const
+    {
+		outValue = m_value;
+    }
 
-	void SetValue(TArray<TYPENAME>& value)
-	{
-		if (!ListEquals<TYPENAME>)
-		m_value = value;
-	}
+    UFUNCTION(BlueprintCallable)
+    inline void SetValue(TArray<TYPENAME>& newValue)
+    {
+        SetValueGeneric<TYPENAME>(newValue, m_value);
+    }
 
 	virtual void Init() override;
 	virtual int GetEncodedPropertySize() override;
@@ -35,9 +43,3 @@ public:
 protected:
 	virtual void CheckNeedSync() override;
 };
-
-UTYPENAMESynchronizedList::UTYPENAMESynchronizedList(TArray<TYPENAME>& initialValue, uint16 propertyID)
-{
-	m_value = Copy(initialValue);
-	m_propertyID = propertyID;
-}

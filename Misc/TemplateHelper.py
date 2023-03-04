@@ -13,37 +13,38 @@ headerIncludes = """// Fill out your copyright notice in the Description page of
 #pragma once
 
 #include "CoreMinimal.h"
-#include "../../SpecializedSynchronizedProperty.h"
+#include "../../SpecializedSynchronizedList.h"
 
 """
 
 
 
 headerTemplate = """
-#include "SynchronizedCLASSNAME.generated.h"
+#include "SynchronizedCLASSNAMEList.generated.h"
 
 /**
  * 
  */
-UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API USynchronizedCLASSNAME : public USpecializedSynchronizedProperty
+UCLASS(BlueprintType, EditInlineNew)
+class ONIONMAN_UNREAL_API USynchronizedCLASSNAMEList : public USpecializedSynchronizedList
 {
 	GENERATED_BODY()
 private:
-	TYPENAME m_value;
+	TArray<TYPENAME> m_value{};
+	TArray<TYPENAME> m_previousValue{};
 
 public:
-	USynchronizedCLASSNAME();
-	USynchronizedCLASSNAME(TYPENAME value, uint16 propertyID);
+	USynchronizedCLASSNAMEList();
+	USynchronizedCLASSNAMEList(TArray<TYPENAME>& initialValue, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline TYPENAME GetValue() const
+    inline void GetValue(TArray<TYPENAME>& outValue) const
     {
-        return GetValueGeneric<TYPENAME>(m_value);
+		outValue = m_value;
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(TYPENAME& newValue)
+    inline void SetValue(TArray<TYPENAME>& newValue)
     {
         SetValueGeneric<TYPENAME>(newValue, m_value);
     }
@@ -52,49 +53,58 @@ public:
 	virtual int GetEncodedPropertySize() override;
 	virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;
 	virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
+
+protected:
+	virtual void CheckNeedSync() override;
 };
 """
-sourceTemplate = """#include "Network/SpecializedProperties/TYPENAME/SynchronizedCLASSNAME.h"
+sourceTemplate = """#include "Network/SpecializedProperties/TYPENAME/SynchronizedCLASSNAMEList.h"
 
-USynchronizedCLASSNAME::USynchronizedCLASSNAME()
+USynchronizedCLASSNAMEList::USynchronizedCLASSNAMEList()
 {
 }
 
-USynchronizedCLASSNAME::USynchronizedCLASSNAME(TYPENAME value, uint16 propertyID) : 
-    USpecializedSynchronizedProperty::USpecializedSynchronizedProperty(propertyID)
+USynchronizedCLASSNAMEList::USynchronizedCLASSNAMEList(TArray<TYPENAME> &initialValue, uint16 propertyID) : 
+    USpecializedSynchronizedList::USpecializedSynchronizedList(propertyID)
 {
-    m_value = value;
+    CopyTo<TYPENAME>(initialValue, m_value);
 }
 
-void USynchronizedCLASSNAME::Init()
+void USynchronizedCLASSNAMEList::Init()
 {
-    USpecializedSynchronizedProperty::Init();
+    USpecializedSynchronizedList::Init();
     InitGeneric<TYPENAME>();
 }
 
-int USynchronizedCLASSNAME::GetEncodedPropertySize()
+int USynchronizedCLASSNAMEList::GetEncodedPropertySize()
 {
-    USpecializedSynchronizedProperty::GetEncodedPropertySize();
+    USpecializedSynchronizedList::GetEncodedPropertySize();
     return GetEncodedPropertySizeGeneric<TYPENAME>(m_value);
 }
 
-void USynchronizedCLASSNAME::PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync)
+void USynchronizedCLASSNAMEList::PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync)
 {
-    USpecializedSynchronizedProperty::PutEncodedPropertyToBuffer(buffer, offset, forSync);
+    USpecializedSynchronizedList::PutEncodedPropertyToBuffer(buffer, offset, forSync);
     PutEncodedPropertyToBufferGeneric<TYPENAME>(m_value, buffer, offset, forSync);
 }
 
-void USynchronizedCLASSNAME::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize)
+void USynchronizedCLASSNAMEList::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize)
 {
-    USpecializedSynchronizedProperty::DecodeProperty(encodedProperty, offset, propertySize);
-    DecodePropertyGeneric<TYPENAME>(m_value, encodedProperty, offset, propertySize);
+    USpecializedSynchronizedList::DecodeProperty(encodedProperty, offset, propertySize);
+    DecodePropertyGeneric<TYPENAME>(m_value, m_previousValue, encodedProperty, offset, propertySize);
+}
+
+void USynchronizedCLASSNAMEList::CheckNeedSync()
+{
+    USpecializedSynchronizedList::CheckNeedSync();
+    CheckNeedSyncGeneric<TYPENAME>(m_value, m_previousValue);
 }
 """
 
 
 headerPath = r"OnionMan_Unreal\Source\OnionMan_Unreal\Public\Network\SpecializedProperties"
 sourcePath = r"OnionMan_Unreal\Source\OnionMan_Unreal\Private\Network\SpecializedProperties"
-fileName = "SynchronizedTYPENAME"
+fileName = "SynchronizedTYPENAMEList"
 
 typeName = "TYPENAME"
 className = "CLASSNAME"
