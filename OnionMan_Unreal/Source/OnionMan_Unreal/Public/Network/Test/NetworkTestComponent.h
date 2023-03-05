@@ -8,6 +8,7 @@
 #include "../SpecializedSynchronizedProperty.h"
 #include "../SpecializedProperties/FString/SynchronizedFStringList.h"
 #include "../SpecializedProperties/FString/SynchronizedFString.h"
+#include "../SpecializedProperties/Bool/SynchronizedBool.h"
 #include "NetworkTestComponent.generated.h"
 
 /**
@@ -28,6 +29,12 @@ public:
 	};
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
 		USynchronizedFString* SP1 {/* TEXT("WAAAAAAAW"), 25*/
+	};
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
+		USynchronizedBool* SP3 {/* TEXT("WAAAAAAAW"), 25*/
+	};
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
+		USpecializedSynchronizedProperty* SP2 {/* TEXT("WAAAAAAAW"), 25*/
 	};
 	//USynchronizedProperty<int> SP0{9, 12};
 	//USynchronizedProperty<FString> SP1{ "Waw", 32 };
