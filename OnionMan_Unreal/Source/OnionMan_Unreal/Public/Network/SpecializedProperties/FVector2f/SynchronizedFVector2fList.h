@@ -12,12 +12,15 @@
 /**
  * 
  */
-UCLASS(BlueprintType)
+UCLASS(BlueprintType, EditInlineNew)
 class ONIONMAN_UNREAL_API USynchronizedFVector2fList : public USpecializedSynchronizedList
 {
 	GENERATED_BODY()
-private:
+protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Value")
 	TArray<FVector2f> m_value{};
+
+private:
 	TArray<FVector2f> m_previousValue{};
 
 public:

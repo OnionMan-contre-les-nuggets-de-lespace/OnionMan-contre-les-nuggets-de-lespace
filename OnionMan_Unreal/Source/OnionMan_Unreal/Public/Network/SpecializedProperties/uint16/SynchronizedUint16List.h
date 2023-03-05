@@ -11,12 +11,15 @@
 /**
  * 
  */
-UCLASS(BlueprintType)
+UCLASS(BlueprintType, EditInlineNew)
 class ONIONMAN_UNREAL_API USynchronizedUint16List : public USpecializedSynchronizedList
 {
 	GENERATED_BODY()
-private:
+protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Value")
 	TArray<uint16> m_value{};
+
+private:
 	TArray<uint16> m_previousValue{};
 
 public:

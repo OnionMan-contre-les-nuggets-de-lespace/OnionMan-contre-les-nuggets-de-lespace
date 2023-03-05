@@ -11,11 +11,12 @@
 /**
  * 
  */
-UCLASS(BlueprintType, EditInlineNew, DefaultToInstanced)
+UCLASS(BlueprintType, EditInlineNew)
 class ONIONMAN_UNREAL_API USynchronizedFString : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
-private:
+protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Value")
 	FString m_value;
 
 public:

@@ -17,9 +17,12 @@ UCLASS()
 class ONIONMAN_UNREAL_API USpecializedSynchronizedList : public UObject, public ISynchronizedPropertyBase
 {
 	GENERATED_BODY()
-private:
+
+protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Property ID")
 	uint16 m_propertyID;
 
+private:
 	bool m_needSync = false;
 
 	bool m_hasFixedSize = false;
