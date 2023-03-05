@@ -15,8 +15,11 @@ UCLASS(BlueprintType, EditInlineNew)
 class ONIONMAN_UNREAL_API USynchronizedCLASSNAMEList : public USpecializedSynchronizedList
 {
 	GENERATED_BODY()
-private:
+protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Value")
 	TArray<TYPENAME> m_value{};
+
+private:
 	TArray<TYPENAME> m_previousValue{};
 
 public:

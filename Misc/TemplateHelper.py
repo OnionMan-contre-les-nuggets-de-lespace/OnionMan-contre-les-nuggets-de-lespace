@@ -13,38 +13,38 @@ headerIncludes = """// Fill out your copyright notice in the Description page of
 #pragma once
 
 #include "CoreMinimal.h"
-#include "../../SpecializedSynchronizedList.h"
+#include "../../SpecializedSynchronizedProperty.h"
 
 """
 
 
 
 headerTemplate = """
-#include "SynchronizedCLASSNAMEList.generated.h"
+#include "SynchronizedCLASSNAME.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType, EditInlineNew)
-class ONIONMAN_UNREAL_API USynchronizedCLASSNAMEList : public USpecializedSynchronizedList
+class ONIONMAN_UNREAL_API USynchronizedCLASSNAME : public USpecializedSynchronizedProperty
 {
 	GENERATED_BODY()
-private:
-	TArray<TYPENAME> m_value{};
-	TArray<TYPENAME> m_previousValue{};
+protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Value")
+	TYPENAME m_value;
 
 public:
-	USynchronizedCLASSNAMEList();
-	USynchronizedCLASSNAMEList(TArray<TYPENAME>& initialValue, uint16 propertyID);
+	USynchronizedCLASSNAME();
+	USynchronizedCLASSNAME(TYPENAME value, uint16 propertyID);
 
     UFUNCTION(BlueprintCallable)
-    inline void GetValue(TArray<TYPENAME>& outValue) const
+    inline TYPENAME GetValue() const
     {
-		outValue = m_value;
+        return GetValueGeneric<TYPENAME>(m_value);
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(TArray<TYPENAME>& newValue)
+    inline void SetValue(TYPENAME& newValue)
     {
         SetValueGeneric<TYPENAME>(newValue, m_value);
     }
@@ -53,9 +53,6 @@ public:
 	virtual int GetEncodedPropertySize() override;
 	virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;
 	virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
-
-protected:
-	virtual void CheckNeedSync() override;
 };
 """
 sourceTemplate = """#include "Network/SpecializedProperties/TYPENAME/SynchronizedCLASSNAMEList.h"
@@ -104,7 +101,7 @@ void USynchronizedCLASSNAMEList::CheckNeedSync()
 
 headerPath = r"OnionMan_Unreal\Source\OnionMan_Unreal\Public\Network\SpecializedProperties"
 sourcePath = r"OnionMan_Unreal\Source\OnionMan_Unreal\Private\Network\SpecializedProperties"
-fileName = "SynchronizedTYPENAMEList"
+fileName = "SynchronizedTYPENAME"
 
 typeName = "TYPENAME"
 className = "CLASSNAME"
@@ -214,6 +211,6 @@ for t in types:
 
     print(header, file = open(f"{headerPath}\{capitalizedType}\{realFileName}.h",'w',encoding='utf-8'))
 
-    if not os.path.exists(f"{sourcePath}\{capitalizedType}"):
-        os.makedirs(f"{sourcePath}\{capitalizedType}")
-    print(sourceTemplate.replace(typeName, t.Typename).replace(className, capitalizedType), file = open(f"{sourcePath}\{capitalizedType}\{realFileName}.cpp",'w',encoding='utf-8'))
+    # if not os.path.exists(f"{sourcePath}\{capitalizedType}"):
+    #     os.makedirs(f"{sourcePath}\{capitalizedType}")
+    # print(sourceTemplate.replace(typeName, t.Typename).replace(className, capitalizedType), file = open(f"{sourcePath}\{capitalizedType}\{realFileName}.cpp",'w',encoding='utf-8'))
