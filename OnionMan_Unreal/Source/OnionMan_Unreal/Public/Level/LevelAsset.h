@@ -13,16 +13,17 @@
  * 
  */
 
-UCLASS()
+UCLASS(BlueprintType)
 class ONIONMAN_UNREAL_API ULevelAsset : public UDataAsset
 {
 	GENERATED_BODY()
+protected:
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, meta = (ShowInnerProperties), DisplayName = "Waves")
+        TArray<UWave*> m_waves;
 
 private:
     float m_currentLevelTime = 0.0f;
     float m_currentWaveTime = 0.0f;
-
-    TArray<UWave*> m_waves;
 
     int m_currentWaveIndex = 0;
     UWave* m_currentWave;
@@ -30,16 +31,21 @@ private:
 public:
     ULevelAsset(/* args */);
 
-    inline const float CurrentLevelTime() const
+    UFUNCTION(BlueprintCallable)
+    inline float CurrentLevelTime() const
     {
         return m_currentLevelTime;
     }
-    inline const float CurrentWaveTime() const
+
+    UFUNCTION(BlueprintCallable)
+    inline float CurrentWaveTime() const
     {
         return m_currentWaveTime;
     }
 
+    UFUNCTION(BlueprintCallable)
     void Load();
 
+    UFUNCTION(BlueprintCallable)
     void Update(float deltaTime);
 };

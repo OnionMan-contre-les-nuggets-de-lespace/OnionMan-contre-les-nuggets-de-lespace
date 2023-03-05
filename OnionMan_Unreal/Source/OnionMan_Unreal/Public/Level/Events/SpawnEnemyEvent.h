@@ -42,7 +42,9 @@ class ONIONMAN_UNREAL_API USpawnEnemyEvent : public UBaseWaveEvent
 	GENERATED_BODY()
 
 protected:
+    UPROPERTY(EditAnywhere, DisplayName = "Number of Enemies to Spawn")
     int m_numberOfEnemiesToSpawn = 1;
+    UPROPERTY(EditAnywhere, DisplayName = "Time Between Spawns")
     float m_timeBetweenSpawns = 0.0f;
 
     //Cache 

@@ -15,10 +15,13 @@ class ONIONMAN_UNREAL_API USpawnEnemyAtPositionEvent : public USpawnEnemyEvent
 {
 	GENERATED_BODY()
 protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Enemy Prefab")
 	AIndependantEnemyActor* m_enemyPrefab;
+	UPROPERTY(EditAnywhere, DisplayName = "Start Position")
 	FVector3f m_startPosition;
-	TArray<AIndependantEnemyActor*> m_editorEnemies;
 
+
+	TArray<AIndependantEnemyActor*> m_editorEnemies;
 
 public:
 	USpawnEnemyAtPositionEvent(/* args */);

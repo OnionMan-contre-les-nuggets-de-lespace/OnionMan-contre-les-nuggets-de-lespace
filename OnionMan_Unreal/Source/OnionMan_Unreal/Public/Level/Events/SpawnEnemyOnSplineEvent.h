@@ -16,8 +16,12 @@ class ONIONMAN_UNREAL_API USpawnEnemyOnSplineEvent : public USpawnEnemyEvent
 {
 	GENERATED_BODY()
 protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Enemy Prefab")
 	AEnemyOnSplineActor* m_enemyPrefab;
+	UPROPERTY(EditAnywhere, DisplayName = "Spline")
     USplineComponent* m_spline;
+
+
 	TArray<AEnemyOnSplineActor*> m_editorEnemies;
 
 
