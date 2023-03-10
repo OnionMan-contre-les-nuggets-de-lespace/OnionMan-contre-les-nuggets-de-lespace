@@ -36,11 +36,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
 		USpecializedSynchronizedProperty* SP2 {/* TEXT("WAAAAAAAW"), 25*/
 	};
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FString EncodedString;
 	//USynchronizedProperty<int> SP0{9, 12};
 	//USynchronizedProperty<FString> SP1{ "Waw", 32 };
 	//USynchronizedFStringProperty SP2{ "Waw", 2 };
 
-	void LoadProperties() override;
+	virtual void LoadProperties() override;
 
 	//UFUNCTION(BlueprintCallable)
 	/*USynchronizedFStringProperty* GetSP2()
@@ -52,6 +55,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintCallable)
+	void EncodeAll();
+	
+	UFUNCTION(BlueprintCallable)
+	void DecodeAll();
 
 
 };

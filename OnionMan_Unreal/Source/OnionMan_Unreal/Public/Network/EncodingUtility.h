@@ -10,7 +10,7 @@ namespace OnionMan:: Network
     /**
      *
      */
-    //UCLASS()
+    // UCLASS()
     class ONIONMAN_UNREAL_API EncodingUtility
     {
     public:
@@ -25,7 +25,7 @@ namespace OnionMan:: Network
         template<>
         static void PutEncodedValueInBuffer<FString>(FString value, TArray<uint8>& buffer, int& offset)
         {
-            PutToBuffer(buffer, (const uint8*)TCHAR_TO_UTF8(*value), offset, value.Len() * sizeof(TCHAR));
+            PutToBuffer(buffer, (const uint8*)TCHAR_TO_WCHAR(*value), offset, value.Len() * sizeof(TCHAR));
         }
 
         template<>
@@ -146,7 +146,7 @@ namespace OnionMan:: Network
                 return FString{};
            
             }
-            FString decodedString = FString(UTF8_TO_TCHAR(bytes.GetData() + offset));
+            FString decodedString = FString(WCHAR_TO_TCHAR(bytes.GetData() + offset));
             offset += size;
             return decodedString;
         }
@@ -290,10 +290,7 @@ namespace OnionMan:: Network
         template<>
         static int GetSizeOf<FString>(FString* value)
         {
-            TArray<uint8> encodedString;
-            int offset = 0;
-            PutEncodedValueInBuffer(*value, encodedString, offset);
-            return encodedString.Num();
+            return value->Len() * sizeof(TCHAR);
         }
 
         template<>

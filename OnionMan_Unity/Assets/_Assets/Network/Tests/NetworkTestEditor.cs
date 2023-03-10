@@ -24,7 +24,6 @@ public class NetworkTestEditor : Editor
         }
         if (GUILayout.Button("ChangeValue"))
         {
-            m_target.ChangeValues();
         }
         base.OnInspectorGUI();
     }

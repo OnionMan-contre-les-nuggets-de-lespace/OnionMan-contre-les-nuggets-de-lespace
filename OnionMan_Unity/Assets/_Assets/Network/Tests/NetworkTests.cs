@@ -8,37 +8,24 @@ using static UnityEditor.PlayerSettings;
 
 public class NetworkTests : SynchronizedMonoBehaviour
 {
-    private enum Enumeuh
-	{
-        A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T
-	}
     [SerializeField]
-    private SynchronizedProperty<char> SP0;
+    private SynchronizedList<string> SP0;
     [SerializeField]
-    private SynchronizedProperty<uint> SP1;
+    private SynchronizedProperty<string> SP1;
     [SerializeField]
-    private SynchronizedProperty<string> SP2;
-    [SerializeField]
-    private SynchronizedProperty<long> SP3;
-    [SerializeField]
-    private SynchronizedList<Vector3> SP4;
-    [SerializeField]
-    private SynchronizedList<string> SP5;
-    [SerializeField]
-    private OnionMan.Utils.SerializedDictionary<Enumeuh,float> SP6;
+    private SynchronizedProperty<Quaternion> SP2;
 
-    [SerializeField] private string m_encodedObjects = string.Empty;
+    [SerializeField]
+    private SynchronizedProperty<bool> SP3;
+    [SerializeField]
+    private string m_encodedObjects;
 
-    // Update is called once per frame
-    void Update()
+    public override void LoadProperties()
     {
-        
-    }
-
-    public void ChangeValues()
-    {
-        SP4.Value.Add(new Vector3(Random.value, Random.value, Random.value));
-        SP5.Value.Add($"Value {Random.value}");
+        AddSynchronizedProperty(SP0);
+        AddSynchronizedProperty(SP1);
+        AddSynchronizedProperty(SP2);
+        AddSynchronizedProperty(SP3);
     }
 
     public void EncodeAndPrint()
@@ -50,21 +37,5 @@ public class NetworkTests : SynchronizedMonoBehaviour
     public void TryDecode()
     {
         NetworkManager.Instance.DecodeObjects(EncodingUtility.GetStringAsBytes(m_encodedObjects));
-    }
-
-    public override void LoadProperties()
-    {
-        SP0.Init();
-        SP1.Init();
-        SP2.Init();
-        SP3.Init();
-        SP4.Init();
-        SP5.Init();
-        AddSynchronizedProperty(SP0);
-        AddSynchronizedProperty(SP1);
-        AddSynchronizedProperty(SP2);
-        AddSynchronizedProperty(SP3);
-        AddSynchronizedProperty(SP4);
-        AddSynchronizedProperty(SP5);
     }
 }

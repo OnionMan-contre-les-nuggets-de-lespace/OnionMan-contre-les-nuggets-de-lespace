@@ -49,7 +49,7 @@ class ONIONMAN_UNREAL_API ISynchronizedObjectBase
 public:
     virtual const uint32 ObjectID() const = 0;
 
-    virtual const TMap<uint16, ISynchronizedPropertyBase*>& Properties() const = 0;
+    virtual const TMap<uint16, TObjectPtr<ISynchronizedPropertyBase>>& Properties() const = 0;
 
     virtual ObjectNeedSyncResult NeedSync() = 0;
 

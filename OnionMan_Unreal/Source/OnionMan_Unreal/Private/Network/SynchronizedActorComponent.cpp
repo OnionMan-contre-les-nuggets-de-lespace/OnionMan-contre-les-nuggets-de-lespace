@@ -32,6 +32,12 @@ void USynchronizedActorComponent::BeginPlay()
 	
 }
 
+void USynchronizedActorComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	UNetworkManager::Instance().EndPlay();
+}
+
 
 // Called every frame
 void USynchronizedActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -47,7 +53,7 @@ const uint32 USynchronizedActorComponent::ObjectID() const
 	return m_objectID;
 }
 
-const TMap<uint16, ISynchronizedPropertyBase*>& USynchronizedActorComponent::Properties() const
+const TMap<uint16, TObjectPtr<ISynchronizedPropertyBase>>& USynchronizedActorComponent::Properties() const
 {
 	return m_synchronizedProperties;
 }
@@ -56,9 +62,9 @@ ObjectNeedSyncResult USynchronizedActorComponent::NeedSync()
 {
 	m_encodedPropertiesSize = 0;
 
-	TArray<ISynchronizedPropertyBase*> propertiesToSync{};
+	TArray<TObjectPtr<ISynchronizedPropertyBase>> propertiesToSync{};
 	GetPropertiesToSync(propertiesToSync);
-	for (ISynchronizedPropertyBase* property : propertiesToSync)
+	for (TObjectPtr<ISynchronizedPropertyBase> property : propertiesToSync)
 	{
 		m_encodedPropertiesSize += property->GetEncodedPropertySize();
 	}
@@ -70,9 +76,9 @@ void USynchronizedActorComponent::PutEncodedObjectToBuffer(TArray<uint8>& buffer
 	EncodingUtility::PutEncodedValueInBuffer<int>(m_encodedPropertiesSize + sizeof(uint32), buffer, offset); // Put Size
 	EncodingUtility::PutEncodedValueInBuffer<uint32>(m_objectID, buffer, offset);                            // Put ID
 
-	TArray<ISynchronizedPropertyBase*> propertiesToSync{};
+	TArray<TObjectPtr<ISynchronizedPropertyBase>> propertiesToSync{};
 	GetPropertiesToSync(propertiesToSync);
-	for (ISynchronizedPropertyBase* property : propertiesToSync)
+	for (TObjectPtr<ISynchronizedPropertyBase> property : propertiesToSync)
 	{
 		property->PutEncodedPropertyToBuffer(buffer, offset, forSync);                                       // Put all Properties
 	}
@@ -91,7 +97,7 @@ void USynchronizedActorComponent::DecodeObject(TArray<uint8>& encodedProperties,
 
 		if (m_synchronizedProperties.Contains(propertyID))
 		{
-			ISynchronizedPropertyBase* synchronizedProperty = m_synchronizedProperties[propertyID];
+			TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty = m_synchronizedProperties[propertyID];
 			synchronizedProperty->DecodeProperty(encodedProperties, offset, dataSize);
 			if (offset - porpertyStartOffset != propertySize)
 			{
@@ -110,9 +116,9 @@ void USynchronizedActorComponent::LoadProperties()
 }
 
 
-void USynchronizedActorComponent::GetPropertiesToSync(TArray<ISynchronizedPropertyBase*>& result)
+void USynchronizedActorComponent::GetPropertiesToSync(TArray<TObjectPtr<ISynchronizedPropertyBase>>& result)
 {
-	for (ISynchronizedPropertyBase* prop : m_propertiesArray)
+	for (TObjectPtr<ISynchronizedPropertyBase> prop : m_propertiesArray)
 	{
 		if (prop->NeedSync())
 		{
@@ -121,7 +127,7 @@ void USynchronizedActorComponent::GetPropertiesToSync(TArray<ISynchronizedProper
 	}
 }
 
-void USynchronizedActorComponent::AddSynchronizedProperty(ISynchronizedPropertyBase* synchronizedProperty)
+void USynchronizedActorComponent::AddSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty)
 {
 	synchronizedProperty->Init();
 

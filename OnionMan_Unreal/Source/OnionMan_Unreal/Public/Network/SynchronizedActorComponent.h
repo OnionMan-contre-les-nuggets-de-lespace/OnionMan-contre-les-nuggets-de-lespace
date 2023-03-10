@@ -13,12 +13,14 @@ UCLASS(Abstract/*, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) */)
 class ONIONMAN_UNREAL_API USynchronizedActorComponent : public UActorComponent, public ISynchronizedObjectBase
 {
 	GENERATED_BODY()
+protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Object ID", Category = "Network")
+	uint32 m_objectID;
 
 private:
-	TMap<uint16, ISynchronizedPropertyBase*> m_synchronizedProperties{};
-	uint32 m_objectID;
+	TMap<uint16, TObjectPtr<ISynchronizedPropertyBase>> m_synchronizedProperties{};
 	int m_encodedPropertiesSize;
-	TArray<ISynchronizedPropertyBase*> m_propertiesArray{};
+	TArray<TObjectPtr<ISynchronizedPropertyBase>> m_propertiesArray{};
 
 public:	
 	// Sets default values for this component's properties
@@ -28,13 +30,15 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
     const uint32 ObjectID() const override;
 
-    const TMap<uint16, ISynchronizedPropertyBase*>& Properties() const override;
+    virtual const TMap<uint16, TObjectPtr<ISynchronizedPropertyBase>>& Properties() const override;
 
     ObjectNeedSyncResult NeedSync() override;
 
@@ -44,6 +48,6 @@ public:
 
     virtual void LoadProperties() override;
 
-	void AddSynchronizedProperty(ISynchronizedPropertyBase* synchronizedProperty);
-	void GetPropertiesToSync(TArray<ISynchronizedPropertyBase*>& result);
+	void AddSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty);
+	void GetPropertiesToSync(TArray<TObjectPtr<ISynchronizedPropertyBase>>& result);
 };

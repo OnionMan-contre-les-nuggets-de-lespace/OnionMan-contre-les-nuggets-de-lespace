@@ -11,6 +11,9 @@ using namespace OnionMan::Network;
 void UNetworkTestComponent::LoadProperties()
 {
 	AddSynchronizedProperty(SP0);
+	AddSynchronizedProperty(SP1);
+	AddSynchronizedProperty(SP2);
+	AddSynchronizedProperty(SP3);
 	//AddSynchronizedProperty(&SP0);
 	//AddSynchronizedProperty(&SP1);
 	//AddSynchronizedProperty(&SP2);
@@ -26,11 +29,23 @@ void UNetworkTestComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	{
 		m_firstFrame = false;
 
-		TArray<uint8> encodedObjects;
-		UNetworkManager::Instance().EncodeObjects(encodedObjects);
-
-		FString encodedString = EncodingUtility::GetBytesAsString(encodedObjects);
-
-		LOG_ERROR("Encoded string : %s", *encodedString);
 	}
+}
+
+void UNetworkTestComponent::EncodeAll()
+{
+	TArray<uint8> encodedObjects;
+	UNetworkManager::Instance().EncodeObjects(encodedObjects);
+
+	FString encodedString = EncodingUtility::GetBytesAsString(encodedObjects);
+
+	LOG_ERROR("Encoded string : %s", *encodedString);
+}
+
+void UNetworkTestComponent::DecodeAll()
+{
+	TArray<uint8> encodedBytes{};
+	EncodingUtility::GetStringAsBytes(EncodedString, encodedBytes);
+
+	UNetworkManager::Instance().DecodeObjects(encodedBytes);
 }

@@ -15,7 +15,7 @@ namespace OnionMan.Network
                 #region Base Types
                 //Misc
                 case string stringValue:
-                    return Encoding.UTF8.GetBytes(stringValue);
+                    return Encoding.Unicode.GetBytes(stringValue);
                 case bool boolValue:
                     return BitConverter.GetBytes(boolValue);
                 case char charValue:
@@ -77,7 +77,7 @@ namespace OnionMan.Network
                 #region Base Types
                 //Misc
                 case string stringValue:
-                    PutToBuffer(buffer, Encoding.UTF8.GetBytes(stringValue), ref offset);
+                    PutToBuffer(buffer, Encoding.Unicode.GetBytes(stringValue), ref offset);
                     break;
                 case bool boolValue:
                     PutToBuffer(buffer, BitConverter.GetBytes(boolValue), ref offset);
@@ -158,7 +158,7 @@ namespace OnionMan.Network
                 {
                     throw new ArgumentException($"In order to decode a string, the argument 'size' must be set");
                 }
-                object st = Encoding.UTF8.GetString(bytes, offset, size);
+                object st = Encoding.Unicode.GetString(bytes, offset, size);
                 offset += size;
                 return (T)st;
             }

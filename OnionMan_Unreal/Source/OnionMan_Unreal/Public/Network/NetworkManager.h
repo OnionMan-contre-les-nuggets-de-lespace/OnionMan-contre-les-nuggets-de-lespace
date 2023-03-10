@@ -16,8 +16,8 @@ class ONIONMAN_UNREAL_API UNetworkManager : public UObject
 {
     GENERATED_BODY()
 private:
-    TMap<uint32, ISynchronizedObjectBase*> m_synchronizedObjects{};
-    TArray<ISynchronizedObjectBase*> m_objectsArray{};
+    TMap<uint32, TObjectPtr<ISynchronizedObjectBase>> m_synchronizedObjects{};
+    TArray<TObjectPtr<ISynchronizedObjectBase>> m_objectsArray{};
 
 public:
     // Singleton stuff
@@ -29,10 +29,13 @@ public:
     //UNetworkManager& operator=(UNetworkManager&&) = delete;
 
     // NetworkManager methods
+    
     void AddSynchronizedObject(ISynchronizedObjectBase& obj);
-    void GetObjectsToSync(TArray<TTuple<ISynchronizedObjectBase*, int>>& outObjectsToSync);
+    void GetObjectsToSync(TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>>& outObjectsToSync);
     void EncodeObjects(TArray<uint8>& outEncodedObjects);
     void DecodeObjects(TArray<uint8>& encodedObjects);
+
+    void EndPlay();
 
 
 private:

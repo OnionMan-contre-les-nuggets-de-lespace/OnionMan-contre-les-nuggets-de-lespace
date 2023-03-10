@@ -9,13 +9,15 @@ using namespace OnionMan::Network;
 
 UNetworkManager::UNetworkManager()
 {
+    LOG_ERROR("Creating NetworkManager")
 }
 
 // Dans le fichier source
 UNetworkManager& UNetworkManager::Instance()
 {
-    static UNetworkManager s_instance{};
-    return s_instance;
+    static UNetworkManager* s_instance = NewObject< UNetworkManager>();
+    LOG_ERROR("Accessing NetworkManager")
+    return *s_instance;
 }
 
 void UNetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
@@ -29,26 +31,26 @@ void UNetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
 	m_objectsArray.Add(&obj);
 }
 
-void UNetworkManager::GetObjectsToSync(TArray<TTuple<ISynchronizedObjectBase*, int>>& outObjectsToSync)
+void UNetworkManager::GetObjectsToSync(TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>>& outObjectsToSync)
 {
     outObjectsToSync.Empty();
-    for (ISynchronizedObjectBase* synchronizedObject : m_objectsArray)
+    for (TObjectPtr<ISynchronizedObjectBase> synchronizedObject : m_objectsArray)
     {
         ObjectNeedSyncResult needSyncResult = synchronizedObject->NeedSync();
         if (needSyncResult.NeedSync())
         {
-            outObjectsToSync.Add(TTuple<ISynchronizedObjectBase*, int>{synchronizedObject, needSyncResult.EncodedSize()});
+            outObjectsToSync.Add(TTuple<TObjectPtr<ISynchronizedObjectBase>, int>{synchronizedObject, needSyncResult.EncodedSize()});
         }
     }
 }
 
 void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
 {
-    TArray<TTuple<ISynchronizedObjectBase*, int>> objectsToSync{};
+    TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>> objectsToSync{};
     GetObjectsToSync(objectsToSync);
 
     int encodedObjectsTotalSize = 0;
-    for(TTuple<ISynchronizedObjectBase*, int> obj : objectsToSync)
+    for(TTuple<TObjectPtr<ISynchronizedObjectBase>, int> obj : objectsToSync)
     {
         encodedObjectsTotalSize += obj.Value;
     }
@@ -57,7 +59,7 @@ void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
     outEncodedObjects.SetNumUninitialized(encodedObjectsTotalSize);
     int offset = 0;
 
-    for(TTuple<ISynchronizedObjectBase*, int> obj : objectsToSync)
+    for (TTuple<TObjectPtr<ISynchronizedObjectBase>, int> obj : objectsToSync)
     {
         obj.Key->PutEncodedObjectToBuffer(outEncodedObjects, offset);
     }
@@ -77,7 +79,7 @@ void UNetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
 
         if (m_synchronizedObjects.Contains(objectID))
         {
-            ISynchronizedObjectBase* synchronizedObject = m_synchronizedObjects[objectID];
+            TObjectPtr<ISynchronizedObjectBase> synchronizedObject = m_synchronizedObjects[objectID];
             synchronizedObject->DecodeObject(encodedObjects, offset, objectDataSize);
             if (offset - initialOffset != objectSize)
             {
@@ -89,4 +91,11 @@ void UNetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
             LOG_ERROR("There are no object with ID", objectID);
         }
     }
+}
+
+void UNetworkManager::EndPlay()
+{
+    LOG_ERROR("End Play")
+    m_synchronizedObjects.Empty();
+    m_objectsArray.Empty();
 }
