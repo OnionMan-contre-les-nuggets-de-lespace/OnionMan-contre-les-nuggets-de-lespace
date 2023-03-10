@@ -12,17 +12,17 @@
 struct SpawnedEnnemy
 {
 private:
-    AEnemyActor* m_enemyObject;
+    TObjectPtr<AEnemyActor> m_enemyObject;
     float m_spawnTime;
 
 public:
-    SpawnedEnnemy(AEnemyActor* enemy, float spawnTime)
+    SpawnedEnnemy(TObjectPtr<AEnemyActor> enemy, float spawnTime)
     {
         m_enemyObject = enemy;
         m_spawnTime = spawnTime;
     }
 
-    AEnemyActor* Enemy() const
+    TObjectPtr<AEnemyActor> Enemy() const
     {
         return m_enemyObject;
     }
@@ -62,12 +62,12 @@ public:
 
     // Editor
     virtual void EditorLoad(float timeSinceStart) override;
-    virtual void EditorUpdate(float newTimeSinceStart);
+    virtual void EditorUpdate(float newTimeSinceStart) override;
     virtual void EditorUnload() override;
 
     virtual void EditorSave() override;
 
 protected:
     virtual void OnFinish() override;
-    virtual AEnemyActor* SpawnEnemy();
+    virtual TObjectPtr<AEnemyActor> SpawnEnemy();
 };

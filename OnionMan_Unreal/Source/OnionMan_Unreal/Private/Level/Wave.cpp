@@ -17,7 +17,7 @@ void UWave::Load()
             return event1.GetTime() < event2.GetTime(); 
         });
 
-    for (UBaseWaveEvent* event : m_waveEvents)
+    for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
         event->Load();
     }
@@ -29,7 +29,7 @@ void UWave::Update(float deltaTime, float currentWaveTime)
     int eventsCount = m_waveEvents.Num();
     while (m_eventToStartIndex <= eventsCount && currentWaveTime >= m_waveEvents[m_eventToStartIndex]->GetTime())
     {
-        UBaseWaveEvent* eventToStart = m_waveEvents[m_eventToStartIndex];
+        TObjectPtr<UBaseWaveEvent> eventToStart = m_waveEvents[m_eventToStartIndex];
         m_eventsThatStarted.Add(eventToStart);
 
         eventToStart->Start();
@@ -39,7 +39,7 @@ void UWave::Update(float deltaTime, float currentWaveTime)
 
     // Updates all started evants
     bool allEventFinished = true;
-    for (UBaseWaveEvent* event : m_eventsThatStarted)
+    for (TObjectPtr<UBaseWaveEvent> event : m_eventsThatStarted)
     {
         if (event->IsFinished())
         {
@@ -59,7 +59,7 @@ void UWave::Update(float deltaTime, float currentWaveTime)
 
 void UWave::FinishWave()
 {
-    for (UBaseWaveEvent* event : m_waveEvents)
+    for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
         event->OnWaveEnd();
     }
@@ -71,7 +71,7 @@ void UWave::EditorLoad(float timeSinceWaveStart)
     {
         return;
     }
-    for (UBaseWaveEvent* event : m_waveEvents)
+    for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
         event->EditorLoad(timeSinceWaveStart);
     }
@@ -83,7 +83,7 @@ void UWave::EditorUpdate(float newtimeSinceWaveStart)
     {
         return;
     }
-    for (UBaseWaveEvent* event : m_waveEvents)
+    for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
         event->EditorUpdate(newtimeSinceWaveStart);
     }
@@ -95,7 +95,7 @@ void UWave::EditorUnload()
     {
         return;
     }
-    for (UBaseWaveEvent* event : m_waveEvents)
+    for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
         event->EditorUnload();
     }
@@ -107,7 +107,7 @@ void UWave::EditorSave()
     {
         return;
     }
-    for (UBaseWaveEvent* event : m_waveEvents)
+    for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
         event->EditorSave();
     }

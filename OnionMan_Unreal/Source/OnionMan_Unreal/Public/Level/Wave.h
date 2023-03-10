@@ -19,12 +19,12 @@ class ONIONMAN_UNREAL_API UWave : public UObject
 
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, meta = (ShowInnerProperties), DisplayName = "Wave Events")
-    TArray<UBaseWaveEvent*> m_waveEvents;
+    TArray<TObjectPtr<UBaseWaveEvent>> m_waveEvents;
 
     bool m_isEditorLoaded = false;
 
 private:
-    TArray<UBaseWaveEvent*> m_eventsThatStarted;
+    TArray<TObjectPtr<UBaseWaveEvent>> m_eventsThatStarted;
 
     bool m_isFinished = false;
     int m_eventToStartIndex = 0;

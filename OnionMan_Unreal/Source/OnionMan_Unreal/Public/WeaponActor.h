@@ -12,21 +12,21 @@ class ONIONMAN_UNREAL_API AWeaponActor : public AActor
 	GENERATED_BODY()
 	
 public:	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon");
+	float m_baseDamage;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon");
+	float m_reloadTime;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon");
+	float m_reloadTimer;
+	UPROPERTY(EditAnywhere, Category = "Weapon");
+	uint16 m_id;
+
 	// Sets default values for this actor's properties
 	AWeaponActor();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		float m_baseDamage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		float m_reloadTime;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		float m_reloadTimer;
-	UPROPERTY(EditAnywhere, Category = "Weapon")
-		uint16 m_id;
-
-
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		bool TryShoot();
+	bool TryShoot();
 
 protected:
 	// Called when the game starts or when spawned

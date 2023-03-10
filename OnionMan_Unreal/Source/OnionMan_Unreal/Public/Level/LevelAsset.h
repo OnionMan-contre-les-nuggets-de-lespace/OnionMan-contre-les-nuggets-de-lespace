@@ -19,14 +19,14 @@ class ONIONMAN_UNREAL_API ULevelAsset : public UDataAsset
 	GENERATED_BODY()
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, meta = (ShowInnerProperties), DisplayName = "Waves")
-        TArray<UWave*> m_waves;
+        TArray<TObjectPtr<UWave>> m_waves;
 
 private:
     float m_currentLevelTime = 0.0f;
     float m_currentWaveTime = 0.0f;
 
     int m_currentWaveIndex = 0;
-    UWave* m_currentWave;
+    TObjectPtr<UWave> m_currentWave;
 
 public:
     ULevelAsset(/* args */);

@@ -32,7 +32,7 @@ void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
         if (m_spawnTimer >= m_timeBetweenSpawns) 
         {
             m_spawnTimer = 0;
-            AEnemyActor* newEnemy = SpawnEnemy();
+            TObjectPtr<AEnemyActor> newEnemy = SpawnEnemy();
             m_spawnedEnemies.Add(SpawnedEnnemy{ newEnemy, currentWaveTime });
             m_spawnedEnemiesCount++;
         }
@@ -100,7 +100,7 @@ void USpawnEnemyEvent::OnFinish()
     //Do nothing maybe
 }
 
-AEnemyActor* USpawnEnemyEvent::SpawnEnemy()
+TObjectPtr<AEnemyActor> USpawnEnemyEvent::SpawnEnemy()
 {
     return nullptr;
 }

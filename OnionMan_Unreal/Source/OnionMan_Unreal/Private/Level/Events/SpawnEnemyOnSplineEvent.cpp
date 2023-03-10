@@ -78,7 +78,7 @@ void USpawnEnemyOnSplineEvent::EditorSave()
 	// @TODO Save Spline
 }
 
-AEnemyActor* USpawnEnemyOnSplineEvent::SpawnEnemy()
+TObjectPtr<AEnemyActor> USpawnEnemyOnSplineEvent::SpawnEnemy()
 {
 	// Request enemy from pool
 	// @TODO : Impl�menter la pool 

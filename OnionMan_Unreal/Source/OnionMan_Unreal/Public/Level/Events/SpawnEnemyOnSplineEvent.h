@@ -36,6 +36,6 @@ public:
     virtual void EditorSave() override;
 
 protected:
-	virtual AEnemyActor* SpawnEnemy() override;
+	virtual TObjectPtr<AEnemyActor> SpawnEnemy() override;
 	
 };

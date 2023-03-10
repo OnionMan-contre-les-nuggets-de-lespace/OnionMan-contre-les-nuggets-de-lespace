@@ -86,7 +86,7 @@ void USpawnEnemyAtPositionEvent::EditorSave()
     // @TODO Save start point position + more is needed
 }
 
-AEnemyActor *USpawnEnemyAtPositionEvent::SpawnEnemy()
+TObjectPtr<AEnemyActor> USpawnEnemyAtPositionEvent::SpawnEnemy()
 {
 	// Request enemy from pool
 	// @TODO : Impl�menter la pool 
