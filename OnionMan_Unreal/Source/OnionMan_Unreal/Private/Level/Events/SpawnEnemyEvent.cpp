@@ -12,7 +12,7 @@ USpawnEnemyEvent::USpawnEnemyEvent(/* args */)
 void USpawnEnemyEvent::Load()
 {
     UBaseWaveEvent::Load();
-    m_spawnedEnemies.Reserve(sizeof(SpawnedEnnemy) * m_numberOfEnemiesToSpawn);
+    m_spawnedEnemies.Reserve(sizeof(SpawnedEnemy) * m_numberOfEnemiesToSpawn);
     // Request enemies from pool
 }
 
@@ -33,14 +33,14 @@ void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
         {
             m_spawnTimer = 0;
             TObjectPtr<AEnemyActor> newEnemy = SpawnEnemy();
-            m_spawnedEnemies.Add(SpawnedEnnemy{ newEnemy, currentWaveTime });
+            m_spawnedEnemies.Add(SpawnedEnemy{ newEnemy, currentWaveTime });
             m_spawnedEnemiesCount++;
         }
         m_spawnTimer += deltaTime;
     }
 
     //Update the position of all spawned enemies
-    for (SpawnedEnnemy spawned : m_spawnedEnemies)
+    for (SpawnedEnemy spawned : m_spawnedEnemies)
     {
         if (spawned.Enemy()->IsAlive())
         {

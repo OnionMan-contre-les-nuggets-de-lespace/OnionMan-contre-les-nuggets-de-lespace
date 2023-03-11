@@ -49,7 +49,7 @@ public:
     UFUNCTION(BlueprintCallable)
     void EditorLoad(float timeSinceWaveStart);
     UFUNCTION(BlueprintCallable)
-    void EditorUpdate(float newtimeSinceWaveStart);
+    void EditorUpdate(float newTimeSinceWaveStart);
     UFUNCTION(BlueprintCallable)
     void EditorUnload();
 

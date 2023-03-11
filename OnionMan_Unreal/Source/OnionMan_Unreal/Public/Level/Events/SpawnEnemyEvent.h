@@ -9,14 +9,14 @@
 
 #include "SpawnEnemyEvent.generated.h"
 
-struct SpawnedEnnemy
+struct SpawnedEnemy
 {
 private:
     TObjectPtr<AEnemyActor> m_enemyObject;
     float m_spawnTime;
 
 public:
-    SpawnedEnnemy(TObjectPtr<AEnemyActor> enemy, float spawnTime)
+    SpawnedEnemy(TObjectPtr<AEnemyActor> enemy, float spawnTime)
     {
         m_enemyObject = enemy;
         m_spawnTime = spawnTime;
@@ -48,7 +48,7 @@ protected:
     float m_timeBetweenSpawns = 0.0f;
 
     //Cache 
-    TArray<SpawnedEnnemy> m_spawnedEnemies;
+    TArray<SpawnedEnemy> m_spawnedEnemies;
     int m_spawnedEnemiesCount = 0;
     float m_spawnTimer = 0.0f;
 

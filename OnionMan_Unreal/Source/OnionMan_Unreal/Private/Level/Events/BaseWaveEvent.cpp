@@ -34,7 +34,7 @@ void UBaseWaveEvent::EditorLoad(float timeSinceStart)
     m_isEditorLoaded = true;
 }
 
-void UBaseWaveEvent::EditorUpdate(float newtimeSinceStart)
+void UBaseWaveEvent::EditorUpdate(float newTimeSinceWaveStart)
 {
     if(!m_isEditorLoaded)
     {

@@ -54,7 +54,7 @@ public:
     UFUNCTION(BlueprintCallable)
     virtual void EditorLoad(float timeSinceStart);
     UFUNCTION(BlueprintCallable)
-    virtual void EditorUpdate(float newtimeSinceStart);
+    virtual void EditorUpdate(float newTimeSinceWaveStart);
     UFUNCTION(BlueprintCallable)
     virtual void EditorUnload();
     UFUNCTION(BlueprintCallable)

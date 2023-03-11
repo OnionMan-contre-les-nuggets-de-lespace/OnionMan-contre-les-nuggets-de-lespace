@@ -10,7 +10,6 @@ UWave::UWave(/* args */)
 
 void UWave::Load()
 {
-
     m_waveEvents.Sort(
         [&](UBaseWaveEvent& event1, UBaseWaveEvent& event2) 
         {
@@ -77,7 +76,7 @@ void UWave::EditorLoad(float timeSinceWaveStart)
     }
 }
 
-void UWave::EditorUpdate(float newtimeSinceWaveStart)
+void UWave::EditorUpdate(float newTimeSinceWaveStart)
 {
     if (!m_isEditorLoaded)
     {
@@ -85,7 +84,7 @@ void UWave::EditorUpdate(float newtimeSinceWaveStart)
     }
     for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
-        event->EditorUpdate(newtimeSinceWaveStart);
+        event->EditorUpdate(newTimeSinceWaveStart);
     }
 }
 
