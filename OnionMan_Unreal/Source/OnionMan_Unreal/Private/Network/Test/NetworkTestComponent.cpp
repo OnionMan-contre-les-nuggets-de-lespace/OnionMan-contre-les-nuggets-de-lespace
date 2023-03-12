@@ -2,9 +2,6 @@
 
 
 #include "Network/Test/NetworkTestComponent.h"
-#include "Network/NetworkManager.h"
-#include "Network/EncodingUtility.h"
-#include "LogUtils.h"
 
 using namespace OnionMan::Network;
 
@@ -17,6 +14,22 @@ void UNetworkTestComponent::LoadProperties()
 	//AddSynchronizedProperty(&SP0);
 	//AddSynchronizedProperty(&SP1);
 	//AddSynchronizedProperty(&SP2);
+}
+
+void UNetworkTestComponent::BeginPlay()
+{
+	USynchronizedActorComponent::BeginPlay();
+
+	UOnionManGameInstance* gameInstance = Cast<UOnionManGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
+	if (gameInstance == nullptr)
+	{
+		LOG_ERROR("Incorrect GameInsance (Require UOnionManGameInstance)");
+	}
+	else
+	{
+		m_networkManager = gameInstance->NetworkManager;
+	}
 }
 
 
@@ -35,7 +48,7 @@ void UNetworkTestComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 void UNetworkTestComponent::EncodeAll()
 {
 	TArray<uint8> encodedObjects;
-	UNetworkManager::Instance().EncodeObjects(encodedObjects);
+	m_networkManager->EncodeObjects(encodedObjects);
 
 	FString encodedString = EncodingUtility::GetBytesAsString(encodedObjects);
 
@@ -47,5 +60,5 @@ void UNetworkTestComponent::DecodeAll()
 	TArray<uint8> encodedBytes{};
 	EncodingUtility::GetStringAsBytes(EncodedString, encodedBytes);
 
-	UNetworkManager::Instance().DecodeObjects(encodedBytes);
+	m_networkManager->DecodeObjects(encodedBytes);
 }

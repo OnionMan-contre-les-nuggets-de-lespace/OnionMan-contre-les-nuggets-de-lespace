@@ -7,6 +7,8 @@
 #include "Network/NetworkManager.h"
 
 #include "LogUtils.h"
+#include "OnionManGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 using namespace OnionMan::Network;
 
@@ -27,17 +29,18 @@ void USynchronizedActorComponent::BeginPlay()
 	UActorComponent::BeginPlay();
 
 	LoadProperties();
-	UNetworkManager::Instance().AddSynchronizedObject(*this);
-	// ...
+	UOnionManGameInstance* gameInstance = Cast<UOnionManGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
+	if (gameInstance == nullptr)
+	{
+		LOG_ERROR("Incorrect GameInsance (Require UOnionManGameInstance)");
+	}
+	else
+	{
+		gameInstance->NetworkManager->AddSynchronizedObject(*this);
+	}
 	
 }
-
-void USynchronizedActorComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-	Super::EndPlay(EndPlayReason);
-	UNetworkManager::Instance().EndPlay();
-}
-
 
 // Called every frame
 void USynchronizedActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

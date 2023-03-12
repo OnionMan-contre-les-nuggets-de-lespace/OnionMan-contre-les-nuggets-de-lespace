@@ -11,6 +11,7 @@ USpecializedSynchronizedList::USpecializedSynchronizedList(uint16 propertyID)
 
 bool USpecializedSynchronizedList::NeedSync()
 {
+    return true;
     CheckNeedSync();
     return m_needSync;
 }

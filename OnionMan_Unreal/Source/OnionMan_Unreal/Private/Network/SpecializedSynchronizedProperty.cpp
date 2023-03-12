@@ -11,6 +11,7 @@ USpecializedSynchronizedProperty::USpecializedSynchronizedProperty(uint16 proper
 
 bool USpecializedSynchronizedProperty::NeedSync()
 {
+    return true;
     return m_needSync;
 }
 

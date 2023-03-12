@@ -12,14 +12,6 @@ UNetworkManager::UNetworkManager()
     LOG_ERROR("Creating NetworkManager")
 }
 
-// Dans le fichier source
-UNetworkManager& UNetworkManager::Instance()
-{
-    static UNetworkManager* s_instance = NewObject< UNetworkManager>();
-    LOG_ERROR("Accessing NetworkManager")
-    return *s_instance;
-}
-
 void UNetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
 {
 	uint32 objID = obj.ObjectID();
@@ -96,6 +88,4 @@ void UNetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
 void UNetworkManager::EndPlay()
 {
     LOG_ERROR("End Play")
-    m_synchronizedObjects.Empty();
-    m_objectsArray.Empty();
 }

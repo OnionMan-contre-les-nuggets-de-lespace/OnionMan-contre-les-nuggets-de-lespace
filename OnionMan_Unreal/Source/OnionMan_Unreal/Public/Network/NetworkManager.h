@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, BlueprintType)
 class ONIONMAN_UNREAL_API UNetworkManager : public UObject
 {
     GENERATED_BODY()
@@ -20,14 +20,6 @@ private:
     TArray<TObjectPtr<ISynchronizedObjectBase>> m_objectsArray{};
 
 public:
-    // Singleton stuff
-    static UNetworkManager& Instance();
-
-    //UNetworkManager(const UNetworkManager&) = delete;
-    //UNetworkManager& operator=(const UNetworkManager&) = delete;
-    //UNetworkManager(UNetworkManager&&) = delete;
-    //UNetworkManager& operator=(UNetworkManager&&) = delete;
-
     // NetworkManager methods
     
     void AddSynchronizedObject(ISynchronizedObjectBase& obj);

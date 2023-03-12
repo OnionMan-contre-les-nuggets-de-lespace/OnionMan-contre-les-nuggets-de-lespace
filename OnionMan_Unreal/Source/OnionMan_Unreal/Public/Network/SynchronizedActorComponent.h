@@ -30,21 +30,19 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-    const uint32 ObjectID() const override;
+    virtual const uint32 ObjectID() const override;
 
     virtual const TMap<uint16, TObjectPtr<ISynchronizedPropertyBase>>& Properties() const override;
 
-    ObjectNeedSyncResult NeedSync() override;
+    virtual ObjectNeedSyncResult NeedSync() override;
 
-    void PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override;
+    virtual void PutEncodedObjectToBuffer(TArray<uint8>& buffer, int& offset, bool forSync = true) override;
 
-    void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) override;
+    virtual void DecodeObject(TArray<uint8>& encodedProperties, int& offset, int size) override;
 
     virtual void LoadProperties() override;
 

@@ -148,6 +148,7 @@ namespace OnionMan:: Network
             }
             FString decodedString = FString(WCHAR_TO_TCHAR(bytes.GetData() + offset));
             offset += size;
+            LOG_ERROR("Decoded Value : %s", *decodedString)
             return decodedString;
         }
 
@@ -156,6 +157,7 @@ namespace OnionMan:: Network
         {
             bool decodedValue = *((bool*)(bytes.GetData() + offset));
             offset += sizeof(bool);
+            LOG_ERROR("Decoded Value : %b", decodedValue)
             return decodedValue;
         }
 
@@ -180,6 +182,7 @@ namespace OnionMan:: Network
         {
             float decodedValue = *((float*)(bytes.GetData() + offset));
             offset += sizeof(float);
+            LOG_ERROR("Decoded Value : %f", decodedValue)
             return decodedValue;
         }
 
@@ -188,6 +191,7 @@ namespace OnionMan:: Network
         {
             int decodedValue = *((int*)(bytes.GetData() + offset));
             offset += sizeof(int);
+            LOG_ERROR("Decoded Value : %i", decodedValue)
             return decodedValue;
         }
 

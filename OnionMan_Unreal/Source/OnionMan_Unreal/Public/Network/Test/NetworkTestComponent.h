@@ -4,11 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Network/SynchronizedActorComponent.h"
-#include "Network/SynchronizedProperty.h"
 #include "../SpecializedSynchronizedProperty.h"
 #include "../SpecializedProperties/FString/SynchronizedFStringList.h"
 #include "../SpecializedProperties/FString/SynchronizedFString.h"
 #include "../SpecializedProperties/Bool/SynchronizedBool.h"
+
+#include "Network/NetworkManager.h"
+#include "Network/EncodingUtility.h"
+#include "LogUtils.h"
+#include "OnionManGameInstance.h"
+#include "Kismet/GameplayStatics.h"
+
 #include "NetworkTestComponent.generated.h"
 
 /**
@@ -21,6 +27,8 @@ class ONIONMAN_UNREAL_API UNetworkTestComponent : public USynchronizedActorCompo
 
 private:
 	bool m_firstFrame = true;
+
+	TObjectPtr<UNetworkManager> m_networkManager;
 	
 
 public:
@@ -51,6 +59,7 @@ public:
 		return &SP2;
 	}*/
 
+	virtual void BeginPlay() override;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
