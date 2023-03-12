@@ -188,6 +188,7 @@ protected:
 		{
 			CopyTo<T>(decodedList, outValue);
 			CopyTo<T>(decodedList, outPreviousValue);
+			m_sizeMayHaveChanged = true;
 			// if (m_onValueChanged != null)
 			// {
 			//     m_onValueChanged(m_value);

@@ -47,7 +47,7 @@ void UNetworkTestComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UNetworkTestComponent::EncodeAll()
 {
-	TArray<uint8> encodedObjects;
+	TArray<uint8> encodedObjects{};
 	m_networkManager->EncodeObjects(encodedObjects);
 
 	FString encodedString = EncodingUtility::GetBytesAsString(encodedObjects);

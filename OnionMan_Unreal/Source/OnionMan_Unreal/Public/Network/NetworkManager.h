@@ -27,8 +27,6 @@ public:
     void EncodeObjects(TArray<uint8>& outEncodedObjects);
     void DecodeObjects(TArray<uint8>& encodedObjects);
 
-    void EndPlay();
-
 
 private:
     UNetworkManager(); 

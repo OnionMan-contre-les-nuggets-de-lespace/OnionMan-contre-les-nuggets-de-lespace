@@ -146,7 +146,7 @@ namespace OnionMan:: Network
                 return FString{};
            
             }
-            FString decodedString = FString(WCHAR_TO_TCHAR(bytes.GetData() + offset));
+            FString decodedString = FString(size / sizeof(TCHAR), WCHAR_TO_TCHAR(bytes.GetData() + offset));
             offset += size;
             LOG_ERROR("Decoded Value : %s", *decodedString)
             return decodedString;

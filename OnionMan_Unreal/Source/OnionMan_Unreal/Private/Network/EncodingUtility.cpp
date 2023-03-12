@@ -442,7 +442,14 @@ namespace OnionMan::Network
     {
         for (int i{ 0 }; i < fromBufferSize; i++, offset++)
         {
-            toBuffer[offset] = fromBuffer[i];
+            if (offset < toBuffer.Num())
+            {
+                toBuffer[offset] = fromBuffer[i];
+            }
+            else
+            {
+                LOG_ERROR("toBuffer does not have an idex %i", offset)
+            }
         }
     }
 #pragma endregion

@@ -106,6 +106,7 @@ namespace OnionMan.Network
             if (!m_value.Equals(decodedValue))
             {
                 m_value = decodedValue;
+                m_sizeMayHaveChanged = true;
                 if (m_onValueChanged != null)
                 {
                     m_onValueChanged(m_value);

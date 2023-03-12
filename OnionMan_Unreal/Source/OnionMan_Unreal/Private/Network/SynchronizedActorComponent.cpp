@@ -83,6 +83,7 @@ void USynchronizedActorComponent::PutEncodedObjectToBuffer(TArray<uint8>& buffer
 	GetPropertiesToSync(propertiesToSync);
 	for (TObjectPtr<ISynchronizedPropertyBase> property : propertiesToSync)
 	{
+        LOG_WARNING("Encoding property %i at offset %i", property->PropertyID(), offset)
 		property->PutEncodedPropertyToBuffer(buffer, offset, forSync);                                       // Put all Properties
 	}
 }

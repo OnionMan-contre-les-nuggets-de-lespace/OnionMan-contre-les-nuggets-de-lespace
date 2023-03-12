@@ -47,12 +47,15 @@ void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
         encodedObjectsTotalSize += obj.Value;
     }
 
+    LOG_ERROR("Encoded Size = %i", encodedObjectsTotalSize)
+
     outEncodedObjects.Empty();
     outEncodedObjects.SetNumUninitialized(encodedObjectsTotalSize);
     int offset = 0;
 
     for (TTuple<TObjectPtr<ISynchronizedObjectBase>, int> obj : objectsToSync)
     {
+        LOG_ERROR("Encoding object %i at offset %i", obj.Key->ObjectID(), offset)
         obj.Key->PutEncodedObjectToBuffer(outEncodedObjects, offset);
     }
 }
@@ -83,9 +86,4 @@ void UNetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
             LOG_ERROR("There are no object with ID", objectID);
         }
     }
-}
-
-void UNetworkManager::EndPlay()
-{
-    LOG_ERROR("End Play")
 }

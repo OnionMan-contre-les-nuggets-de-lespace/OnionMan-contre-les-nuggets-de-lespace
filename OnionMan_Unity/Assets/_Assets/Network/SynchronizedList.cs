@@ -141,6 +141,7 @@ namespace OnionMan.Network
             {
                 m_value = Copy(decodedList);
                 m_previousValue = Copy(decodedList);
+                m_sizeMayHaveChanged = true;
                 if (m_onValueChanged != null)
                 {
                     m_onValueChanged(m_value);

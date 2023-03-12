@@ -20,7 +20,7 @@ class ONIONMAN_UNREAL_API USpecializedSynchronizedProperty : public UObject, pub
 
 protected:
 	UPROPERTY(EditAnywhere, DisplayName = "Property ID")
-	uint16 m_propertyID;
+	uint16 m_propertyID{};
 
 private:
 	bool m_needSync = false;
@@ -119,7 +119,9 @@ protected:
 		T decodedValue = EncodingUtility::Decode<T>(encodedProperty, offset, propertySize);
 		if (outValue != decodedValue)
 		{
+			LOG_WARNING("Value changed")
 			outValue = decodedValue;
+            m_sizeMayHaveChanged = true;
 			// if (m_onValueChanged != null)
 			// {
 			//     m_onValueChanged(m_value);
