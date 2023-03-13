@@ -29,6 +29,7 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void BeginDestroy() override;
 
 public:	
 	// Called every frame
@@ -46,6 +47,7 @@ public:
 
     virtual void LoadProperties() override;
 
-	void AddSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty);
+	void AddSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty); 
+	void RemoveSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty);
 	void GetPropertiesToSync(TArray<TObjectPtr<ISynchronizedPropertyBase>>& result);
 };

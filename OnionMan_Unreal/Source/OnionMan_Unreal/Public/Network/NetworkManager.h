@@ -21,8 +21,9 @@ private:
 
 public:
     // NetworkManager methods
-    
+
     void AddSynchronizedObject(ISynchronizedObjectBase& obj);
+    void RemoveSynchronizedObject(ISynchronizedObjectBase& obj);
     void GetObjectsToSync(TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>>& outObjectsToSync);
     void EncodeObjects(TArray<uint8>& outEncodedObjects);
     void DecodeObjects(TArray<uint8>& encodedObjects);

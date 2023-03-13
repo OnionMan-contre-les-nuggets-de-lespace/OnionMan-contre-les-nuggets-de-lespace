@@ -42,6 +42,18 @@ void USynchronizedActorComponent::BeginPlay()
 	
 }
 
+void USynchronizedActorComponent::BeginDestroy()
+{
+	UActorComponent::BeginDestroy();
+	UOnionManGameInstance* gameInstance = Cast<UOnionManGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+
+	if (gameInstance != nullptr)
+	{
+		gameInstance->NetworkManager->RemoveSynchronizedObject(*this);
+	}
+	
+}
+
 // Called every frame
 void USynchronizedActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -139,10 +151,20 @@ void USynchronizedActorComponent::AddSynchronizedProperty(TObjectPtr<ISynchroniz
 	if (m_synchronizedProperties.Contains(propID))
 	{
 		LOG_ERROR("The ID %i is already used", propID);
+		return;
 	}
-	else 
+	m_synchronizedProperties.Add(propID, synchronizedProperty);
+	m_propertiesArray.Add(synchronizedProperty);
+}
+
+void USynchronizedActorComponent::RemoveSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty)
+{
+	uint16 propID = synchronizedProperty->PropertyID();
+	if (m_synchronizedProperties.Contains(propID))
 	{
-		m_synchronizedProperties.Add(propID, synchronizedProperty);
-		m_propertiesArray.Add(synchronizedProperty);
+		LOG_ERROR("No properties with ID %i in the Object %i", propID, m_objectID);
+		return;
 	}
+	m_synchronizedProperties.Remove(propID);
+	m_propertiesArray.Remove(synchronizedProperty);
 }

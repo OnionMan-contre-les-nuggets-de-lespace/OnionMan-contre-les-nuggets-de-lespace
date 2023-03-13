@@ -18,9 +18,22 @@ void UNetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
 	if (m_synchronizedObjects.Contains(objID))
 	{
 		LOG_ERROR("The object ID %i is already used", objID);
+        return;
 	}
 	m_synchronizedObjects.Add(objID, &obj);
 	m_objectsArray.Add(&obj);
+}
+
+void UNetworkManager::RemoveSynchronizedObject(ISynchronizedObjectBase& obj)
+{
+    uint32 objID = obj.ObjectID();
+    if (!m_synchronizedObjects.Contains(objID))
+    {
+        LOG_ERROR("No object with ID %i", objID);
+        return;
+    }
+    m_synchronizedObjects.Remove(objID);
+    m_objectsArray.Remove(&obj);
 }
 
 void UNetworkManager::GetObjectsToSync(TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>>& outObjectsToSync)

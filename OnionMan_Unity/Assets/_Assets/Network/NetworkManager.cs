@@ -26,6 +26,16 @@ namespace OnionMan.Network
             m_synchronizedObjects.Add(objID, obj);
         }
 
+        public void RemoveSynchronizedObject(ISynchronizedObject obj)
+        {
+            uint objID = obj.ObjectID;
+            if (!m_synchronizedObjects.ContainsKey(objID))
+            {
+                throw new InvalidDataException($"No object with ID {objID}");
+            }
+            m_synchronizedObjects.Remove(objID);
+        }
+
         public IEnumerable<(ISynchronizedObject, int)> GetObjectsToSync()
         {
             foreach (ISynchronizedObject synchronizedObject in m_synchronizedObjects.Values)

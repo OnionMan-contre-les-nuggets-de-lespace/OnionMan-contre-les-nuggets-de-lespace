@@ -105,6 +105,16 @@ namespace OnionMan.Network
             }
             m_synchronizedProperties.Add(propID, synchronizedProperty);
         }
+
+        public void RemoveSynchronizedProperty(ISynchronizedProperty synchronizedProperty)
+        {
+            ushort propID = synchronizedProperty.PropertyID;
+            if (!m_synchronizedProperties.ContainsKey(propID))
+            {
+                throw new InvalidDataException($"No properties with ID {propID} in the Object {m_objectID}");
+            }
+            m_synchronizedProperties.Remove(propID);
+        }
         #endregion
 
         // Start is called before the first frame update
@@ -114,5 +124,9 @@ namespace OnionMan.Network
             NetworkManager.Instance.AddSynchronizedObject(this);
         }
 
+        protected virtual void OnDestroy()
+        {
+            NetworkManager.Instance.RemoveSynchronizedObject(this);
+        }
     }
 }
