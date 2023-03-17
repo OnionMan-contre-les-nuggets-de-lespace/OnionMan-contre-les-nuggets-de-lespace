@@ -123,10 +123,5 @@ namespace OnionMan.Network
             LoadProperties();
             NetworkManager.Instance.AddSynchronizedObject(this);
         }
-
-        protected virtual void OnDestroy()
-        {
-            NetworkManager.Instance.RemoveSynchronizedObject(this);
-        }
     }
 }
