@@ -7,58 +7,58 @@ using namespace OnionMan::Network;
 
 void UNetworkTestComponent::LoadProperties()
 {
-	AddSynchronizedProperty(SP0);
-	AddSynchronizedProperty(SP1);
-	AddSynchronizedProperty(SP2);
-	AddSynchronizedProperty(SP3);
-	//AddSynchronizedProperty(&SP0);
-	//AddSynchronizedProperty(&SP1);
-	//AddSynchronizedProperty(&SP2);
+    AddSynchronizedProperty(SP0);
+    AddSynchronizedProperty(SP1);
+    AddSynchronizedProperty(SP2);
+    AddSynchronizedProperty(SP3);
+    //AddSynchronizedProperty(&SP0);
+    //AddSynchronizedProperty(&SP1);
+    //AddSynchronizedProperty(&SP2);
 }
 
 void UNetworkTestComponent::BeginPlay()
 {
-	USynchronizedActorComponent::BeginPlay();
+    USynchronizedActorComponent::BeginPlay();
 
-	UOnionManGameInstance* gameInstance = Cast<UOnionManGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+    UOnionManGameInstance* gameInstance = Cast<UOnionManGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 
-	if (gameInstance == nullptr)
-	{
-		LOG_ERROR("Incorrect GameInsance (Require UOnionManGameInstance)");
-	}
-	else
-	{
-		m_networkManager = gameInstance->NetworkManager;
-	}
+    if (gameInstance == nullptr)
+    {
+        LOG_ERROR("Incorrect GameInsance (Require UOnionManGameInstance)");
+    }
+    else
+    {
+        m_networkManager = gameInstance->NetworkManager;
+    }
 }
 
 
 // Called every frame
 void UNetworkTestComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	USynchronizedActorComponent::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    USynchronizedActorComponent::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (m_firstFrame) 
-	{
-		m_firstFrame = false;
+    if (m_firstFrame) 
+    {
+        m_firstFrame = false;
 
-	}
+    }
 }
 
 void UNetworkTestComponent::EncodeAll()
 {
-	TArray<uint8> encodedObjects{};
-	m_networkManager->EncodeObjects(encodedObjects);
+    TArray<uint8> encodedObjects{};
+    m_networkManager->EncodeObjects(encodedObjects);
 
-	FString encodedString = EncodingUtility::GetBytesAsString(encodedObjects);
+    FString encodedString = EncodingUtility::GetBytesAsString(encodedObjects);
 
-	LOG_ERROR("Encoded string : %s", *encodedString);
+    LOG_ERROR("Encoded string : %s", *encodedString);
 }
 
 void UNetworkTestComponent::DecodeAll()
 {
-	TArray<uint8> encodedBytes{};
-	EncodingUtility::GetStringAsBytes(EncodedString, encodedBytes);
+    TArray<uint8> encodedBytes{};
+    EncodingUtility::GetStringAsBytes(EncodedString, encodedBytes);
 
-	m_networkManager->DecodeObjects(encodedBytes);
+    m_networkManager->DecodeObjects(encodedBytes);
 }

@@ -5,6 +5,6 @@
 
 void UOnionManGameInstance::Init()
 {
-	UGameInstance::Init();
-	NetworkManager = NewObject<UNetworkManager>();
+    UGameInstance::Init();
+    NetworkManager = NewObject<UNetworkManager>();
 }

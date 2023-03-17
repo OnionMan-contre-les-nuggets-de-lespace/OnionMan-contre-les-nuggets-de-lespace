@@ -14,14 +14,14 @@ UNetworkManager::UNetworkManager()
 
 void UNetworkManager::AddSynchronizedObject(ISynchronizedObjectBase& obj)
 {
-	uint32 objID = obj.ObjectID();
-	if (m_synchronizedObjects.Contains(objID))
-	{
-		LOG_ERROR("The object ID %i is already used", objID);
+    uint32 objID = obj.ObjectID();
+    if (m_synchronizedObjects.Contains(objID))
+    {
+        LOG_ERROR("The object ID %i is already used", objID);
         return;
-	}
-	m_synchronizedObjects.Add(objID, &obj);
-	m_objectsArray.Add(&obj);
+    }
+    m_synchronizedObjects.Add(objID, &obj);
+    m_objectsArray.Add(&obj);
 }
 
 void UNetworkManager::RemoveSynchronizedObject(ISynchronizedObjectBase& obj)
@@ -55,12 +55,12 @@ void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
     GetObjectsToSync(objectsToSync);
 
     int encodedObjectsTotalSize = 0;
-    for(TTuple<TObjectPtr<ISynchronizedObjectBase>, int> obj : objectsToSync)
+    for (TTuple<TObjectPtr<ISynchronizedObjectBase>, int> obj : objectsToSync)
     {
         encodedObjectsTotalSize += obj.Value;
     }
 
-    LOG_ERROR("Encoded Size = %i", encodedObjectsTotalSize)
+    LOG_ERROR("Encoded Size = %i", encodedObjectsTotalSize);
 
     outEncodedObjects.Empty();
     outEncodedObjects.SetNumUninitialized(encodedObjectsTotalSize);
@@ -69,7 +69,7 @@ void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
     for (TTuple<TObjectPtr<ISynchronizedObjectBase>, int> obj : objectsToSync)
     {
         LOG_ERROR("Encoding object %i at offset %i", obj.Key->ObjectID(), offset)
-        obj.Key->PutEncodedObjectToBuffer(outEncodedObjects, offset);
+            obj.Key->PutEncodedObjectToBuffer(outEncodedObjects, offset);
     }
 }
 

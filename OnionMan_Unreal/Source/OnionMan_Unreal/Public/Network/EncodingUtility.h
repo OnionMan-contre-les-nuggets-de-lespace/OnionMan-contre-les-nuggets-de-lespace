@@ -134,7 +134,7 @@ namespace OnionMan:: Network
         static T Decode(TArray<uint8>& bytes, int& offset, int size = -1)
         {
             LOG_ERROR("The type %s cannot be decoded yet", internal::GetTypeNameHelper<T>::GetTypeName());
-            return NULL;
+            return T{};
         }
 
         template<>
@@ -146,137 +146,233 @@ namespace OnionMan:: Network
                 return FString{};
            
             }
-            FString decodedString = FString(size / sizeof(TCHAR), WCHAR_TO_TCHAR(bytes.GetData() + offset));
-            offset += size;
-            LOG_ERROR("Decoded Value : %s", *decodedString)
-            return decodedString;
+            if (offset + size <= bytes.Num()) 
+            {
+                FString decodedString = FString(size / sizeof(TCHAR), WCHAR_TO_TCHAR(bytes.GetData() + offset));
+                offset += size;
+                LOG_ERROR("Decoded Value : %s", *decodedString);
+                return decodedString;
+            }
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<FString>");
+            return FString{};
         }
 
         template<>
         static bool Decode<bool>(TArray<uint8>& bytes, int& offset, int size)
         {
-            bool decodedValue = *((bool*)(bytes.GetData() + offset));
+            if (offset + size <= bytes.Num())
+            {
+                bool decodedValue = *((bool*)(bytes.GetData() + offset));
+                offset += sizeof(bool);
+                LOG_ERROR("Decoded Value : %s", decodedValue ? *FString("True") : *FString("False"));
+                return decodedValue;
+            }
             offset += sizeof(bool);
-            LOG_ERROR("Decoded Value : %b", decodedValue)
-            return decodedValue;
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<bool>");
+            return bool{};
         }
 
         template<>
-        static char Decode<char>(TArray<uint8>& bytes, int& offset, int size)
+        static TCHAR Decode<TCHAR>(TArray<uint8>& bytes, int& offset, int size)
         {
-            char decodedValue = *((char*)(bytes.GetData() + offset));
-            offset += sizeof(char);
-            return decodedValue;
+            if (offset + size <= bytes.Num())
+            {
+                char decodedValue = *((TCHAR*)(bytes.GetData() + offset));
+                offset += sizeof(TCHAR);
+                return decodedValue;
+            }
+            offset += sizeof(TCHAR);
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<TCHAR>");
+            return TCHAR{};
         }
 
         template<>
         static double Decode<double>(TArray<uint8>& bytes, int& offset, int size)
         {
-            double decodedValue = *((double*)(bytes.GetData() + offset));
+            if (offset + size <= bytes.Num())
+            {
+                double decodedValue = *((double*)(bytes.GetData() + offset));
+                offset += sizeof(double);
+                LOG_ERROR("Decoded Value : %f", (double)decodedValue);
+                return decodedValue;
+            }
             offset += sizeof(double);
-            return decodedValue;
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<double>");
+            return double{};
         }
 
         template<>
         static float Decode<float>(TArray<uint8>& bytes, int& offset, int size)
         {
-            float decodedValue = *((float*)(bytes.GetData() + offset));
+            if (offset + size <= bytes.Num())
+            {
+                float decodedValue = *((float*)(bytes.GetData() + offset));
+                offset += sizeof(float);
+                LOG_ERROR("Decoded Value : %f", decodedValue);
+                return decodedValue;
+            }
             offset += sizeof(float);
-            LOG_ERROR("Decoded Value : %f", decodedValue)
-            return decodedValue;
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<float>");
+            return float{};
         }
 
         template<>
         static int Decode<int>(TArray<uint8>& bytes, int& offset, int size)
         {
-            int decodedValue = *((int*)(bytes.GetData() + offset));
+            if (offset + size <= bytes.Num())
+            {
+                int decodedValue = *((int*)(bytes.GetData() + offset));
+                offset += sizeof(int);
+                LOG_ERROR("Decoded Value : %i", decodedValue);
+                return decodedValue;
+            }
             offset += sizeof(int);
-            LOG_ERROR("Decoded Value : %i", decodedValue)
-            return decodedValue;
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<int>");
+            return int{};
         }
 
         template<>
-        static long Decode<long>(TArray<uint8>& bytes, int& offset, int size)
+        static int64 Decode<int64>(TArray<uint8>& bytes, int& offset, int size)
         {
-            long decodedValue = *((long*)(bytes.GetData() + offset));
-            offset += sizeof(long);
-            return decodedValue;
+            if (offset + size <= bytes.Num())
+            {
+                int64 decodedValue = *((int64*)(bytes.GetData() + offset));
+                offset += sizeof(int64);
+                LOG_ERROR("Decoded Value : %i", (int)decodedValue);
+                return decodedValue;
+            }
+            offset += sizeof(int64);
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<int64>");
+            return int64{};
         }
 
         template<>
-        static short Decode<short>(TArray<uint8>& bytes, int& offset, int size)
+        static int16 Decode<short>(TArray<uint8>& bytes, int& offset, int size)
         {
-            short decodedValue = *((short*)(bytes.GetData() + offset));
-            offset += sizeof(short);
-            return decodedValue;
+            if (offset + size <= bytes.Num())
+            {
+                int16 decodedValue = *((int16*)(bytes.GetData() + offset));
+                offset += sizeof(int16);
+                LOG_ERROR("Decoded Value : %i", (int)decodedValue);
+                return decodedValue;
+            }
+            offset += sizeof(int16);
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<int16>");
+            return int16{};
         }
 
         template<>
         static uint32 Decode<uint32>(TArray<uint8>& bytes, int& offset, int size)
         {
-            uint32 decodedValue = *((uint32*)(bytes.GetData() + offset));
+            if (offset + size <= bytes.Num())
+            {
+                uint32 decodedValue = *((uint32*)(bytes.GetData() + offset));
+                offset += sizeof(uint32);
+                LOG_ERROR("Decoded Value : %i", (int)decodedValue);
+                return decodedValue;
+            }
             offset += sizeof(uint32);
-            return decodedValue;
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<uint32>");
+            return uint32{};
         }
 
         template<>
         static uint64 Decode<uint64>(TArray<uint8>& bytes, int& offset, int size)
         {
-            uint64 decodedValue = *((uint64*)(bytes.GetData() + offset));
+            if (offset + size <= bytes.Num())
+            {
+                uint64 decodedValue = *((uint64*)(bytes.GetData() + offset));
+                offset += sizeof(uint64);
+                LOG_ERROR("Decoded Value : %i", (int)decodedValue);
+                return decodedValue;
+            }
             offset += sizeof(uint64);
-            return decodedValue;
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<uint64>");
+            return uint64{};
         }
 
         template<>
         static uint16 Decode<uint16>(TArray<uint8>& bytes, int& offset, int size)
         {
-            uint16 decodedValue = *((uint16*)(bytes.GetData() + offset));
+            if (offset + size <= bytes.Num())
+            {
+                uint16 decodedValue = *((uint16*)(bytes.GetData() + offset));
+                offset += sizeof(uint16);
+                LOG_ERROR("Decoded Value : %i", (int)decodedValue);
+                return decodedValue;
+            }
             offset += sizeof(uint16);
-            return decodedValue;
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<uint16>");
+            return uint16{};
         }
 
         template<>
         static FVector3f Decode<FVector3f>(TArray<uint8>& bytes, int& offset, int size)
         {
-            return FVector3f(
-                Decode<float>(bytes, offset),
-                Decode<float>(bytes, offset),
-                Decode<float>(bytes, offset));
+            if (offset + size <= bytes.Num())
+            {
+                return FVector3f(
+                    Decode<float>(bytes, offset),
+                    Decode<float>(bytes, offset),
+                    Decode<float>(bytes, offset));
+            }
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<FVector3f>");
+            return FVector3f{};
         }
 
         template<>
         static FIntVector Decode<FIntVector>(TArray<uint8>& bytes, int& offset, int size)
         {
-            return FIntVector(
-                Decode<int>(bytes, offset),
-                Decode<int>(bytes, offset),
-                Decode<int>(bytes, offset));
+            if (offset + size <= bytes.Num())
+            {
+                return FIntVector(
+                    Decode<int>(bytes, offset),
+                    Decode<int>(bytes, offset),
+                    Decode<int>(bytes, offset));
+            }
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<FIntVector>");
+            return FIntVector{};
         }
 
         template<>
         static FVector2f Decode<FVector2f>(TArray<uint8>& bytes, int& offset, int size)
         {
-            return FVector2f(
-                Decode<float>(bytes, offset),
-                Decode<float>(bytes, offset));
+            if (offset + size <= bytes.Num())
+            {
+                return FVector2f(
+                    Decode<float>(bytes, offset),
+                    Decode<float>(bytes, offset));
+            }
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<FVector2f>");
+            return FVector2f{};
         }
 
         template<>
         static FIntVector2 Decode<FIntVector2>(TArray<uint8>& bytes, int& offset, int size)
         {
-            return FIntVector2(
-                Decode<int>(bytes, offset),
-                Decode<int>(bytes, offset));
+            if (offset + size <= bytes.Num())
+            {
+                return FIntVector2(
+                    Decode<int>(bytes, offset),
+                    Decode<int>(bytes, offset));
+            }
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<FIntVector2>");
+            return FIntVector2{};
         }
 
         template<>
         static FQuat4f Decode<FQuat4f>(TArray<uint8>& bytes, int& offset, int size)
         {
-            return FQuat4f(
-                Decode<float>(bytes, offset),
-                Decode<float>(bytes, offset),
-                Decode<float>(bytes, offset),
-                Decode<float>(bytes, offset));
+            if (offset + size <= bytes.Num())
+            {
+                return FQuat4f(
+                    Decode<float>(bytes, offset),
+                    Decode<float>(bytes, offset),
+                    Decode<float>(bytes, offset),
+                    Decode<float>(bytes, offset));
+            }
+            LOG_ERROR("Trying to read a value outside of byte buffer in Decode<FQuat4f>");
+            return FQuat4f{};
         }
 
 #pragma endregion

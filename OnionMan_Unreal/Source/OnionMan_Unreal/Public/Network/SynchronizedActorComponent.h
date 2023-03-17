@@ -12,28 +12,28 @@
 UCLASS(Abstract/*, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) */)
 class ONIONMAN_UNREAL_API USynchronizedActorComponent : public UActorComponent, public ISynchronizedObjectBase
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 protected:
-	UPROPERTY(EditAnywhere, DisplayName = "Object ID", Category = "Network")
-	uint32 m_objectID;
+    UPROPERTY(EditAnywhere, DisplayName = "Object ID", Category = "Network")
+    uint32 m_objectID;
 
 private:
-	TMap<uint16, TObjectPtr<ISynchronizedPropertyBase>> m_synchronizedProperties{};
-	int m_encodedPropertiesSize;
-	TArray<TObjectPtr<ISynchronizedPropertyBase>> m_propertiesArray{};
+    TMap<uint16, TObjectPtr<ISynchronizedPropertyBase>> m_synchronizedProperties{};
+    int m_encodedPropertiesSize;
+    TArray<TObjectPtr<ISynchronizedPropertyBase>> m_propertiesArray{};
 
 public:	
-	// Sets default values for this component's properties
-	USynchronizedActorComponent();
+    // Sets default values for this component's properties
+    USynchronizedActorComponent();
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-	virtual void BeginDestroy() override;
+    // Called when the game starts
+    virtual void BeginPlay() override;
+    virtual void BeginDestroy() override;
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+    // Called every frame
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
     virtual const uint32 ObjectID() const override;
 
@@ -47,7 +47,7 @@ public:
 
     virtual void LoadProperties() override;
 
-	void AddSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty); 
-	void RemoveSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty);
-	void GetPropertiesToSync(TArray<TObjectPtr<ISynchronizedPropertyBase>>& result);
+    void AddSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty); 
+    void RemoveSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty);
+    void GetPropertiesToSync(TArray<TObjectPtr<ISynchronizedPropertyBase>>& result);
 };

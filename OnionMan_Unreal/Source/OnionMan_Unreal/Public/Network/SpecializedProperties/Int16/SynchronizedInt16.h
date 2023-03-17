@@ -14,14 +14,14 @@
 UCLASS(BlueprintType, EditInlineNew)
 class ONIONMAN_UNREAL_API USynchronizedInt16 : public USpecializedSynchronizedProperty
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 protected:
-	UPROPERTY(EditAnywhere, DisplayName = "Value")
-	int16 m_value;
+    UPROPERTY(EditAnywhere, DisplayName = "Value")
+    int16 m_value;
 
 public:
-	USynchronizedInt16();
-	USynchronizedInt16(int16 value, uint16 propertyID);
+    USynchronizedInt16();
+    USynchronizedInt16(int16 value, uint16 propertyID);
 
     inline int16 GetValue() const
     {
@@ -33,9 +33,9 @@ public:
         SetValueGeneric<int16>(newValue, m_value);
     }
 
-	virtual void Init() override;
-	virtual int GetEncodedPropertySize() override;
-	virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;
-	virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
+    virtual void Init() override;
+    virtual int GetEncodedPropertySize() override;
+    virtual void PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int& offset, bool forSync) override;
+    virtual void DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize) override;
 };
 

@@ -13,10 +13,10 @@
 UCLASS(BlueprintType, Blueprintable)
 class ONIONMAN_UNREAL_API UOnionManGameInstance : public UGameInstance
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
-	UPROPERTY(BlueprintReadWrite)
-	TObjectPtr<UNetworkManager> NetworkManager;
+    UPROPERTY(BlueprintReadWrite)
+    TObjectPtr<UNetworkManager> NetworkManager;
 
-	virtual void Init() override;
+    virtual void Init() override;
 };
