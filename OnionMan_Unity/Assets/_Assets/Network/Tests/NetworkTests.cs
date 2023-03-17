@@ -4,7 +4,6 @@ using UnityEngine;
 
 using OnionMan.Network;
 using System.Linq;
-using static UnityEditor.PlayerSettings;
 
 public class NetworkTests : SynchronizedMonoBehaviour
 {
