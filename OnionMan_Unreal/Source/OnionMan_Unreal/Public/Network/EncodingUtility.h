@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "LogUtils.h"
 
-namespace OnionMan:: Network
+namespace OnionMan::Network
 {
     /**
      *
@@ -25,7 +25,7 @@ namespace OnionMan:: Network
         template<>
         static void PutEncodedValueInBuffer<FString>(FString value, TArray<uint8>& buffer, int& offset)
         {
-            PutToBuffer(buffer, (const uint8*)TCHAR_TO_WCHAR(*value), offset, value.Len() * sizeof(TCHAR));
+            PutToBuffer(buffer, (const uint8*)TCHAR_TO_WCHAR(*value), offset, value.Len() * sizeof(WCHAR));
         }
 
         template<>
@@ -59,15 +59,15 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static void PutEncodedValueInBuffer<long>(long value, TArray<uint8>& buffer, int& offset)
+        static void PutEncodedValueInBuffer<int64>(int64 value, TArray<uint8>& buffer, int& offset)
         {
-            PutToBuffer(buffer, (uint8*)&value, offset, sizeof(long));
+            PutToBuffer(buffer, (uint8*)&value, offset, sizeof(int64));
         }
 
         template<>
-        static void PutEncodedValueInBuffer<short>(short value, TArray<uint8>& buffer, int& offset)
+        static void PutEncodedValueInBuffer<int16>(int16 value, TArray<uint8>& buffer, int& offset)
         {
-            PutToBuffer(buffer, (uint8*)&value, offset, sizeof(short));
+            PutToBuffer(buffer, (uint8*)&value, offset, sizeof(int16));
         }
 
         template<>
@@ -160,7 +160,7 @@ namespace OnionMan:: Network
         template<>
         static bool Decode<bool>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(bool) <= bytes.Num())
             {
                 bool decodedValue = *((bool*)(bytes.GetData() + offset));
                 offset += sizeof(bool);
@@ -175,9 +175,9 @@ namespace OnionMan:: Network
         template<>
         static TCHAR Decode<TCHAR>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(TCHAR) <= bytes.Num())
             {
-                char decodedValue = *((TCHAR*)(bytes.GetData() + offset));
+                TCHAR decodedValue = *((TCHAR*)(bytes.GetData() + offset));
                 offset += sizeof(TCHAR);
                 return decodedValue;
             }
@@ -189,7 +189,7 @@ namespace OnionMan:: Network
         template<>
         static double Decode<double>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(double) <= bytes.Num())
             {
                 double decodedValue = *((double*)(bytes.GetData() + offset));
                 offset += sizeof(double);
@@ -204,7 +204,7 @@ namespace OnionMan:: Network
         template<>
         static float Decode<float>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(float) <= bytes.Num())
             {
                 float decodedValue = *((float*)(bytes.GetData() + offset));
                 offset += sizeof(float);
@@ -219,7 +219,7 @@ namespace OnionMan:: Network
         template<>
         static int Decode<int>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(int) <= bytes.Num())
             {
                 int decodedValue = *((int*)(bytes.GetData() + offset));
                 offset += sizeof(int);
@@ -234,7 +234,7 @@ namespace OnionMan:: Network
         template<>
         static int64 Decode<int64>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(int64) <= bytes.Num())
             {
                 int64 decodedValue = *((int64*)(bytes.GetData() + offset));
                 offset += sizeof(int64);
@@ -247,9 +247,9 @@ namespace OnionMan:: Network
         }
 
         template<>
-        static int16 Decode<short>(TArray<uint8>& bytes, int& offset, int size)
+        static int16 Decode<int16>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(int16) <= bytes.Num())
             {
                 int16 decodedValue = *((int16*)(bytes.GetData() + offset));
                 offset += sizeof(int16);
@@ -264,7 +264,7 @@ namespace OnionMan:: Network
         template<>
         static uint32 Decode<uint32>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(uint32) <= bytes.Num())
             {
                 uint32 decodedValue = *((uint32*)(bytes.GetData() + offset));
                 offset += sizeof(uint32);
@@ -279,7 +279,7 @@ namespace OnionMan:: Network
         template<>
         static uint64 Decode<uint64>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(uint64) <= bytes.Num())
             {
                 uint64 decodedValue = *((uint64*)(bytes.GetData() + offset));
                 offset += sizeof(uint64);
@@ -294,7 +294,7 @@ namespace OnionMan:: Network
         template<>
         static uint16 Decode<uint16>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + sizeof(uint16) <= bytes.Num())
             {
                 uint16 decodedValue = *((uint16*)(bytes.GetData() + offset));
                 offset += sizeof(uint16);
@@ -309,7 +309,7 @@ namespace OnionMan:: Network
         template<>
         static FVector3f Decode<FVector3f>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + 3 * sizeof(float) <= bytes.Num())
             {
                 return FVector3f(
                     Decode<float>(bytes, offset),
@@ -323,7 +323,7 @@ namespace OnionMan:: Network
         template<>
         static FIntVector Decode<FIntVector>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + 3 * sizeof(int) <= bytes.Num())
             {
                 return FIntVector(
                     Decode<int>(bytes, offset),
@@ -337,7 +337,7 @@ namespace OnionMan:: Network
         template<>
         static FVector2f Decode<FVector2f>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + 2 * sizeof(float) <= bytes.Num())
             {
                 return FVector2f(
                     Decode<float>(bytes, offset),
@@ -350,7 +350,7 @@ namespace OnionMan:: Network
         template<>
         static FIntVector2 Decode<FIntVector2>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + 2 * sizeof(int) <= bytes.Num())
             {
                 return FIntVector2(
                     Decode<int>(bytes, offset),
@@ -363,7 +363,7 @@ namespace OnionMan:: Network
         template<>
         static FQuat4f Decode<FQuat4f>(TArray<uint8>& bytes, int& offset, int size)
         {
-            if (offset + size <= bytes.Num())
+            if (offset + 4 * sizeof(float) <= bytes.Num())
             {
                 return FQuat4f(
                     Decode<float>(bytes, offset),
