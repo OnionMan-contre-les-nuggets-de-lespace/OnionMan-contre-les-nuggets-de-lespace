@@ -11,7 +11,12 @@ USpecializedSynchronizedList::USpecializedSynchronizedList(uint16 propertyID)
 
 bool USpecializedSynchronizedList::NeedSync()
 {
-    return true;
+    if (Role() == NetworkRole::Reciever)
+    {
+        return false;
+    }
+
+    return true; // @TODO Remove it
     CheckNeedSync();
     return m_needSync;
 }
@@ -19,6 +24,11 @@ bool USpecializedSynchronizedList::NeedSync()
 const uint16 USpecializedSynchronizedList::PropertyID() const
 {
     return m_propertyID;
+}
+
+const NetworkRole USpecializedSynchronizedList::Role() const
+{
+    return m_role;
 }
 
 void USpecializedSynchronizedList::Init()

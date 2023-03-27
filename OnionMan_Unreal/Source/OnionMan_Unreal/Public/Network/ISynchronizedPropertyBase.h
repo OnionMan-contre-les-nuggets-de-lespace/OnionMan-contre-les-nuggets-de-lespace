@@ -15,6 +15,13 @@ class USynchronizedPropertyBase : public UInterface
     GENERATED_BODY()
 };
 
+enum NetworkRole
+{
+    SenderAndReciever = 0,
+    Sender = 1,
+    Reciever = 2,
+}
+
 class ISynchronizedPropertyBase
 {
     GENERATED_BODY()
@@ -22,7 +29,9 @@ public:
 
     virtual bool NeedSync() = 0;
 
-    virtual const uint16 PropertyID() const = 0 ;
+    virtual const uint16 PropertyID() const = 0;
+
+    virtual const NetworkRole Role() const = 0;
 
     virtual void Init() = 0;
 

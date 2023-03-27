@@ -13,6 +13,7 @@ template<typename T>
 class ONIONMAN_UNREAL_API USynchronizedProperty : public ISynchronizedPropertyBase
 {
 private:
+    NetworkRole m_role;
 	T m_value;
 	uint16 m_propertyID;
 
@@ -31,15 +32,29 @@ public:
 
 	bool NeedSync() override;
 
+    const NetworkRole Role() const 
+    {
+        return m_role;
+    }
+
 	const uint16 PropertyID() const override;
 
 	inline const T& GetValue() const
 	{
+        if (Role() == NetworkRole::Sender)
+        {
+            LOG_ERROR("You should not try to get the value of a sender property");
+        }
 		return m_value;
 	}
 
 	inline void SetValue(T value)
 	{
+        if (Role() == NetworkRole::Reciever)
+        {
+            LOG_ERROR("Do not set the value of a reciever property");
+            return;
+        }
 		if (m_value != value)
 		{
 			m_value = value;
