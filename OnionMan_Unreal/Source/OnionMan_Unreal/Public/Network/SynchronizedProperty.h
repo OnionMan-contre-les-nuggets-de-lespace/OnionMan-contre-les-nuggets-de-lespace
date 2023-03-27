@@ -13,7 +13,7 @@ template<typename T>
 class ONIONMAN_UNREAL_API USynchronizedProperty : public ISynchronizedPropertyBase
 {
 private:
-    NetworkRole m_role;
+    TEnumAsByte<ENetworkRole> m_role;
 	T m_value;
 	uint16 m_propertyID;
 
@@ -32,7 +32,7 @@ public:
 
 	bool NeedSync() override;
 
-    const NetworkRole Role() const 
+    const ENetworkRole Role() const 
     {
         return m_role;
     }
@@ -41,7 +41,7 @@ public:
 
 	inline const T& GetValue() const
 	{
-        if (Role() == NetworkRole::Sender)
+        if (Role() == ENetworkRole::Sender)
         {
             LOG_ERROR("You should not try to get the value of a sender property");
         }
@@ -50,7 +50,7 @@ public:
 
 	inline void SetValue(T value)
 	{
-        if (Role() == NetworkRole::Reciever)
+        if (Role() == ENetworkRole::Receiver)
         {
             LOG_ERROR("Do not set the value of a reciever property");
             return;

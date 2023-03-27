@@ -25,7 +25,7 @@ namespace OnionMan::Network
         template<>
         static void PutEncodedValueInBuffer<FString>(FString value, TArray<uint8>& buffer, int& offset)
         {
-            PutToBuffer(buffer, (const uint8*)TCHAR_TO_WCHAR(*value), offset, value.Len() * sizeof(WCHAR));
+            PutToBuffer(buffer, (const uint8*)TCHAR_TO_WCHAR(*value), offset, value.Len() * sizeof(TCHAR));
         }
 
         template<>

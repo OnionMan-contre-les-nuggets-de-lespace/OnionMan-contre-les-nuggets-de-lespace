@@ -11,7 +11,7 @@ USpecializedSynchronizedList::USpecializedSynchronizedList(uint16 propertyID)
 
 bool USpecializedSynchronizedList::NeedSync()
 {
-    if (Role() == NetworkRole::Reciever)
+    if (Role() == ENetworkRole::Receiver)
     {
         return false;
     }
@@ -26,7 +26,7 @@ const uint16 USpecializedSynchronizedList::PropertyID() const
     return m_propertyID;
 }
 
-const NetworkRole USpecializedSynchronizedList::Role() const
+const ENetworkRole USpecializedSynchronizedList::Role() const
 {
     return m_role;
 }

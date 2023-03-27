@@ -21,7 +21,7 @@ namespace OnionMan.Network
             }
             set
             {
-                if (Role == NetworkRole.Reciever)
+                if (Role == NetworkRole.Receiver)
                 {
                     Debug.LogError("Do not set the value of a reciever property");
                     return;
@@ -40,7 +40,7 @@ namespace OnionMan.Network
         {
             get 
             {
-                if (Role == NetworkRole.Reciever)
+                if (Role == NetworkRole.Receiver)
                 {
                     return false;
                 }
@@ -61,7 +61,7 @@ namespace OnionMan.Network
         }
 
         [SerializeField]
-        private NetworkRole m_role = NetworkRole.SenderAndReciever;
+        private NetworkRole m_role = NetworkRole.SenderAndReceiver;
 
         [SerializeField]
         private T m_value;
@@ -102,7 +102,7 @@ namespace OnionMan.Network
         {
             if (forSync)
             {
-                if (Role == NetworkRole.Reciever)
+                if (Role == NetworkRole.Receiver)
                 {
                     Debug.LogError("Do not try to encode a reciever property");
                     return;
@@ -119,7 +119,7 @@ namespace OnionMan.Network
         {
             if (forSync)
             {
-                if (Role == NetworkRole.Reciever)
+                if (Role == NetworkRole.Receiver)
                 {
                     Debug.LogError("Do not try to encode a reciever property");
                     return new byte[0];

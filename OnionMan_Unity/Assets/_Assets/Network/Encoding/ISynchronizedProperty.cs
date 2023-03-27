@@ -4,9 +4,9 @@ namespace OnionMan.Network
 {
     public enum NetworkRole
     {
-        SenderAndReciever = 0,
+        SenderAndReceiver = 0,
         Sender = 1,
-        Reciever = 2,
+        Receiver = 2,
     }
 
     public interface ISynchronizedProperty

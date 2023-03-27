@@ -6,6 +6,13 @@
 
 #include "ISynchronizedPropertyBase.generated.h"
 
+UENUM()
+enum ENetworkRole
+{
+    SenderAndReceiver = 0,
+    Sender = 1,
+    Receiver = 2,
+};
 /**
  *
  */
@@ -14,13 +21,6 @@ class USynchronizedPropertyBase : public UInterface
 {
     GENERATED_BODY()
 };
-
-enum NetworkRole
-{
-    SenderAndReciever = 0,
-    Sender = 1,
-    Reciever = 2,
-}
 
 class ISynchronizedPropertyBase
 {
@@ -31,7 +31,7 @@ public:
 
     virtual const uint16 PropertyID() const = 0;
 
-    virtual const NetworkRole Role() const = 0;
+    virtual const ENetworkRole Role() const = 0;
 
     virtual void Init() = 0;
 

@@ -20,7 +20,7 @@ const uint16 USpecializedSynchronizedProperty::PropertyID() const
     return m_propertyID;
 }
 
-const NetworkRole USpecializedSynchronizedProperty::Role() const
+const ENetworkRole USpecializedSynchronizedProperty::Role() const
 {
     return m_role;
 }

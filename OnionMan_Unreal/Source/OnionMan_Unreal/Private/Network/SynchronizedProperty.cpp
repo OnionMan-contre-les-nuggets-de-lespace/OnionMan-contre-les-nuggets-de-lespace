@@ -66,7 +66,7 @@ void USynchronizedProperty<T>::PutEncodedPropertyToBuffer(TArray<uint8>& buffer,
 {
     if (forSync)
     {
-        if (Role() == NetworkRole::Reciever)
+        if (Role() == ENetworkRole::Receiver)
         {
             LOG_ERROR("Do not try to encode a reciever property");
             return;
@@ -84,7 +84,7 @@ void USynchronizedProperty<T>::DecodeProperty(TArray<uint8>& encodedProperty, in
 {
     T decodedValue = EncodingUtility::Decode<T>(encodedProperty, offset, propertySize);
 
-    if (Role() == NetworkRole::Sender)
+    if (Role() == ENetworkRole::Sender)
     {
         LOG_ERROR("Do not try to decode a sender property");
         return;
