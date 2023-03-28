@@ -19,6 +19,11 @@ const uint16 USpecializedSynchronizedProperty::PropertyID() const
     return m_propertyID;
 }
 
+const NetworkRole USpecializedSynchronizedProperty::Role() const
+{
+    return m_role;
+}
+
 void USpecializedSynchronizedProperty::Init()
 {
 }
@@ -35,4 +40,3 @@ void USpecializedSynchronizedProperty::PutEncodedPropertyToBuffer(TArray<uint8>&
 void USpecializedSynchronizedProperty::DecodeProperty(TArray<uint8>& encodedProperty, int& offset, int propertySize)
 {
 }
-

@@ -19,6 +19,9 @@ class ONIONMAN_UNREAL_API USpecializedSynchronizedList : public UObject, public 
     GENERATED_BODY()
 
 protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Role")
+	TEnumAsByte<ENetworkRole> m_role = ENetworkRole::SenderAndReceiver;
+
     UPROPERTY(EditAnywhere, DisplayName = "Property ID")
     uint16 m_propertyID;
 
@@ -42,6 +45,9 @@ public:
     virtual bool NeedSync() override;
     // Cannot use UFUNCTION(BlueprintCallable) because blueprints does not support uint16
     virtual const uint16 PropertyID() const override;
+	UFUNCTION(BlueprintCallable)
+	virtual const ENetworkRole Role() const override;
+
     UFUNCTION(BlueprintCallable)
     virtual void Init() override;
     UFUNCTION(BlueprintCallable)
@@ -111,12 +117,21 @@ protected:
     template<typename T>
     const TArray<T>& GetValueGeneric(const TArray<T>& value) const
     {
+        if (Role() == ENetworkRole::Sender)
+        {
+            LOG_ERROR("You should not try to get the value of a sender property");
+        }
         return value;
     }
 
     template<typename T>
     void SetValueGeneric(TArray<T> value, TArray<T>& outValue)
     {
+        if (Role() == ENetworkRole::Receiver)
+        {
+            LOG_ERROR("Do not set the value of a reciever property");
+            return;
+        }
         outValue = value;
     }
     
@@ -160,6 +175,11 @@ protected:
     {
         if (forSync)
         {
+            if (Role() == ENetworkRole::Receiver)
+            {
+                LOG_ERROR("Do not try to encode a reciever property");
+                return;
+            }
             m_needSync = false;
         }
 
@@ -182,6 +202,12 @@ protected:
         {
             int itemSize = EncodingUtility::Decode<int>(encodedProperty, offset);
             decodedList.Add(EncodingUtility::Decode<T>(encodedProperty, offset, itemSize));
+        }
+
+        if (Role() == ENetworkRole::Sender)
+        {
+            LOG_ERROR("Do not try to decode a sender property");
+            return;
         }
 
         if (!ListEquals<T>(outValue, decodedList))

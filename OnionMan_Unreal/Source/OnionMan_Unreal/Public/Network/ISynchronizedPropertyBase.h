@@ -6,6 +6,13 @@
 
 #include "ISynchronizedPropertyBase.generated.h"
 
+UENUM()
+enum ENetworkRole
+{
+    SenderAndReceiver = 0,
+    Sender = 1,
+    Receiver = 2,
+};
 /**
  *
  */
@@ -22,7 +29,9 @@ public:
 
     virtual bool NeedSync() = 0;
 
-    virtual const uint16 PropertyID() const = 0 ;
+    virtual const uint16 PropertyID() const = 0;
+
+    virtual const ENetworkRole Role() const = 0;
 
     virtual void Init() = 0;
 

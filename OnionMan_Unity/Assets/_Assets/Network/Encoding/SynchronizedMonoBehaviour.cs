@@ -39,7 +39,7 @@ namespace OnionMan.Network
 
             foreach (ISynchronizedProperty property in GetPropertiesToSync())
             {
-                property.PutEncodedPoropertyToBuffer(buffer, ref offset, forSync);                               // Put all Properties
+                property.PutEncodedPropertyToBuffer(buffer, ref offset, forSync);                               // Put all Properties
             }
         }
         public IEnumerable<byte> EncodeObject(bool forSync = true)

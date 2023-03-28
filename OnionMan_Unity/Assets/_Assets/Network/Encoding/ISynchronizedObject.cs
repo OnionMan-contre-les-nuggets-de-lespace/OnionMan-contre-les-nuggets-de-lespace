@@ -28,10 +28,10 @@ namespace OnionMan.Network
         private bool m_needSync; 
         private int m_encodedSize;
 
-		public ObjectNeedSyncResult(bool needSync, int encodedSize)
-		{
+        public ObjectNeedSyncResult(bool needSync, int encodedSize)
+        {
             m_needSync = needSync;
             m_encodedSize = encodedSize;
-		}
+        }
     }
 }
