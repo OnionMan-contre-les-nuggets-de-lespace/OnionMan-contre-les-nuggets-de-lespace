@@ -29,6 +29,8 @@ public:
 		bool IsArmored;
 	// Create Property Weapons ! (donc un script C++ weapon)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+		TSubclassOf<AActor> Weapon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		FVector Location;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		TSubclassOf<AActor> m_actorBP;
