@@ -11,13 +11,18 @@ USpecializedSynchronizedProperty::USpecializedSynchronizedProperty(uint16 proper
 
 bool USpecializedSynchronizedProperty::NeedSync()
 {
-    return true;
+    return true; // @TODO Remove it
     return m_needSync;
 }
 
 const uint16 USpecializedSynchronizedProperty::PropertyID() const
 {
     return m_propertyID;
+}
+
+const ENetworkRole USpecializedSynchronizedProperty::Role() const
+{
+    return m_role;
 }
 
 void USpecializedSynchronizedProperty::Init()

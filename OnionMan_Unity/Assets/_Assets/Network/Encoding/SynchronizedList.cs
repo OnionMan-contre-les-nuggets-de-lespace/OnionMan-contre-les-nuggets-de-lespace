@@ -15,6 +15,11 @@ namespace OnionMan.Network
         {
             get 
             {
+                if (Role == NetworkRole.Receiver)
+                {
+                    return false;
+                }
+
                 CheckNeedSync();
                 return m_needSync;
             }
@@ -23,15 +28,35 @@ namespace OnionMan.Network
 
         public List<T> Value
         {
-            get => m_value; 
-            set => m_value = value;
+            get
+            {
+                if (Role == NetworkRole.Sender)
+                {
+                    Debug.LogError($"You should not try to get the value of a sender property");
+                }
+                return m_value;
+            }
+            set
+            {
+                if (Role == NetworkRole.Receiver)
+                {
+                    Debug.LogError($"Do not set the value of a reciever property");
+                    return;
+                }
+                m_value = value;
+            }
         }
+
+        public NetworkRole Role { get => m_role; }
 
         public Action<List<T>> OnValueChanged 
         { 
             get => m_onValueChanged; 
-            set => m_onValueChanged = value; 
+            set => m_onValueChanged = value;
         }
+
+        [SerializeField]
+        private NetworkRole m_role = NetworkRole.SenderAndReceiver;
 
         [SerializeField]
         private ushort m_propertyID;
@@ -51,7 +76,7 @@ namespace OnionMan.Network
 
         private Action<List<T>> m_onValueChanged;
 
-		public SynchronizedList(List<T> initialValue, ushort propertyID)
+        public SynchronizedList(List<T> initialValue, ushort propertyID)
         {
             m_value = Copy(initialValue);
             m_propertyID = propertyID; 
@@ -90,10 +115,15 @@ namespace OnionMan.Network
             return m_encodedSize;
         }
 
-        public void PutEncodedPoropertyToBuffer(byte[] buffer, ref int offset, bool forSync = true)
+        public void PutEncodedPropertyToBuffer(byte[] buffer, ref int offset, bool forSync = true)
         {
             if (forSync)
             {
+                if (Role == NetworkRole.Receiver)
+                {
+                    Debug.LogError($"Do not try to encode a reciever property");
+                    return;
+                }
                 m_needSync = false;
             }
 
@@ -109,19 +139,24 @@ namespace OnionMan.Network
         {
             if (forSync)
             {
+                if (Role == NetworkRole.Receiver)
+                {
+                    Debug.LogError($"Do not try to encode a reciever property");
+                    return new byte[0];
+                }
                 m_needSync = false;
             }
 
             int propertySize = GetEncodedPropertySize();
             int offset = 0;
-			byte[] encodedList = new byte[propertySize];
+            byte[] encodedList = new byte[propertySize];
             EncodingUtility.PutEncodedValueInBuffer(propertySize, encodedList, ref offset);
             EncodingUtility.PutEncodedValueInBuffer(m_propertyID, encodedList, ref offset);
 
             foreach (T item in m_value)
-			{
-				EncodingUtility.PutEncodedValueInBuffer(GetTSize(item), encodedList, ref offset);
-				EncodingUtility.PutEncodedValueInBuffer(item, encodedList, ref offset);
+            {
+                EncodingUtility.PutEncodedValueInBuffer(GetTSize(item), encodedList, ref offset);
+                EncodingUtility.PutEncodedValueInBuffer(item, encodedList, ref offset);
             }
             return encodedList;
         }
@@ -137,6 +172,12 @@ namespace OnionMan.Network
                 decodedList.Add(EncodingUtility.Decode<T>(encodedProperty, ref offset, itemSize));
             }
 
+            if (Role == NetworkRole.Sender)
+            {
+                Debug.LogError($"Do not try to decode a sender property");
+                return;
+            }
+
             if (!ListEquals(m_value, decodedList))
             {
                 m_value = Copy(decodedList);
@@ -149,7 +190,7 @@ namespace OnionMan.Network
             }
         }
         
-		private void CheckNeedSync()
+        private void CheckNeedSync()
         {
             if (m_needSync)
             {

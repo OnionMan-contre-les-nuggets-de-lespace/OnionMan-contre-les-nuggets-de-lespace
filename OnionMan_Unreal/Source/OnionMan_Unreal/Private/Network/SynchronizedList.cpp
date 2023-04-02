@@ -84,6 +84,11 @@ void USynchronizedList<T>::PutEncodedPropertyToBuffer(TArray<uint8>& buffer, int
 {
     if (forSync)
     {
+        if (Role() == ENetworkRole::Receiver)
+        {
+            LOG_ERROR("Do not try to encode a reciever property");
+            return;
+        }
         m_needSync = false;
     }
 
@@ -106,6 +111,12 @@ void USynchronizedList<T>::DecodeProperty(TArray<uint8>& encodedProperty, int& o
     {
         int itemSize = EncodingUtility::Decode<int>(encodedProperty, offset);
         decodedList.Add(EncodingUtility::Decode<T>(encodedProperty, offset, itemSize));
+    }
+
+    if (Role() == ENetworkRole::Sender)
+    {
+        LOG_ERROR("Do not try to decode a sender property");
+        return;
     }
 
     if (!ListEquals(m_value, decodedList))

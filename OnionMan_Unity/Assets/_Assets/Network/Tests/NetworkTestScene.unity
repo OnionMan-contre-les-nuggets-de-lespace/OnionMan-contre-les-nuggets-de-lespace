@@ -154,18 +154,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_objectID: 0
   SP0:
+    m_role: 0
     m_propertyID: 0
     m_needSync: 1
     m_value: []
   SP1:
+    m_role: 0
     m_value: 
     m_propertyID: 1
     m_needSync: 1
   SP2:
+    m_role: 0
     m_value: {x: 0, y: 0, z: 0, w: 0}
     m_propertyID: 2
     m_needSync: 1
   SP3:
+    m_role: 0
     m_value: 0
     m_propertyID: 3
     m_needSync: 1
@@ -261,8 +265,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_objectID: 666
   SP0:
+    m_role: 1
     m_propertyID: 0
-    m_needSync: 0
+    m_needSync: 1
     m_value:
     - This
     - Is
@@ -271,17 +276,20 @@ MonoBehaviour:
     - SyncList
     - "\xC07\u2017\xD3=9"
   SP1:
+    m_role: 2
     m_value: aaabbbccc
     m_propertyID: 1
     m_needSync: 1
   SP2:
-    m_value: {x: 0, y: 0, z: 0, w: 1}
+    m_role: 0
+    m_value: {x: -0.15241559, y: 0.0151860565, z: -0.7820206, w: -0.604138}
     m_propertyID: 2
-    m_needSync: 0
+    m_needSync: 1
   SP3:
+    m_role: 1
     m_value: 1
     m_propertyID: 3
-    m_needSync: 0
+    m_needSync: 1
   m_encodedObjects: 99|0|0|0|154|2|0|0|62|0|0|0|0|0|10|0|0|0|84|0|101|0|115|0|116|0|49|0|2|0|0|0|50|0|16|0|0|0|101|0|102|0|115|0|101|0|102|0|115|0|101|0|102|0|16|0|0|0|112|0|111|0|105|0|117|0|56|0|198|2|144|0|72|0|18|0|0|0|1|0|114|0|103|0|100|0|114|0|103|0|100|0|114|0|103|0|3|0|0|0|3|0|0
 --- !u!4 &1969823608
 Transform:
@@ -312,14 +320,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_objectID: 666
   SP0:
+    m_role: 0
     m_value: {x: 0, y: 0, z: 0}
     m_propertyID: 0
     m_needSync: 1
   SP1:
+    m_role: 0
     m_value: {x: 0, y: 0, z: 0, w: 0}
     m_propertyID: 1
     m_needSync: 1
   SP3:
+    m_role: 0
     m_value: 
     m_propertyID: 3
     m_needSync: 1

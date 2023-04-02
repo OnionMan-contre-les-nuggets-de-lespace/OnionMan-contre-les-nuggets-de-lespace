@@ -19,6 +19,9 @@ class ONIONMAN_UNREAL_API USpecializedSynchronizedProperty : public UObject, pub
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY(EditAnywhere, DisplayName = "Role")
+	TEnumAsByte<ENetworkRole> m_role = ENetworkRole::SenderAndReceiver;
+
 	UPROPERTY(EditAnywhere, DisplayName = "Property ID")
 	uint16 m_propertyID{};
 
@@ -42,6 +45,9 @@ public:
 	// Cannot use UFUNCTION(BlueprintCallable) because blueprints does not support uint16
 	virtual const uint16 PropertyID() const override;
 	UFUNCTION(BlueprintCallable)
+	virtual const ENetworkRole Role() const override;
+
+	UFUNCTION(BlueprintCallable)
 	virtual void Init() override;
 	UFUNCTION(BlueprintCallable)
 	virtual int GetEncodedPropertySize() override;
@@ -56,12 +62,21 @@ protected:
 	template<typename T>
 	const T& GetValueGeneric(const T& value) const
 	{
+        if (Role() == ENetworkRole::Sender)
+        {
+            LOG_ERROR("You should not try to get the value of a sender property");
+        }
 		return value;
 	}
 
 	template<typename T>
 	void SetValueGeneric(const T& value, T& outValue)
 	{
+        if (Role() == ENetworkRole::Receiver)
+        {
+            LOG_ERROR("Do not set the value of a reciever property");
+            return;
+        }
 		if (outValue != value)
 		{
 			outValue = value;
@@ -105,6 +120,11 @@ protected:
 	{
 		if (forSync)
 		{
+            if (Role() == ENetworkRole::Receiver)
+            {
+                LOG_ERROR("Do not try to encode a reciever property");
+                return;
+            }
 			m_needSync = false;
 		}
 
@@ -117,6 +137,13 @@ protected:
 	void DecodePropertyGeneric(T& outValue, TArray<uint8>& encodedProperty, int& offset, int propertySize)
 	{
 		T decodedValue = EncodingUtility::Decode<T>(encodedProperty, offset, propertySize);
+
+        if (Role() == ENetworkRole::Sender)
+        {
+            LOG_ERROR("Do not try to decode a sender property");
+            return;
+        }
+        
 		if (outValue != decodedValue)
 		{
 			LOG_WARNING("Value changed")
