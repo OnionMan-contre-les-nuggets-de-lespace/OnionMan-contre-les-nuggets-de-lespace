@@ -242,25 +242,28 @@ public class PlayerMovement : Subject
 
             yield return new WaitUntil(() => Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) < 0.1f);
 
-            isOnAFloor = false;
-
-            movementDirection = MovementDirection.DOWN;
-
-            yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.y - playerTransform.position.y) < 0.1f);
-
-            currentPlayerFloor = targetFloor;
-            isOnAFloor = true;
-
-            if (playerTargetedPos != cachedTargetedPos)
+            while(targetFloor != currentPlayerFloor)
             {
-                playerTargetedPos = cachedTargetedPos;
+                isOnAFloor = false;
 
-                StopCoroutine(moveCoroutine);
+                movementDirection = MovementDirection.DOWN;
 
-                CheckTargetRelativePosition();
+                yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor - 1].position.y - playerTransform.position.y) < 0.1f);
 
-                moveCoroutine = StartCoroutine(MoveCoroutine());
+                currentPlayerFloor--;
+                isOnAFloor = true;
             }
+
+            //if (playerTargetedPos != cachedTargetedPos)
+            //{
+            //    playerTargetedPos = cachedTargetedPos;
+
+            //    StopCoroutine(moveCoroutine);
+
+            //    CheckTargetRelativePosition();
+
+            //    moveCoroutine = StartCoroutine(MoveCoroutine());
+            //}
 
 
             if (playerTargetedPos.position.x > playerTransform.position.x)
