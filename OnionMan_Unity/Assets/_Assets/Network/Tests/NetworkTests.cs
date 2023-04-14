@@ -29,7 +29,7 @@ public class NetworkTests : SynchronizedMonoBehaviour
 
     public void EncodeAndPrint()
     {
-        Debug.Log(EncodingUtility.GetBytesAsString(NetworkManager.Instance.EncodeObjects()));
+        //Debug.Log(EncodingUtility.GetBytesAsString(NetworkManager.Instance.TryEncodeObjects()));
         //NetworkManager.Instance.DecodeObjects(NetworkManager.Instance.EncodeObjects());
     }
 

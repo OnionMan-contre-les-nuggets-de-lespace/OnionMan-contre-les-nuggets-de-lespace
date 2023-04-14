@@ -12,7 +12,7 @@ namespace OnionMan.Network
 
         public ObjectNeedSyncResult NeedSync();
 
-        public void PutEncodedObjectToBuffer(byte[] buffer, ref int offset, bool forSync = true);
+        public void PutEncodedObjectToBuffer(ref byte[] buffer, ref int offset, bool forSync = true);
         public IEnumerable<byte> EncodeObject(bool forSync = true);
 
         public void DecodeObject(byte[] encodedProperties, ref int offset, int size);

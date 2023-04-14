@@ -98,7 +98,7 @@ namespace OnionMan.Network
             }
         }
 
-        public void PutEncodedPropertyToBuffer(byte[] buffer, ref int offset, bool forSync = true)
+        public void PutEncodedPropertyToBuffer(ref byte[] buffer, ref int offset, bool forSync = true)
         {
             if (forSync)
             {
@@ -110,9 +110,9 @@ namespace OnionMan.Network
                 m_needSync = false;
             }
 
-            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), buffer, ref offset); // Put Size
-            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, buffer, ref offset);                           // Put ID
-            EncodingUtility.PutEncodedValueInBuffer(m_value, buffer, ref offset);                                // Put Data
+            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), ref buffer, ref offset); // Put Size
+            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, ref buffer, ref offset);                           // Put ID
+            EncodingUtility.PutEncodedValueInBuffer(m_value, ref buffer, ref offset);                                // Put Data
         }
 
         public IEnumerable<byte> EncodeProperty(bool forSync = true)
@@ -129,9 +129,9 @@ namespace OnionMan.Network
             }
             byte[] encodedProperty = new byte[GetEncodedPropertySize()];
             int offset = 0;
-            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), encodedProperty, ref offset); // Put Size
-            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, encodedProperty, ref offset);                           // Put ID
-            EncodingUtility.PutEncodedValueInBuffer(m_value, encodedProperty, ref offset);                                // Put Data
+            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), ref encodedProperty, ref offset); // Put Size
+            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, ref encodedProperty, ref offset);                           // Put ID
+            EncodingUtility.PutEncodedValueInBuffer(m_value, ref encodedProperty, ref offset);                                // Put Data
 
             return encodedProperty;
         }

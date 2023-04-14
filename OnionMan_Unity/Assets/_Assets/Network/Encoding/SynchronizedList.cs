@@ -115,7 +115,7 @@ namespace OnionMan.Network
             return m_encodedSize;
         }
 
-        public void PutEncodedPropertyToBuffer(byte[] buffer, ref int offset, bool forSync = true)
+        public void PutEncodedPropertyToBuffer(ref byte[] buffer, ref int offset, bool forSync = true)
         {
             if (forSync)
             {
@@ -127,12 +127,12 @@ namespace OnionMan.Network
                 m_needSync = false;
             }
 
-            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), buffer, ref offset); // Put Size
-            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, buffer, ref offset);                           // Put ID
+            EncodingUtility.PutEncodedValueInBuffer(GetEncodedPropertySize() - sizeof(int), ref buffer, ref offset); // Put Size
+            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, ref buffer, ref offset);                           // Put ID
             foreach (T t in m_value)                                                                             // For each element in list :
             {
-                EncodingUtility.PutEncodedValueInBuffer(GetTSize(t), buffer, ref offset);                        // Put Size
-                EncodingUtility.PutEncodedValueInBuffer(t, buffer, ref offset);                                  // Put Data
+                EncodingUtility.PutEncodedValueInBuffer(GetTSize(t), ref buffer, ref offset);                        // Put Size
+                EncodingUtility.PutEncodedValueInBuffer(t, ref buffer, ref offset);                                  // Put Data
             }
         }
         public IEnumerable<byte> EncodeProperty(bool forSync = true)
@@ -150,13 +150,13 @@ namespace OnionMan.Network
             int propertySize = GetEncodedPropertySize();
             int offset = 0;
             byte[] encodedList = new byte[propertySize];
-            EncodingUtility.PutEncodedValueInBuffer(propertySize, encodedList, ref offset);
-            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, encodedList, ref offset);
+            EncodingUtility.PutEncodedValueInBuffer(propertySize, ref encodedList, ref offset);
+            EncodingUtility.PutEncodedValueInBuffer(m_propertyID, ref encodedList, ref offset);
 
             foreach (T item in m_value)
             {
-                EncodingUtility.PutEncodedValueInBuffer(GetTSize(item), encodedList, ref offset);
-                EncodingUtility.PutEncodedValueInBuffer(item, encodedList, ref offset);
+                EncodingUtility.PutEncodedValueInBuffer(GetTSize(item), ref encodedList, ref offset);
+                EncodingUtility.PutEncodedValueInBuffer(item, ref encodedList, ref offset);
             }
             return encodedList;
         }

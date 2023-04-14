@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 namespace OnionMan.Network
@@ -70,77 +71,77 @@ namespace OnionMan.Network
             }
         }
 
-        public static void PutEncodedValueInBuffer<T>(T value, byte[] buffer, ref int offset)
+        public static void PutEncodedValueInBuffer<T>(T value, ref byte[] buffer, ref int offset)
         {
             switch (value)
             {
                 #region Base Types
                 //Misc
                 case string stringValue:
-                    PutToBuffer(buffer, Encoding.Unicode.GetBytes(stringValue), ref offset);
+                    PutToBuffer(ref buffer, Encoding.Unicode.GetBytes(stringValue), ref offset);
                     break;
                 case bool boolValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(boolValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(boolValue), ref offset);
                     break;
                 case char charValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(charValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(charValue), ref offset);
                     break;
 
                 //Numbers
                 case double doubleValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(doubleValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(doubleValue), ref offset);
                     break;
                 case float floatValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(floatValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(floatValue), ref offset);
                     break;
                 case int intValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(intValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(intValue), ref offset);
                     break;
                 case long longValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(longValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(longValue), ref offset);
                     break;
                 case short shortValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(shortValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(shortValue), ref offset);
                     break;
                 case uint uintValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(uintValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(uintValue), ref offset);
                     break;
                 case ulong ulongValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(ulongValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(ulongValue), ref offset);
                     break;
                 case ushort ushortValue:
-                    PutToBuffer(buffer, BitConverter.GetBytes(ushortValue), ref offset);
+                    PutToBuffer(ref buffer, BitConverter.GetBytes(ushortValue), ref offset);
                     break;
                 #endregion
                 #region Derived Types
                 //Vectors
                 case Vector3 vector3Value:
-                    PutEncodedValueInBuffer(vector3Value.x, buffer, ref offset);
-                    PutEncodedValueInBuffer(vector3Value.y, buffer, ref offset);
-                    PutEncodedValueInBuffer(vector3Value.z, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3Value.x, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3Value.y, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3Value.z, ref buffer, ref offset);
                     break;
 
                 case Vector3Int vector3IntValue:
-                    PutEncodedValueInBuffer(vector3IntValue.x, buffer, ref offset);
-                    PutEncodedValueInBuffer(vector3IntValue.y, buffer, ref offset);
-                    PutEncodedValueInBuffer(vector3IntValue.z, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3IntValue.x, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3IntValue.y, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(vector3IntValue.z, ref buffer, ref offset);
                     break;
 
                 case Vector2 vector2Value:
-                    PutEncodedValueInBuffer(vector2Value.x, buffer, ref offset);
-                    PutEncodedValueInBuffer(vector2Value.y, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector2Value.x, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(vector2Value.y, ref buffer, ref offset);
                     break;
 
                 case Vector2Int vector2IntValue:
-                    PutEncodedValueInBuffer(vector2IntValue.x, buffer, ref offset);
-                    PutEncodedValueInBuffer(vector2IntValue.y, buffer, ref offset);
+                    PutEncodedValueInBuffer(vector2IntValue.x, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(vector2IntValue.y, ref buffer, ref offset);
                     break;
 
                 case Quaternion quaternionValue:
-                    PutEncodedValueInBuffer(quaternionValue.x, buffer, ref offset);
-                    PutEncodedValueInBuffer(quaternionValue.y, buffer, ref offset);
-                    PutEncodedValueInBuffer(quaternionValue.z, buffer, ref offset);
-                    PutEncodedValueInBuffer(quaternionValue.w, buffer, ref offset);
+                    PutEncodedValueInBuffer(quaternionValue.x, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(quaternionValue.y, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(quaternionValue.z, ref buffer, ref offset);
+                    PutEncodedValueInBuffer(quaternionValue.w, ref buffer, ref offset);
                     break;
                 #endregion
                 default:
@@ -363,11 +364,19 @@ namespace OnionMan.Network
             }
         }
 
-        public static void PutToBuffer(byte[] toBuffer, byte[] fromBuffer, ref int offset)
+        public static void PutToBuffer(ref byte[] toBuffer, byte[] fromBuffer, ref int offset)
         {
             for (int i = 0; i < fromBuffer.Length; offset++, i++)
             {
                 toBuffer[offset] = fromBuffer[i];
+            }
+        }
+
+        public static void ResizeBuffer(byte[] sourceBuffer, ref byte[] targetBuffer)
+        {
+            for (int i = 0; i < targetBuffer.Length; i++)
+            {
+                targetBuffer[i] = sourceBuffer[i];
             }
         }
 
