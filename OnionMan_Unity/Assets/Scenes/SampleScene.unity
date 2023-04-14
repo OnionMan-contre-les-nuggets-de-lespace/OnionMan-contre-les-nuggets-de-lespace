@@ -1221,9 +1221,9 @@ MonoBehaviour:
   - {fileID: 120095641}
   - {fileID: 123398310}
   - {fileID: 295816523}
-  horizontalSpeed: 0.05
-  verticalDownSpeed: 0.05
-  verticalUpSpeed: 0.01
+  horizontalSpeed: 0.1
+  verticalDownSpeed: 0.1
+  verticalUpSpeed: 0.05
   startBurgerFloor: 5
   checkDistance: 20
   whatIsLadder:
@@ -1479,7 +1479,7 @@ PrefabInstance:
       objectReference: {fileID: 1671623280}
     - target: {fileID: 3636955176149839051, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetPlayerTargetedPos
+      value: OC_GetPlayerTargetedPos
       objectReference: {fileID: 0}
     - target: {fileID: 3636955176879063170, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1487,7 +1487,7 @@ PrefabInstance:
       objectReference: {fileID: 1671623280}
     - target: {fileID: 3636955176879063170, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetPlayerTargetedPos
+      value: OC_GetPlayerTargetedPos
       objectReference: {fileID: 0}
     - target: {fileID: 3636955176886578729, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_Camera
@@ -1595,7 +1595,7 @@ PrefabInstance:
       objectReference: {fileID: 1671623280}
     - target: {fileID: 3636955177694737536, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetPlayerTargetedPos
+      value: OC_GetPlayerTargetedPos
       objectReference: {fileID: 0}
     - target: {fileID: 3636955177716255300, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1603,7 +1603,7 @@ PrefabInstance:
       objectReference: {fileID: 1671623280}
     - target: {fileID: 3636955177716255300, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetPlayerTargetedPos
+      value: OC_GetPlayerTargetedPos
       objectReference: {fileID: 0}
     - target: {fileID: 3636955177797379040, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1611,7 +1611,7 @@ PrefabInstance:
       objectReference: {fileID: 1671623280}
     - target: {fileID: 3636955177797379040, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetPlayerTargetedPos
+      value: OC_GetPlayerTargetedPos
       objectReference: {fileID: 0}
     - target: {fileID: 3636955177828370579, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1619,7 +1619,7 @@ PrefabInstance:
       objectReference: {fileID: 1671623280}
     - target: {fileID: 3636955177828370579, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GetPlayerTargetedPos
+      value: OC_GetPlayerTargetedPos
       objectReference: {fileID: 0}
     - target: {fileID: 5305659851912837137, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_IsActive

@@ -40,6 +40,8 @@ public class PlayerMovement : Subject
     private int currentPlayerFloor;
     private int targetFloor;
 
+    Coroutine moveCoroutine;
+
     private RaycastHit2D[] sideCheckBuffer = new RaycastHit2D[1];
 
     public enum MovementDirection
@@ -66,7 +68,7 @@ public class PlayerMovement : Subject
         isOnAFloor = true;
     }
 
-    public void GetPlayerTargetedPos(int i)
+    public void OC_GetPlayerTargetedPos(int i)
     {
         cachedTargetedPos = possiblePlayerPoses[i];
         targetFloor = i;
@@ -75,7 +77,10 @@ public class PlayerMovement : Subject
         {
             isAtDestination = false;
 
-            StopCoroutine(MoveCoroutine()); ///Deplacement avec Coroutine
+            if(moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine); ///Deplacement avec Coroutine
+            }
             playerTargetedPos = possiblePlayerPoses[i];
 
             CheckTargetRelativePosition();
@@ -105,7 +110,7 @@ public class PlayerMovement : Subject
             //    }
             //}
 
-            StartCoroutine(MoveCoroutine());///Deplacement avec Coroutine
+            moveCoroutine = StartCoroutine(MoveCoroutine());///Deplacement avec Coroutine
 
             doHorizontalMove = true;
             isAtDestination = false;
@@ -124,17 +129,17 @@ public class PlayerMovement : Subject
     {
         if(!isAtDestination)
         {
-            if (playerTargetedPos != cachedTargetedPos)
-            {
-                playerTargetedPos = cachedTargetedPos;
+            //if (playerTargetedPos != cachedTargetedPos)
+            //{
+            //    playerTargetedPos = cachedTargetedPos;
 
-                StopCoroutine(MoveCoroutine());
+            //    StopCoroutine(MoveCoroutine());
 
-                CheckTargetRelativePosition();
+            //    CheckTargetRelativePosition();
 
-                StartCoroutine(MoveCoroutine());
+            //    StartCoroutine(MoveCoroutine());
 
-            }
+            //}
 
             int left = -1;
             int right = 1;
@@ -182,50 +187,46 @@ public class PlayerMovement : Subject
     {
         if (targetIsAbove)
         {
-            if (LeftCheck(whatIsLadder))
+            while(currentPlayerFloor != targetFloor)
             {
-                movementDirection = MovementDirection.LEFT;
-            }
-            else if (RightCheck(whatIsLadder))
-            {
-                movementDirection = MovementDirection.RIGHT;
-            }
-
-            Transform targetLadderTransform = sideCheckBuffer[0].transform;
-
-            yield return new WaitUntil(() => Mathf.Abs(targetLadderTransform.position.x - playerTransform.position.x) < 0.1f);
-
-            isOnAFloor = false;
-
-            movementDirection = MovementDirection.UP;
-
-            yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor + 1].position.y - playerTransform.position.y) < 0.1f);
-            currentPlayerFloor++;
-
-            isOnAFloor = true;
-
-            if (currentPlayerFloor == targetFloor)
-            {
-                if (playerTargetedPos.position.x > playerTransform.position.x)
-                {
-                    movementDirection = MovementDirection.RIGHT;
-                }
-                else if (playerTargetedPos.position.x < playerTransform.position.x)
+                if (LeftCheck(whatIsLadder))
                 {
                     movementDirection = MovementDirection.LEFT;
                 }
+                else if (RightCheck(whatIsLadder))
+                {
+                    movementDirection = MovementDirection.RIGHT;
+                }
 
-                yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
-                movementDirection = MovementDirection.STAY;
-                isAtDestination = true;
-                NotifyObservers();
+                Transform targetLadderTransform = sideCheckBuffer[0].transform;
+
+                yield return new WaitUntil(() => Mathf.Abs(targetLadderTransform.position.x - playerTransform.position.x) < 0.1f);
+
+                isOnAFloor = false;
+
+                movementDirection = MovementDirection.UP;
+
+                yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor + 1].position.y - playerTransform.position.y) < 0.1f);
+                currentPlayerFloor++;
+
+                isOnAFloor = true;
+                playerTargetedPos = cachedTargetedPos;
+                CheckTargetRelativePosition();
             }
-            else
+
+            if (playerTargetedPos.position.x > playerTransform.position.x)
             {
-                StopCoroutine(MoveCoroutine());
-
-                StartCoroutine(MoveCoroutine());
+                movementDirection = MovementDirection.RIGHT;
             }
+            else if (playerTargetedPos.position.x < playerTransform.position.x)
+            {
+                movementDirection = MovementDirection.LEFT;
+            }
+
+            yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
+            movementDirection = MovementDirection.STAY;
+            isAtDestination = true;
+            NotifyObservers();
         }
 
         if (targetIsBelow)
@@ -254,11 +255,11 @@ public class PlayerMovement : Subject
             {
                 playerTargetedPos = cachedTargetedPos;
 
-                StopCoroutine(MoveCoroutine());
+                StopCoroutine(moveCoroutine);
 
                 CheckTargetRelativePosition();
 
-                StartCoroutine(MoveCoroutine());
+                moveCoroutine = StartCoroutine(MoveCoroutine());
             }
 
 
