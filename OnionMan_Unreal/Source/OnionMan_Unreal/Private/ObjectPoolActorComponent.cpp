@@ -33,7 +33,7 @@ void UObjectPoolActorComponent::BeginPlay()
 				{
 					PoolableActor->SetActive(false);
 					PoolableActor->SetPoolIndex(i);
-					PoolableActor->OnPooledObjectDespawned.AddUObject(this, &UObjectPoolActorComponent::OnPooledObjectDespawn);
+					PoolableActor->OnPooledObjectDespawned.AddDynamic(this, &UObjectPoolActorComponent::OnPooledObjectDespawn);
 					ObjectPool.Add(PoolableActor);
 				}
 			}

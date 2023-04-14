@@ -8,7 +8,7 @@
 #include "PooledObject.generated.h"
 
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnPooledObjectDespawned, APooledObject*, PoolActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPooledObjectDespawned, APooledObject*, PoolActor);
 
 UCLASS()
 class ONIONMAN_UNREAL_API APooledObject : public AActor

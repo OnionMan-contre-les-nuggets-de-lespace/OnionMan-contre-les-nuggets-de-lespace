@@ -34,6 +34,8 @@ public:
 		FVector Location;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		TSubclassOf<AActor> m_actorBP;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Class Options")
+		TSubclassOf<AActor> m_objectPoolBP;
 	/*UFUNCTION(BlueprintCallable, Category = "Enemy")
 		void SpawnActor(FVector Location);*/
 
