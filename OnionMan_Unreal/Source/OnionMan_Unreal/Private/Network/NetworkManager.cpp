@@ -49,6 +49,72 @@ void UNetworkManager::GetObjectsToSync(TArray<TTuple<TObjectPtr<ISynchronizedObj
     }
 }
 
+void UNetworkManager::OnClientConnected(FString client)
+{
+    LOG_ERROR("New Client Connected, waw : %s", *client);
+}
+
+void UNetworkManager::OnBytesRecieved(UPARAM(ref) TArray<uint8>& encodedObjects)
+{
+    DecodeObjects(encodedObjects);
+}
+
+bool UNetworkManager::TryEncodeObjects(TArray<UNetworkBatch*>& outNetworkBatches)
+{
+    TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>> objectsToSync{};
+    GetObjectsToSync(objectsToSync);
+
+    if (objectsToSync.Num() == 0) 
+    {
+        outNetworkBatches = TArray<UNetworkBatch*>{};
+        return false;
+    }
+
+    TArray<BatchInfos*> encodedObjectsBatches = TArray<BatchInfos*>();
+    encodedObjectsBatches.Add(new BatchInfos(TArray<TObjectPtr<ISynchronizedObjectBase>>(), 0));
+    int currentBatchIndex = 0;
+
+    for(TTuple<TObjectPtr<ISynchronizedObjectBase>, int> object : objectsToSync)
+    {
+        BatchInfos currentBatckInfos = *encodedObjectsBatches[currentBatchIndex];
+        if (currentBatckInfos.BatchSize + object.Value > MAX_BATCH_SIZE)
+        {
+            BatchInfos* newBatch = new BatchInfos(TArray<TObjectPtr<ISynchronizedObjectBase>>(), 0);
+            newBatch->BatchSize = object.Value;
+            newBatch->ObjectsToSync.Add(object.Key);
+            encodedObjectsBatches.Add(newBatch);
+
+            currentBatchIndex++;
+        }
+        else
+        {
+            currentBatckInfos.BatchSize += object.Value;
+            currentBatckInfos.ObjectsToSync.Add(object.Key);
+        }
+    }
+
+    outNetworkBatches = TArray<UNetworkBatch*>{};
+    for(BatchInfos* batch : encodedObjectsBatches)
+    {
+        TArray<uint8> encodedObjectsBuffer = TArray<uint8>{};
+        encodedObjectsBuffer.SetNumUninitialized(batch->BatchSize);
+        int offset = 0;
+
+        for (TObjectPtr<ISynchronizedObjectBase> synchronizedObject : batch->ObjectsToSync)
+        {
+            synchronizedObject->PutEncodedObjectToBuffer(encodedObjectsBuffer, offset);
+        }
+
+        UNetworkBatch* a = NewObject<UNetworkBatch>();
+        a->EncodedBatch = encodedObjectsBuffer;
+        outNetworkBatches.Add(a);
+
+        delete batch;
+    }
+
+    return true;
+}
+
 void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
 {
     TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>> objectsToSync{};
@@ -68,12 +134,12 @@ void UNetworkManager::EncodeObjects(TArray<uint8>& outEncodedObjects)
 
     for (TTuple<TObjectPtr<ISynchronizedObjectBase>, int> obj : objectsToSync)
     {
-        LOG_ERROR("Encoding object %i at offset %i", obj.Key->ObjectID(), offset)
-            obj.Key->PutEncodedObjectToBuffer(outEncodedObjects, offset);
+        LOG_ERROR("Encoding object %i at offset %i", obj.Key->ObjectID(), offset);
+        obj.Key->PutEncodedObjectToBuffer(outEncodedObjects, offset);
     }
 }
 
-void UNetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
+void UNetworkManager::DecodeObjects(UPARAM(ref) TArray<uint8>& encodedObjects)
 {
     int offset = 0;
     int bufferSize = encodedObjects.Num();
@@ -96,7 +162,41 @@ void UNetworkManager::DecodeObjects(TArray<uint8>& encodedObjects)
         }
         else
         {
-            LOG_ERROR("There are no object with ID", objectID);
+            LOG_ERROR("There are no object with ID %i", objectID);
         }
     }
+}
+
+int UNetworkManager::GetMaxBatchSize()
+{
+    return MAX_BATCH_SIZE;
+}
+
+void UNetworkManager::TestMethod()
+{
+    /*TArray<TArray<int>&> testArray = TArray<TArray<int>&>{};
+
+    for (int d = 0; d < 10; d++) 
+    {
+        TArray<int> dArray = TArray<int>{};
+
+        for (int i = 0; i < 10; i++)
+        {
+            dArray.Add(d * 10 + i);
+        }
+        testArray.Add(dArray);
+    }
+
+    LOG_ERROR("Array of Array COUNT : %i", testArray.Num());
+    for (int i = 0; i < testArray.Num(); i++) 
+    {
+        LOG_WARNING("Sub array %i : Count : %i", i, testArray[i].Num())
+            
+        for (int j = 0; j < testArray[i].Num(); j++)
+        {
+            LOG_WARNING("element at %i : Value : %i", j, testArray[i][j])
+
+        }
+
+    }*/
 }
