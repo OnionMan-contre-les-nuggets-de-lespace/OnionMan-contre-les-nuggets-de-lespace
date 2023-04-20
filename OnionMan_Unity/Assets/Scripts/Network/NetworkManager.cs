@@ -5,10 +5,10 @@ using System.Linq;
 
 using OnionMan.Utils;
 using System.Net.Sockets;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.EventSystems;
+
 using System.Threading;
 using System;
+using System.Net;
 
 namespace OnionMan.Network
 {
@@ -25,11 +25,12 @@ namespace OnionMan.Network
                 BatchSize = batchSize;
             }
         }
+        [SerializeField] private bool m_useHostnameInsteadOfIP = false;
+        [SerializeField] private byte[] m_ip = new byte[4];
+        [SerializeField] private string m_hostName = "localhost";
+        [SerializeField] private int m_port = 0;
 
-        [SerializeField] private string m_ip;
-        [SerializeField] private int m_port;
-
-        private const int MAX_BATCH_SIZE = 8096;
+        private const int MAX_BATCH_SIZE = 8192;
 
         private Dictionary<uint, ISynchronizedObject> m_synchronizedObjects = new Dictionary<uint, ISynchronizedObject>();
 
@@ -43,9 +44,33 @@ namespace OnionMan.Network
         private bool m_isConnected = false;
         private bool m_shouldListenForNetwork = false;
 
+        private byte[] m_ping;
+
         public NetworkManager()
         {
 
+        }
+
+        private void Start()
+        {
+            m_ping = EncodingUtility.Encode<string>("Ping").ToArray();
+        }
+
+        private void Update()
+        {
+            if (m_isConnected)
+            {
+                if (Input.GetKey(KeyCode.W))
+                {
+                    m_networkStream.Write(m_ping);
+                    Debug.LogError($"Ping");
+                }
+                int available = m_tcpClient.Available;
+                if (available != 0)
+                {
+                    Debug.LogError($"Data Available : {available}");
+                }
+            }
         }
 
         protected virtual void LateUpdate()
@@ -62,6 +87,16 @@ namespace OnionMan.Network
             }
         }
 
+        private void OnApplicationQuit()
+        {
+            m_tcpClient.Dispose();
+            m_shouldListenForNetwork = false;
+        }
+
+        protected void OnDestroy()
+        {
+        }
+
         public override void Initialize()
         {
             base.Initialize();
@@ -71,19 +106,30 @@ namespace OnionMan.Network
         {
             if (!m_isConnected)
             {
-                m_tcpClient = new TcpClient(m_ip, m_port);
+                if (m_useHostnameInsteadOfIP)
+                {
+                    m_tcpClient = new TcpClient(m_hostName, m_port);
+                }
+                else
+                {
+                    IPEndPoint endPoint = new IPEndPoint(new IPAddress(m_ip), m_port);
+                    m_tcpClient = new TcpClient();
+                    m_tcpClient.Connect(endPoint);
+                    //m_tcpClient.Client.Bind(endPoint);
+                }
 
-                Debug.LogError($"Is Connected before connect: {m_tcpClient.Connected}");
 
-                m_tcpClient.Connect(m_ip, m_port);
-
-                Debug.LogError($"Is Connected after connect: {m_tcpClient.Connected}");
+                Debug.LogError($"Is connected before Connect {m_tcpClient.Connected}");
+                Debug.LogError($"Is connected before Connect {m_tcpClient.Connected}");
+                //Debug.LogError($"Created client at IP {m_tcpClient.Client.RemoteEndPoin}");
 
                 m_networkStream = m_tcpClient.GetStream();
-                m_isConnected = true;
+                m_isConnected = m_tcpClient.Connected;
 
                 m_shouldListenForNetwork = true;
-                m_networkThread = new Thread(new ThreadStart(ListenForNetwork));
+                //m_networkThread = new Thread(new ThreadStart(ListenForNetwork));
+                //m_networkThread.Start();
+                m_networkStream.Write(EncodingUtility.Encode<string>("Ping").ToArray());
             }
         }
 
@@ -95,6 +141,7 @@ namespace OnionMan.Network
                 {
                     byte[] encodedObjectsBuffer = new byte[MAX_BATCH_SIZE];
                     int encodedMessageSize = m_networkStream.Read(encodedObjectsBuffer, m_networkStreamOffset, MAX_BATCH_SIZE);
+                    m_networkStreamOffset += encodedMessageSize;
 
                     byte[] resizedEncodedObjects = new byte[encodedMessageSize];
                     EncodingUtility.ResizeBuffer(encodedObjectsBuffer, ref resizedEncodedObjects);
@@ -148,13 +195,13 @@ namespace OnionMan.Network
             }
         }
 
-        public bool TryEncodeObjects(out List<byte[]> encodedObjectsBufferBatch)
+        public bool TryEncodeObjects(out List<byte[]> encodedObjectsBufferBatches)
         {
             IEnumerable<(ISynchronizedObject, int)> objectsToSync = GetObjectsToSync();
 
             if (objectsToSync.Count() == 0)
             {
-                encodedObjectsBufferBatch = new List<byte[]>();
+                encodedObjectsBufferBatches = new List<byte[]>();
                 return false;
             }
 
@@ -181,7 +228,7 @@ namespace OnionMan.Network
                 }
             }
 
-            encodedObjectsBufferBatch = new List<byte[]>();
+            encodedObjectsBufferBatches = new List<byte[]>();
             foreach (BatchInfos batch in encodedObjectsBatches)
             {
                 byte[] encodedObjectsBuffer = new byte[batch.BatchSize];
@@ -191,7 +238,7 @@ namespace OnionMan.Network
                 {
                     synchronizedObject.PutEncodedObjectToBuffer(ref encodedObjectsBuffer, ref offset);
                 }
-                encodedObjectsBufferBatch.Add(encodedObjectsBuffer);
+                encodedObjectsBufferBatches.Add(encodedObjectsBuffer);
             }
 
             return true;
