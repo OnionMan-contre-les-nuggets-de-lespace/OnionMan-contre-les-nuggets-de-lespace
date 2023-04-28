@@ -1335,9 +1335,9 @@ MonoBehaviour:
   - {fileID: 120095641}
   - {fileID: 123398310}
   - {fileID: 295816523}
-  horizontalSpeed: 0.1
-  verticalDownSpeed: 0.1
-  verticalUpSpeed: 0.05
+  horizontalSpeed: 0.05
+  verticalDownSpeed: 0.05
+  verticalUpSpeed: 0.01
   startBurgerFloor: 5
   checkDistance: 20
   whatIsLadder:
