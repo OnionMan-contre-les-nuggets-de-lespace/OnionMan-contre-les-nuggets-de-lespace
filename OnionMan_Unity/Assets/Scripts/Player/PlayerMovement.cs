@@ -68,6 +68,21 @@ public class PlayerMovement : Subject
         isOnAFloor = true;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.transform.CompareTag("DeadZone"))
+        {
+            if(moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+            }
+            playerTransform.position = possiblePlayerPoses[targetFloor].position;
+            isAtDestination = true;
+            isOnAFloor = true;
+            currentPlayerFloor = targetFloor;
+        }
+    }
+
     public void OC_GetPlayerTargetedPos(int i)
     {
         cachedTargetedPos = possiblePlayerPoses[i];
