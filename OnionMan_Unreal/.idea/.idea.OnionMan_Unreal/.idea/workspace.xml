@@ -8,11 +8,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e84b278-3960-4376-bf09-d0cd5aece868" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/BP_EnemyOnSpline.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/BP_EnemyOnSpline.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OnionMan_Unreal/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OnionMan_Unreal/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Maps/OnionManMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Maps/OnionManMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/BP_IndependentEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/BP_IndependentEnemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OnionMan_Unreal/Private/ObjectPoolActorComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OnionMan_Unreal/Private/ObjectPoolActorComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/TestSpawner.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/TestSpawner.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OnionMan_Unreal/Public/Enemies/EnemyActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OnionMan_Unreal/Public/Enemies/EnemyActor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OnionMan_Unreal/Public/PooledObject.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OnionMan_Unreal/Public/PooledObject.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,25 +24,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\yan_d\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\yan_d\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\yan_d\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\yan_d\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\yan_d\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\yan_d\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="OnionMan_Unreal" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -110,6 +110,9 @@
       <option name="presentableId" value="Default" />
       <updated>1681475186543</updated>
       <workItem from="1681475190304" duration="4636000" />
+      <workItem from="1682530036171" duration="990000" />
+      <workItem from="1682531483841" duration="32000" />
+      <workItem from="1682691943467" duration="2992000" />
     </task>
     <servers />
   </component>
