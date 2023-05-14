@@ -30,7 +30,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(double& newValue)
+    inline void SetValue(UPARAM(ref) double& newValue)
     {
         SetValueGeneric<double>(newValue, m_value);
     }

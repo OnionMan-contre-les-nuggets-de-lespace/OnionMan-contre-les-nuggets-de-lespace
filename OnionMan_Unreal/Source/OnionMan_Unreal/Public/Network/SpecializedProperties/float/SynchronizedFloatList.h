@@ -33,7 +33,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(TArray<float>& newValue)
+    inline void SetValue(UPARAM(ref) TArray<float>& newValue)
     {
         SetValueGeneric<float>(newValue, m_value);
     }

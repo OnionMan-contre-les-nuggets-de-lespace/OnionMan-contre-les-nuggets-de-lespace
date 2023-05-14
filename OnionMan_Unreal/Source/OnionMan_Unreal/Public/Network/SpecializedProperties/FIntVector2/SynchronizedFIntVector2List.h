@@ -32,7 +32,7 @@ public:
 		outValue = m_value;
     }
 
-    inline void SetValue(TArray<FIntVector2>& newValue)
+    inline void SetValue(UPARAM(ref) TArray<FIntVector2>& newValue)
     {
         SetValueGeneric<FIntVector2>(newValue, m_value);
     }
