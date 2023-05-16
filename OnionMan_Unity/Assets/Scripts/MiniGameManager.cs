@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniGameManager : MonoBehaviour, IObserver
+public class MiniGameManager : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private bool hasWinMiniGame;
@@ -18,17 +18,17 @@ public class MiniGameManager : MonoBehaviour, IObserver
         miniGameGameObject.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        playerMovement = FindObjectOfType<PlayerMovement>();
+    //private void OnEnable()
+    //{
+    //    playerMovement = FindObjectOfType<PlayerMovement>();
 
-        playerMovement.AddObserver(this);
-    }
+    //    playerMovement.AddObserver(this);
+    //}
 
-    private void OnDisable()
-    {
-        playerMovement.RemoveObserver(this);
-    }
+    //private void OnDisable()
+    //{
+    //    playerMovement.RemoveObserver(this);
+    //}
 
     public void OnNotify()
     {

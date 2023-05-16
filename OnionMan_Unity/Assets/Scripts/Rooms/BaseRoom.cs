@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class BaseRoom : MonoBehaviour
 {
-    public enum RoomName
-    {
-        TOP_BUN,
-        TOMATO,
-        CHEESE,
-        STEAK,
-        SALAD,
-        BOTTOM_BUN,
-        NONE
-    }
-
     [SerializeField] protected RoomName roomName;
+
+    private PlayerMovement playerMovement;
     protected RoomManager roomManager;
     protected RepairManager repairManager;
+
+    private void Awake()
+    {
+        roomManager = FindObjectOfType<RoomManager>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
+    }
+
+    private void Start()
+    {
+        roomManager.AddRoom(this);
+    }
+
+    public void StartRoomInteraction()
+    {
+
+    }
 
     protected virtual List<IRoomAction> GetActionsToDisplay()
     {

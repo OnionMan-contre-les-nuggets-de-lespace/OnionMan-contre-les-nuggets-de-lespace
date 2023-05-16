@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TopBunRoom : BaseRoom
+public class TopBunRoom : BunRoom
 {
     private RoomAction_Computer m_roomActionComputer;
 

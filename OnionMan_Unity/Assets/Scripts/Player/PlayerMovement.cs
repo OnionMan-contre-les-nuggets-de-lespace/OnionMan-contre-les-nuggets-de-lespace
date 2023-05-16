@@ -44,6 +44,8 @@ public class PlayerMovement : Subject
 
     private RaycastHit2D[] sideCheckBuffer = new RaycastHit2D[1];
 
+    private RoomManager roomManager;
+
     public enum MovementDirection
     {
         RIGHT,
@@ -66,6 +68,8 @@ public class PlayerMovement : Subject
 
         isAtDestination = true;
         isOnAFloor = true;
+
+        roomManager = FindObjectOfType<RoomManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -80,6 +84,7 @@ public class PlayerMovement : Subject
             isAtDestination = true;
             isOnAFloor = true;
             currentPlayerFloor = targetFloor;
+            roomManager.NotifyRoom(currentPlayerFloor);
         }
     }
 
@@ -241,7 +246,8 @@ public class PlayerMovement : Subject
             yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
             movementDirection = MovementDirection.STAY;
             isAtDestination = true;
-            NotifyObservers();
+            //NotifyObservers();
+            roomManager.NotifyRoom(currentPlayerFloor);
         }
 
         if (targetIsBelow)
@@ -293,7 +299,8 @@ public class PlayerMovement : Subject
             yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
             movementDirection = MovementDirection.STAY;
             isAtDestination = true;
-            NotifyObservers();
+            //NotifyObservers();
+            roomManager.NotifyRoom(currentPlayerFloor);
         }
 
 
