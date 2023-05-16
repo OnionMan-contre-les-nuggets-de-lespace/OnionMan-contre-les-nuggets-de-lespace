@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IRoomAction
 {
+    bool CanBeDone { get; }
     void LaunchAction();
 
     string GetActionName();

@@ -5,6 +5,12 @@ using UnityEngine;
 public class RoomAction_Computer : MonoBehaviour, IRoomAction
 {
     [SerializeField] private string actionName;
+    public bool CanBeDone
+    {
+        get => true;
+    }
+
+
     public string GetActionName()
     {
         return actionName;
@@ -12,6 +18,6 @@ public class RoomAction_Computer : MonoBehaviour, IRoomAction
 
     public void LaunchAction()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("LAUNCHING COMPUTER");
     }
 }

@@ -5,6 +5,12 @@ using UnityEngine;
 public class RoomAction_ExtinguishFire : MonoBehaviour, IRoomAction
 {
     [SerializeField] private string actionName;
+    public bool CanBeDone
+    {
+        get => true;
+    }
+
+
 
     public string GetActionName()
     {

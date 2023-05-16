@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class TopBunRoom : BunRoom
 {
-    private RoomAction_Computer m_roomActionComputer;
+    private RoomAction_Computer computerAction;
+
+    private void Start()
+    {
+        computerAction = FindObjectOfType<RoomAction_Computer>();
+    }
 
     protected override List<IRoomAction> GetActionsToDisplay()
     {
-        return base.GetActionsToDisplay();
+        List<IRoomAction> roomActions = new List<IRoomAction>();
+
+        roomActions.Add(computerAction);
+
+        return roomActions;
     }
 }

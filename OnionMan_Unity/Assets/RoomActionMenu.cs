@@ -19,10 +19,17 @@ public class RoomActionMenu : MonoBehaviour
     {
         for (int i = 0; i < actionList.Count; i++)
         {
+            m_actionButton[i].gameObject.SetActive(true);
             m_actionButton[i].GetComponentInChildren<TMP_Text>().text = actionList[i].GetActionName();
 
-            int x = i;
-            m_actionButton[i].onClick.AddListener(delegate { actionList[x].LaunchAction(); });
+            m_actionButton[i].interactable = actionList[i].CanBeDone;
+            //TODO : Rajouter un encart dynamique pour afficher une phrase de feedback quand on ne peut pas réaliser une action ("Vous avez l'extincteur/ Vous n'avez pas encore scanné de salles/etc...)
+
+            if(actionList[i].CanBeDone)
+            {
+                int x = i;
+                m_actionButton[i].onClick.AddListener(delegate { actionList[x].LaunchAction(); });
+            }
         }
 
         canvasGroup.alpha = 1f;
@@ -40,6 +47,8 @@ public class RoomActionMenu : MonoBehaviour
         {
             entry.GetComponentInChildren<TMP_Text>().text = string.Empty;
             entry.onClick.RemoveAllListeners();
+            entry.interactable = true;
+            entry.gameObject.SetActive(false);
         }
     }
 }

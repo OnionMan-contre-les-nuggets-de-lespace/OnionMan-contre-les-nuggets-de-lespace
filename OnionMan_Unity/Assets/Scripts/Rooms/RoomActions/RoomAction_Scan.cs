@@ -5,6 +5,13 @@ using UnityEngine;
 public class RoomAction_Scan : MonoBehaviour, IRoomAction
 {
     [SerializeField] private string actionName;
+    [SerializeField] private bool canBeDone;
+    public bool CanBeDone
+    {
+        get => true;
+    }
+
+
     public string GetActionName()
     {
         return actionName;

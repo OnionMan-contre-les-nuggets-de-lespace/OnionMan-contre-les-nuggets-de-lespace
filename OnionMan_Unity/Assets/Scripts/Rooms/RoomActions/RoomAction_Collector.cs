@@ -6,6 +6,11 @@ public class RoomAction_Collector : MonoBehaviour, IRoomAction
 {
 
     [SerializeField] private string actionName;
+    public bool CanBeDone
+    {
+        get => true;
+    }
+
     public string GetActionName()
     {
         return actionName;
@@ -13,6 +18,6 @@ public class RoomAction_Collector : MonoBehaviour, IRoomAction
 
     public void LaunchAction()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("LAUNCHING COLLECTOR");
     }
 }
