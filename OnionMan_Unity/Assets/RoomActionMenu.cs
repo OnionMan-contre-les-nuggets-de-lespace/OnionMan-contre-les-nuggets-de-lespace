@@ -7,6 +7,7 @@ using TMPro;
 public class RoomActionMenu : MonoBehaviour
 {
     [SerializeField] private List<Button> m_actionButton = new List<Button>();
+    [SerializeField] private CanvasGroup actionChoiceMenuCanvasGroup;
 
     private CanvasGroup canvasGroup;
 
@@ -31,8 +32,7 @@ public class RoomActionMenu : MonoBehaviour
                 m_actionButton[i].onClick.AddListener(delegate { actionList[x].LaunchAction(); });
             }
         }
-
-        canvasGroup.alpha = 1f;
+        actionChoiceMenuCanvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
     }
@@ -41,7 +41,7 @@ public class RoomActionMenu : MonoBehaviour
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
-        canvasGroup.alpha = 0f;
+        actionChoiceMenuCanvasGroup.alpha = 0f;
 
         foreach (Button entry in m_actionButton)
         {
