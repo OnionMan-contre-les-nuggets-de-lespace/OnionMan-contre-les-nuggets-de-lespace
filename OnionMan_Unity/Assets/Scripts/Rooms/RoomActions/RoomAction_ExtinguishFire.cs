@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomAction_Collector : MonoBehaviour, IRoomAction
+public class RoomAction_ExtinguishFire : MonoBehaviour, IRoomAction
 {
-
     [SerializeField] private string actionName;
+
     public string GetActionName()
     {
         return actionName;
@@ -13,6 +13,6 @@ public class RoomAction_Collector : MonoBehaviour, IRoomAction
 
     public void LaunchAction()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("LAUNCHING EXTINGUISH");
     }
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class RoomAction_Scan : MonoBehaviour, IRoomAction
 {
+    [SerializeField] private string actionName;
     public string GetActionName()
     {
-        throw new System.NotImplementedException();
+        return actionName;
     }
 
     public void LaunchAction()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("LAUNCHING SCAN");
     }
 }

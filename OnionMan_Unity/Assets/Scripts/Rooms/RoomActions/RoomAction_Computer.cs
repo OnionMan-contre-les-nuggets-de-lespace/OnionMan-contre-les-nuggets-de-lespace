@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class RoomAction_Computer : MonoBehaviour, IRoomAction
 {
+    [SerializeField] private string actionName;
     public string GetActionName()
     {
-        throw new System.NotImplementedException();
+        return actionName;
     }
 
     public void LaunchAction()

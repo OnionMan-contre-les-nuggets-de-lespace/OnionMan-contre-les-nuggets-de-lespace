@@ -9,11 +9,13 @@ public class BaseRoom : MonoBehaviour
     private PlayerMovement playerMovement;
     protected RoomManager roomManager;
     protected RepairManager repairManager;
+    private RoomActionMenu roomActionMenu;
 
     private void Awake()
     {
         roomManager = FindObjectOfType<RoomManager>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        roomActionMenu = FindObjectOfType<RoomActionMenu>();
     }
 
     private void Start()
@@ -23,7 +25,7 @@ public class BaseRoom : MonoBehaviour
 
     public void StartRoomInteraction()
     {
-
+        roomActionMenu.ShowActionMenu(GetActionsToDisplay());
     }
 
     protected virtual List<IRoomAction> GetActionsToDisplay()
@@ -35,6 +37,6 @@ public class BaseRoom : MonoBehaviour
 
     protected virtual void ResetActionMenu()
     {
-
+        roomActionMenu.HideActionMenu();
     }
 }
