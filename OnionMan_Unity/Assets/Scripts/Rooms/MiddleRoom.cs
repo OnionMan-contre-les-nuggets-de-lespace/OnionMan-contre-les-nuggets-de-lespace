@@ -19,7 +19,7 @@ public class MiddleRoom : BaseRoom
     private RoomAction_Repair repairAction;
     private RoomAction_ExtinguishFire extinguishAction;
 
-    Action<RoomName> OnRoomScanned;
+    public Action<RoomName> OnRoomScanned;
 
 
 
@@ -29,6 +29,8 @@ public class MiddleRoom : BaseRoom
         scanAction = FindObjectOfType<RoomAction_Scan>();
         repairAction = FindObjectOfType<RoomAction_Repair>();
         extinguishAction = FindObjectOfType<RoomAction_ExtinguishFire>();
+
+        scanAction.OnScanActionEnd += OnFinishedAction;
     }
 
     protected override List<IRoomAction> GetActionsToDisplay()
@@ -67,11 +69,17 @@ public class MiddleRoom : BaseRoom
                 }
             }
         }
+
+        if(roomHealth <= 0)
+        {
+            m_isInCriticalState = true;
+        }
         
     }
 
-    IEnumerator DecayCycleCoroutine()
+    private void StepIntoCriticalState()
     {
-        yield return new WaitForSeconds(0);
+
     }
+
 }

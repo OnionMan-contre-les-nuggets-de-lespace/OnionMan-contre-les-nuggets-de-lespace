@@ -7,10 +7,12 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private List<BaseRoom> m_rooms = new List<BaseRoom>();
     private List<MiddleRoom> m_middleRooms = new List<MiddleRoom>();
     private List<BunRoom> m_bunRooms = new List<BunRoom>();
+    public RoomName currentPlayerRoomName;
 
     public void NotifyRoom(int indexOfRoom)
     {
         m_rooms[indexOfRoom].StartRoomInteraction();
+        currentPlayerRoomName = m_rooms[indexOfRoom].roomName;
     }
 
     public void AddMiddleRoom(MiddleRoom middleRoom)

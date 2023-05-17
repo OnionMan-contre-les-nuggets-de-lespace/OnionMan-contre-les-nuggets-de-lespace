@@ -9,6 +9,7 @@ public class RoomActionMenu : MonoBehaviour
     [SerializeField] private List<Button> m_actionButton = new List<Button>();
     [SerializeField] private CanvasGroup actionChoiceMenuCanvasGroup;
 
+
     private CanvasGroup canvasGroup;
 
     private void Awake()
@@ -16,7 +17,7 @@ public class RoomActionMenu : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void ShowActionMenu(List<IRoomAction> actionList)
+    public void ShowActionMenu(List<IRoomAction> actionList, RoomName roomToLaunchAction)
     {
         for (int i = 0; i < actionList.Count; i++)
         {
@@ -29,7 +30,10 @@ public class RoomActionMenu : MonoBehaviour
             if(actionList[i].CanBeDone)
             {
                 int x = i;
-                m_actionButton[i].onClick.AddListener(delegate { actionList[x].LaunchAction(); });
+                m_actionButton[i].onClick.AddListener(delegate { 
+                    actionList[x].LaunchAction(roomToLaunchAction);
+                    HideAndResetActionMenu();
+                });
             }
         }
         actionChoiceMenuCanvasGroup.alpha = 1f;
@@ -37,7 +41,7 @@ public class RoomActionMenu : MonoBehaviour
         canvasGroup.blocksRaycasts = true;
     }
 
-    public void HideActionMenu()
+    public void HideAndResetActionMenu()
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;

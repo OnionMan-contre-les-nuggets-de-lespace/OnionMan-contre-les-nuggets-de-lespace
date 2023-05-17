@@ -16,7 +16,7 @@ public class RoomAction_Repair : MonoBehaviour, IRoomAction
         return actionName;
     }
 
-    public void LaunchAction()
+    public void LaunchAction(RoomName currentRoom)
     {
         Debug.Log("LAUNCHING REPAIR");
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomAction_Collector : MonoBehaviour, IRoomAction
 {
-
+    
     [SerializeField] private string actionName;
     public bool CanBeDone
     {
@@ -16,7 +16,7 @@ public class RoomAction_Collector : MonoBehaviour, IRoomAction
         return actionName;
     }
 
-    public void LaunchAction()
+    public void LaunchAction(RoomName currentRoom)
     {
         Debug.Log("LAUNCHING COLLECTOR");
     }

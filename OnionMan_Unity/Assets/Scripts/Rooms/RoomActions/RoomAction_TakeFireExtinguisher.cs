@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomAction_Computer : MonoBehaviour, IRoomAction
+public class RoomAction_TakeFireExtinguisher : MonoBehaviour, IRoomAction
 {
     [SerializeField] private string actionName;
     public bool CanBeDone
     {
         get => true;
     }
+
 
 
     public string GetActionName()
@@ -18,6 +19,6 @@ public class RoomAction_Computer : MonoBehaviour, IRoomAction
 
     public void LaunchAction(RoomName currentRoom)
     {
-        Debug.Log("LAUNCHING COMPUTER");
+        Debug.Log("LAUNCHING TAKE FIRE EXTINGUISHER");
     }
 }

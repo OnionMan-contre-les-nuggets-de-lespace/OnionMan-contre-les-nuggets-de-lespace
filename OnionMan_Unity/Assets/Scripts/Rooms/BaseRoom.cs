@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BaseRoom : MonoBehaviour
 {
-    [SerializeField] protected RoomName roomName;
+    [SerializeField] public RoomName roomName;
+    [SerializeField] private Canvas mainCanvas;
 
-    private PlayerMovement playerMovement;
     protected RoomManager roomManager;
     protected RepairManager repairManager;
     private RoomActionMenu roomActionMenu;
@@ -14,7 +14,6 @@ public class BaseRoom : MonoBehaviour
     private void Awake()
     {
         roomManager = FindObjectOfType<RoomManager>();
-        playerMovement = FindObjectOfType<PlayerMovement>();
         roomActionMenu = FindObjectOfType<RoomActionMenu>();
     }
 
@@ -25,7 +24,8 @@ public class BaseRoom : MonoBehaviour
 
     public void StartRoomInteraction()
     {
-        roomActionMenu.ShowActionMenu(GetActionsToDisplay());
+        roomActionMenu.ShowActionMenu(GetActionsToDisplay(), roomName);
+        mainCanvas.sortingOrder = 10;
     }
 
     protected virtual List<IRoomAction> GetActionsToDisplay()
@@ -37,6 +37,12 @@ public class BaseRoom : MonoBehaviour
 
     protected virtual void ResetActionMenu()
     {
-        roomActionMenu.HideActionMenu();
+        roomActionMenu.HideAndResetActionMenu();
+    }
+
+    protected virtual void OnFinishedAction()
+    {
+        roomActionMenu.HideAndResetActionMenu();
+        mainCanvas.sortingOrder = 0;
     }
 }

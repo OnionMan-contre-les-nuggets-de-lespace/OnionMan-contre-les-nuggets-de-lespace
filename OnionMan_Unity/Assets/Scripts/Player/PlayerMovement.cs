@@ -37,7 +37,7 @@ public class PlayerMovement : Subject
     private Transform playerTargetedPos;
     private Transform cachedTargetedPos; //Used to stock the new TargetedPos if the player clock on another button before the first targeted pos is reached
 
-    private int currentPlayerFloor;
+    public static int currentPlayerFloor;
     private int targetFloor;
 
     Coroutine moveCoroutine;
