@@ -17,7 +17,7 @@ public class RoomActionMenu : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void ShowActionMenu(List<IRoomAction> actionList, RoomName roomToLaunchAction)
+    public void ShowActionMenu(List<IRoomAction> actionList, BaseRoom roomToLaunchAction)
     {
         for (int i = 0; i < actionList.Count; i++)
         {
@@ -31,7 +31,7 @@ public class RoomActionMenu : MonoBehaviour
             {
                 int x = i;
                 m_actionButton[i].onClick.AddListener(delegate { 
-                    actionList[x].LaunchAction(roomToLaunchAction);
+                    actionList[x].LaunchAction(roomToLaunchAction.roomName);
                     HideAndResetActionMenu();
                 });
             }

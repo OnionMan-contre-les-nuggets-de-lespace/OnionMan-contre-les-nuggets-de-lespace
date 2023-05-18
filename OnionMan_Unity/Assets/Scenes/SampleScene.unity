@@ -813,6 +813,7 @@ MonoBehaviour:
   - {fileID: 3636955176367539900}
   - {fileID: 3636955176367539901}
   - {fileID: 3636955176367539902}
+  isPlayerHit: 0
 --- !u!1001 &776643024
 PrefabInstance:
   m_ObjectHideFlags: 0

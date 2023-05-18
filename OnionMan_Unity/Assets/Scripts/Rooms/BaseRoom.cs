@@ -9,12 +9,14 @@ public class BaseRoom : MonoBehaviour
 
     protected RoomManager roomManager;
     protected RepairManager repairManager;
+    protected PlayerMovement playerMovement;
     private RoomActionMenu roomActionMenu;
 
     private void Awake()
     {
         roomManager = FindObjectOfType<RoomManager>();
         roomActionMenu = FindObjectOfType<RoomActionMenu>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     private void Start()
@@ -24,7 +26,7 @@ public class BaseRoom : MonoBehaviour
 
     public void StartRoomInteraction()
     {
-        roomActionMenu.ShowActionMenu(GetActionsToDisplay(), roomName);
+        roomActionMenu.ShowActionMenu(GetActionsToDisplay(), this);
         mainCanvas.sortingOrder = 10;
     }
 

@@ -178,6 +178,8 @@ public class PlayerMovement : Subject
                 case MovementDirection.DOWN:
                     VerticalDownMove();
                     break;
+                case MovementDirection.STAY:
+                    break;
 
             }
 

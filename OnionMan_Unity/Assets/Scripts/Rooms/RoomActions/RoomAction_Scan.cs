@@ -10,6 +10,7 @@ public class RoomAction_Scan : MonoBehaviour, IRoomAction
     [SerializeField] private float scanTime;
     [SerializeField] private bool canBeDone;
 
+    private RoomManager roomManager;
     private Dictionary<RoomName, GameObject> roomScanEffect = new Dictionary<RoomName, GameObject>();
 
     public Action OnScanActionEnd;
@@ -20,10 +21,11 @@ public class RoomAction_Scan : MonoBehaviour, IRoomAction
 
     private void Awake()
     {
-        roomScanEffect.Add(RoomName.TOMATO, scanEffects[0]);
-        roomScanEffect.Add(RoomName.CHEESE, scanEffects[1]);
-        roomScanEffect.Add(RoomName.STEAK, scanEffects[2]);
-        roomScanEffect.Add(RoomName.SALAD, scanEffects[3]);
+        roomManager = FindObjectOfType<RoomManager>();
+        //roomScanEffect.Add(RoomName.TOMATO, scanEffects[0]);
+        //roomScanEffect.Add(RoomName.CHEESE, scanEffects[1]);
+        //roomScanEffect.Add(RoomName.STEAK, scanEffects[2]);
+        //roomScanEffect.Add(RoomName.SALAD, scanEffects[3]);
     }
 
     public string GetActionName()
@@ -38,12 +40,13 @@ public class RoomAction_Scan : MonoBehaviour, IRoomAction
 
     IEnumerator ScanCoroutine(RoomName roomToScan)
     {
-        roomScanEffect[roomToScan].SetActive(true);
+        roomManager.middleRooms[roomToScan].scanEffect.SetActive(true);
         Debug.Log("LAUNCHING SCAN");
 
         yield return new WaitForSeconds(scanTime);
 
-        roomScanEffect[roomToScan].SetActive(false);
+        roomManager.middleRooms[roomToScan].scanEffect.SetActive(false);
         OnScanActionEnd?.Invoke();
+        Debug.Log("Scan Action Ended");
     }
 }

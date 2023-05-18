@@ -5,14 +5,30 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     [SerializeField] private List<BaseRoom> m_rooms = new List<BaseRoom>();
+    [SerializeField] private bool isPlayerHit; //TODO passer en synchronized property
+
     private List<MiddleRoom> m_middleRooms = new List<MiddleRoom>();
     private List<BunRoom> m_bunRooms = new List<BunRoom>();
-    public RoomName currentPlayerRoomName;
+
+    public Dictionary<RoomName, MiddleRoom> middleRooms = new Dictionary<RoomName, MiddleRoom>();
+
+    private void Update()
+    {
+        if(isPlayerHit)
+        {
+            ChooseRoomInCriticalState();
+            isPlayerHit = false;
+        }
+    }
+
+    private void ChooseRoomInCriticalState()
+    {
+        m_middleRooms[Random.Range(0, m_middleRooms.Count)].isInCriticalState = true;
+    }
 
     public void NotifyRoom(int indexOfRoom)
     {
         m_rooms[indexOfRoom].StartRoomInteraction();
-        currentPlayerRoomName = m_rooms[indexOfRoom].roomName;
     }
 
     public void AddMiddleRoom(MiddleRoom middleRoom)

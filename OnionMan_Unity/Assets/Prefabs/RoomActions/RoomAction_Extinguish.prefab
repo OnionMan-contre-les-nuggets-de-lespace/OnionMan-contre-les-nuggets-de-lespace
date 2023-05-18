@@ -90,3 +90,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionName: Eteindre le feu
+  extinguishTime: 10
