@@ -481,6 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_connectButton: {fileID: 1146964871}
+  m_nextSceneName: NetworkTestScene
 --- !u!114 &1315528602
 MonoBehaviour:
   m_ObjectHideFlags: 0
