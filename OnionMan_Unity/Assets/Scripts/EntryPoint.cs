@@ -21,7 +21,7 @@ public class EntryPoint : MonoBehaviour
 
         Scene entryScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(m_mainMenuSceneName);
-        SceneManager.UnloadSceneAsync(entryScene);
+        //SceneManager.UnloadSceneAsync(entryScene);
     }
 
     // Update is called once per frame
