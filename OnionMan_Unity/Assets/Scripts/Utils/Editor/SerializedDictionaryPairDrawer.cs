@@ -4,7 +4,7 @@ using UnityEditor;
 /// <summary>
 /// Custom inspector dictionary
 /// </summary>
-namespace OnionMan.Utils
+namespace OnionMan.Utils.Editor
 {
     [CustomPropertyDrawer(typeof(ISerializedDictionaryPair), true)]
     public class SerializedDictionaryPairDrawer: PropertyDrawer
