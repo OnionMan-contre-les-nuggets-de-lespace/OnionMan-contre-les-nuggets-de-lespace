@@ -59,6 +59,42 @@ void UNetworkManager::OnBytesRecieved(UPARAM(ref) TArray<uint8>& encodedObjects)
     DecodeObjects(encodedObjects);
 }
 
+bool UNetworkManager::TryAcknoledge(UPARAM(ref) TArray<uint8>& recievedBytes, TArray<uint8>& outEncodedAck, FString& outIP)
+{
+    int offset = 0;
+    outIP = EncodingUtility::Decode<FString>(recievedBytes, offset, recievedBytes.Num());
+
+    TArray<FString> ip{};
+    outIP.ParseIntoArray(ip, TEXT("."));
+    LOG_ERROR("Recieved IP : %s", *outIP);
+
+    if (ip.Num() != 4) 
+    {
+        return false;
+    }
+
+    for (FString stringByte : ip)
+    {
+        if (stringByte.IsNumeric())
+        {
+            int byte = FCString::Atoi(*stringByte);
+            if (0 > byte || 255 < byte) 
+            {
+                return false;
+            }
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    offset = 0;
+    outEncodedAck.SetNumUninitialized(EncodingUtility::GetSizeOf<FString>(&AcknoledgeMessage));
+    EncodingUtility::PutEncodedValueInBuffer<FString>(AcknoledgeMessage, outEncodedAck, offset);
+    return true;
+}
+
 bool UNetworkManager::TryEncodeObjects(TArray<UNetworkBatch*>& outNetworkBatches)
 {
     TArray<TTuple<TObjectPtr<ISynchronizedObjectBase>, int>> objectsToSync{};
@@ -69,6 +105,7 @@ bool UNetworkManager::TryEncodeObjects(TArray<UNetworkBatch*>& outNetworkBatches
         outNetworkBatches = TArray<UNetworkBatch*>{};
         return false;
     }
+    LOG_ERROR("%i objectsToSyncs : id : %i", objectsToSync.Num(), objectsToSync[0].Key->ObjectID())
 
     TArray<BatchInfos*> encodedObjectsBatches = TArray<BatchInfos*>();
     encodedObjectsBatches.Add(new BatchInfos(TArray<TObjectPtr<ISynchronizedObjectBase>>(), 0));
@@ -76,8 +113,8 @@ bool UNetworkManager::TryEncodeObjects(TArray<UNetworkBatch*>& outNetworkBatches
 
     for(TTuple<TObjectPtr<ISynchronizedObjectBase>, int> object : objectsToSync)
     {
-        BatchInfos currentBatckInfos = *encodedObjectsBatches[currentBatchIndex];
-        if (currentBatckInfos.BatchSize + object.Value > MAX_BATCH_SIZE)
+        BatchInfos* currentBatckInfos = encodedObjectsBatches[currentBatchIndex];
+        if (currentBatckInfos->BatchSize + object.Value > MAX_BATCH_SIZE)
         {
             BatchInfos* newBatch = new BatchInfos(TArray<TObjectPtr<ISynchronizedObjectBase>>(), 0);
             newBatch->BatchSize = object.Value;
@@ -88,8 +125,8 @@ bool UNetworkManager::TryEncodeObjects(TArray<UNetworkBatch*>& outNetworkBatches
         }
         else
         {
-            currentBatckInfos.BatchSize += object.Value;
-            currentBatckInfos.ObjectsToSync.Add(object.Key);
+            currentBatckInfos->BatchSize += object.Value;
+            currentBatckInfos->ObjectsToSync.Add(object.Key);
         }
     }
 
@@ -102,7 +139,7 @@ bool UNetworkManager::TryEncodeObjects(TArray<UNetworkBatch*>& outNetworkBatches
 
         for (TObjectPtr<ISynchronizedObjectBase> synchronizedObject : batch->ObjectsToSync)
         {
-            synchronizedObject->PutEncodedObjectToBuffer(encodedObjectsBuffer, offset);
+            synchronizedObject->PutEncodedObjectToBuffer(encodedObjectsBuffer, offset, true);
         }
 
         UNetworkBatch* a = NewObject<UNetworkBatch>();

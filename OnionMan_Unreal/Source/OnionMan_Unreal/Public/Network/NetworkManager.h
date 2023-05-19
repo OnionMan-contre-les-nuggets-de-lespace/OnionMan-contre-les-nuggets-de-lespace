@@ -31,6 +31,10 @@ class ONIONMAN_UNREAL_API UNetworkManager : public UObject
 {
     GENERATED_BODY()
 
+public:
+    UPROPERTY(EditAnywhere)
+    FString AcknoledgeMessage = "ServerAck";
+
 private:
     TMap<uint32, TObjectPtr<ISynchronizedObjectBase>> m_synchronizedObjects{};
     TArray<TObjectPtr<ISynchronizedObjectBase>> m_objectsArray{};
@@ -48,6 +52,8 @@ public:
     void OnClientConnected(FString client);
     UFUNCTION(BlueprintCallable)
     void OnBytesRecieved(UPARAM(ref) TArray<uint8>& encodedObjects);
+    UFUNCTION(BlueprintCallable)
+    bool TryAcknoledge(UPARAM(ref) TArray<uint8>& recievedBytes, TArray<uint8>& outEncodedAck, FString& outIP);
 
 
     UFUNCTION(BlueprintCallable)

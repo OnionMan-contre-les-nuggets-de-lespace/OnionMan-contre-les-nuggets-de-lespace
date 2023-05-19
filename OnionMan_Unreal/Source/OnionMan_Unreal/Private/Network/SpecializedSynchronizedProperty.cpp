@@ -11,7 +11,6 @@ USpecializedSynchronizedProperty::USpecializedSynchronizedProperty(uint16 proper
 
 bool USpecializedSynchronizedProperty::NeedSync()
 {
-    return true; // @TODO Remove it
     return m_needSync;
 }
 
