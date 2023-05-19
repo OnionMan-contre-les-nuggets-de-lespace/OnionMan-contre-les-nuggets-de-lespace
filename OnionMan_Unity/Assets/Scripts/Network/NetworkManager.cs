@@ -1,19 +1,25 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
 using System.Linq;
-
-using OnionMan.Utils;
+using System.Net;
 using System.Net.Sockets;
 
-using System.Threading;
-using System;
-using System.Net;
+using UnityEngine;
+
+using OnionMan.Utils;
 
 namespace OnionMan.Network
 {
     public class NetworkManager : SingletonMonoBehaviour<NetworkManager>
     {
+        private enum ConnectionState
+        {
+            Disconnected,
+            WatingForServerResponse,
+            Connected,
+        }
+
         private class BatchInfos
         {
             public List<ISynchronizedObject> ObjectsToSync;
@@ -25,76 +31,60 @@ namespace OnionMan.Network
                 BatchSize = batchSize;
             }
         }
-        [SerializeField] private bool m_useHostnameInsteadOfIP = false;
-        [SerializeField] private byte[] m_ip = new byte[4];
-        [SerializeField] private string m_hostName = "localhost";
-        [SerializeField] private int m_port = 0;
+
+        public Action OnConnectedToServer;
+
+        [SerializeField] private string m_serverIP = "192.168.56.1";
+
+        [SerializeField] private string m_acknoledgeMessage = "ServerAck";
+
+        [SerializeField] private int m_senderPort = 0;
+        [SerializeField] private int m_recieverPort = 0;
 
         private const int MAX_BATCH_SIZE = 8192;
 
         private Dictionary<uint, ISynchronizedObject> m_synchronizedObjects = new Dictionary<uint, ISynchronizedObject>();
 
-        private TcpClient m_tcpClient;
-        private NetworkStream m_networkStream;
+        private IPEndPoint m_recieverEndPoint;
+        private UdpClient m_udpClientReciever;
+        private UdpClient m_udpClient;
 
-        private int m_networkStreamOffset;
+        private ConnectionState m_connectionState = ConnectionState.Disconnected;
 
-        Thread m_networkThread;
-
-        private bool m_isConnected = false;
-        private bool m_shouldListenForNetwork = false;
-
-        private byte[] m_ping;
 
         public NetworkManager()
         {
 
         }
 
-        private void Start()
+        protected override void Start()
         {
-            m_ping = EncodingUtility.Encode<string>("Ping").ToArray();
+            base.Start();
+            m_connectionState = ConnectionState.Disconnected;
         }
 
         private void Update()
         {
-            if (m_isConnected)
+            if (m_connectionState == ConnectionState.Connected)
             {
-                if (Input.GetKey(KeyCode.W))
-                {
-                    m_networkStream.Write(m_ping);
-                    Debug.LogError($"Ping");
-                }
-                int available = m_tcpClient.Available;
-                if (available != 0)
-                {
-                    Debug.LogError($"Data Available : {available}");
-                }
             }
         }
 
         protected virtual void LateUpdate()
         {
-            if (m_isConnected)
-            {
-                if (TryEncodeObjects(out List<byte[]> encodedObjectsBatches))
-                {
-                    foreach (byte[] batch in encodedObjectsBatches)
-                    {
-                        m_networkStream.Write(batch);
-                    }
-                }
-            }
+            SendDataIfNeeded();
+            RecieveDataIfAvailable();
         }
 
         private void OnApplicationQuit()
         {
-            m_tcpClient.Dispose();
-            m_shouldListenForNetwork = false;
+            Dispose();
         }
 
-        protected void OnDestroy()
+        public override void OnDestroy()
         {
+            base.OnDestroy();
+            Dispose();
         }
 
         public override void Initialize()
@@ -102,67 +92,82 @@ namespace OnionMan.Network
             base.Initialize();
         }
 
+        private void Dispose()
+        {
+            m_udpClient?.Close();
+            m_udpClient?.Dispose();
+            //m_udpClientReciever?.Close();
+            //m_udpClientReciever?.Dispose();
+        }
+
         public void Connect()
         {
-            if (!m_isConnected)
+            if (m_connectionState == ConnectionState.Disconnected)
             {
-                if (m_useHostnameInsteadOfIP)
-                {
-                    m_tcpClient = new TcpClient(m_hostName, m_port);
-                }
-                else
-                {
-                    IPEndPoint endPoint = new IPEndPoint(new IPAddress(m_ip), m_port);
-                    m_tcpClient = new TcpClient();
-                    m_tcpClient.Connect(endPoint);
-                    //m_tcpClient.Client.Bind(endPoint);
-                }
+                m_udpClientReciever = new UdpClient(m_recieverPort);
 
+                IPEndPoint senderEndPoint = new IPEndPoint(IPAddress.Parse(m_serverIP), m_senderPort);
+                m_udpClient = new UdpClient();
+                m_udpClient.Connect(senderEndPoint);
 
-                Debug.LogError($"Is connected before Connect {m_tcpClient.Connected}");
-                Debug.LogError($"Is connected before Connect {m_tcpClient.Connected}");
-                //Debug.LogError($"Created client at IP {m_tcpClient.Client.RemoteEndPoin}");
+                // Sends the Ip to the server
+                byte[] encodedIP = EncodingUtility.Encode(GetCurrentIP().ToString()).ToArray();
 
-                m_networkStream = m_tcpClient.GetStream();
-                m_isConnected = m_tcpClient.Connected;
+                m_udpClient.Send(encodedIP, encodedIP.Length);
 
-                m_shouldListenForNetwork = true;
-                //m_networkThread = new Thread(new ThreadStart(ListenForNetwork));
-                //m_networkThread.Start();
-                m_networkStream.Write(EncodingUtility.Encode<string>("Ping").ToArray());
+                m_connectionState = ConnectionState.WatingForServerResponse;
             }
         }
 
-        private void ListenForNetwork()
+        private void SendDataIfNeeded()
         {
-            while (m_shouldListenForNetwork)
+            if(m_connectionState == ConnectionState.Connected)
             {
-                try
+                if (TryEncodeObjects(out List<byte[]> encodedObjectsBatches))
                 {
-                    byte[] encodedObjectsBuffer = new byte[MAX_BATCH_SIZE];
-                    int encodedMessageSize = m_networkStream.Read(encodedObjectsBuffer, m_networkStreamOffset, MAX_BATCH_SIZE);
-                    m_networkStreamOffset += encodedMessageSize;
-
-                    byte[] resizedEncodedObjects = new byte[encodedMessageSize];
-                    EncodingUtility.ResizeBuffer(encodedObjectsBuffer, ref resizedEncodedObjects);
-
-                    DecodeObjects(resizedEncodedObjects);
-                }
-                catch (ArgumentNullException e)
-                {
-                    Debug.LogException(e);
-                }
-                catch (SocketException e)
-                {
-                    Debug.LogException(e);
-                }
-                catch(Exception e)
-                {
-                    Debug.LogException(e);
+                    foreach (byte[] batch in encodedObjectsBatches)
+                    {
+                        m_udpClient.Send(batch, batch.Length);
+                    }
                 }
             }
         }
 
+        private void RecieveDataIfAvailable()
+        {
+            if (m_connectionState != ConnectionState.Disconnected)
+            {
+                if (m_udpClientReciever.Available != 0)
+                {
+                    byte[] recievedBytes = m_udpClientReciever.Receive(ref m_recieverEndPoint);
+                    Debug.LogError($"[Frame {Time.frameCount}] {m_udpClientReciever.Available} bytes available");
+                    Debug.LogError($"Recieved {recievedBytes.Length} bytes from IP {m_recieverEndPoint.Address} and port {m_recieverEndPoint.Port}");
+                    Debug.LogError($"Bytes Recieved : {EncodingUtility.GetBytesAsString(recievedBytes)}");
+
+                    switch (m_connectionState)
+                    {
+                        case ConnectionState.Disconnected:
+                            break;
+
+                        case ConnectionState.WatingForServerResponse:
+                            int offset = 0;
+                            string decodedResponse = EncodingUtility.Decode<string>(recievedBytes, ref offset, recievedBytes.Length);
+                            if (decodedResponse == m_acknoledgeMessage)
+                            {
+                                m_connectionState = ConnectionState.Connected;
+                                OnConnectedToServer?.Invoke();
+                            }
+                            break;
+
+                        case ConnectionState.Connected:
+                            DecodeObjects(recievedBytes);
+                            break;
+                    }
+                }
+            }
+        }
+
+        
         public void AddSynchronizedObject(ISynchronizedObject obj)
         {
             uint objID = obj.ObjectID;
@@ -268,6 +273,13 @@ namespace OnionMan.Network
                     throw new InvalidDataException($"There are no object with ID {objectID}");
                 }
             }
+        }
+
+        private IPAddress GetCurrentIP()
+        {
+            IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
+            IPAddress currentIpAddress = hostEntry.AddressList.FirstOrDefault(address => address.AddressFamily == AddressFamily.InterNetwork);
+            return currentIpAddress;
         }
     }
 }

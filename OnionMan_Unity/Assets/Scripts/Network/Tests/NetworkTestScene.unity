@@ -123,129 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1230472126
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1230472128}
-  - component: {fileID: 1230472127}
-  m_Layer: 0
-  m_Name: NetworkGO
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1230472127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1230472126}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 954e1d7b72963d34988b6866582b0ada, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_objectID: 0
-  SP0:
-    m_role: 0
-    m_propertyID: 0
-    m_needSync: 1
-    m_value: []
-  SP1:
-    m_role: 0
-    m_value: 
-    m_propertyID: 1
-    m_needSync: 1
-  SP2:
-    m_role: 0
-    m_value: {x: 0, y: 0, z: 0, w: 0}
-    m_propertyID: 2
-    m_needSync: 1
-  SP3:
-    m_role: 0
-    m_value: 0
-    m_propertyID: 3
-    m_needSync: 1
-  m_encodedObjects: 
---- !u!4 &1230472128
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1230472126}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.236, y: 1.119, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1328008460
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1328008462}
-  - component: {fileID: 1328008461}
-  - component: {fileID: 1328008463}
-  m_Layer: 0
-  m_Name: '[Singleton] OnionMan.Network.NetworkManager'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1328008461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1328008460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d2cbd306e81e8a4c802f1c59cd8a2e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1328008462
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1328008460}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1328008463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1328008460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4acc5650ff9b8e84f9b4a03eb947b45b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1969823606
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1969823608}
   - component: {fileID: 1969823607}
-  - component: {fileID: 1969823609}
   m_Layer: 0
   m_Name: NetworkGO_2
   m_TagString: Untagged
@@ -278,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_objectID: 666
   SP0:
-    m_role: 1
+    m_role: 0
     m_propertyID: 0
     m_needSync: 1
     m_value:
@@ -299,7 +175,7 @@ MonoBehaviour:
     m_propertyID: 2
     m_needSync: 1
   SP3:
-    m_role: 1
+    m_role: 0
     m_value: 1
     m_propertyID: 3
     m_needSync: 1
@@ -317,33 +193,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1969823609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969823606}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94e96f91f0958ad4685615b481f2e2d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_objectID: 666
-  SP0:
-    m_role: 0
-    m_value: {x: 0, y: 0, z: 0}
-    m_propertyID: 0
-    m_needSync: 1
-  SP1:
-    m_role: 0
-    m_value: {x: 0, y: 0, z: 0, w: 0}
-    m_propertyID: 1
-    m_needSync: 1
-  SP3:
-    m_role: 0
-    m_value: 
-    m_propertyID: 3
-    m_needSync: 1

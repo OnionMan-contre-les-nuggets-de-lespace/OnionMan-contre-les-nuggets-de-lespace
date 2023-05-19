@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2cbd306e81e8a4c802f1c59cd8a2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_useHostnameInsteadOfIP: 0
+  m_useHostnameInsteadOfIP: 1
   m_ip: c0a801ba
-  m_hostName: SuperServeurWAW
-  m_port: 3000
+  m_serverIP: 192.168.56.1
+  m_acknoledgeMessage: ServerAck
+  m_senderPort: 8080
+  m_recieverPort: 8081
