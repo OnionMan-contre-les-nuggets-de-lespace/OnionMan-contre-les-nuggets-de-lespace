@@ -34,8 +34,6 @@ namespace OnionMan.Network
 
         public Action OnConnectedToServer;
 
-        [SerializeField] private string m_serverIP = "192.168.56.1";
-
         [SerializeField] private string m_acknoledgeMessage = "ServerAck";
 
         [SerializeField] private int m_senderPort = 0;
@@ -100,13 +98,13 @@ namespace OnionMan.Network
             //m_udpClientReciever?.Dispose();
         }
 
-        public void Connect()
+        public void Connect(string serverIP)
         {
             if (m_connectionState == ConnectionState.Disconnected)
             {
                 m_udpClientReciever = new UdpClient(m_recieverPort);
 
-                IPEndPoint senderEndPoint = new IPEndPoint(IPAddress.Parse(m_serverIP), m_senderPort);
+                IPEndPoint senderEndPoint = new IPEndPoint(IPAddress.Parse(serverIP), m_senderPort);
                 m_udpClient = new UdpClient();
                 m_udpClient.Connect(senderEndPoint);
 

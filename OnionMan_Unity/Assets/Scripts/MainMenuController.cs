@@ -6,9 +6,11 @@ using UnityEngine.UI;
 using OnionMan.Network;
 using System;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField] private TMP_InputField m_serverIPInputField;
     [SerializeField] private Button m_connectButton;
 
     [SerializeField] private string m_nextSceneName;
@@ -25,7 +27,7 @@ public class MainMenuController : MonoBehaviour
 
     private void OnConnectButtonClicked()
     {
-        NetworkManager.Instance.Connect();
+        NetworkManager.Instance.Connect(m_serverIPInputField.text);
         m_connectButton.enabled = false;
         NetworkManager.Instance.OnConnectedToServer += OnConnectedToUnrealServer; 
     }
