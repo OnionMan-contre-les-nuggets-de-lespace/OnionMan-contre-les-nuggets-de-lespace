@@ -3,28 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class RoomAction_ExtinguishFire : MonoBehaviour, IRoomAction
+public class RoomAction_ExtinguishFire : RoomAction
 {
-    [SerializeField] private string actionName;
     [SerializeField] private float extinguishTime;
 
     public Action OnExtinguishActionEnd;
 
-    public bool CanBeDone
-    {
-        get => true;
-    }
 
     private void Awake()
     {
     }
 
-    public string GetActionName()
+    public override string GetActionName()
     {
         return actionName;
     }
 
-    public void LaunchAction(RoomName currentRoom)
+    public override void LaunchAction(RoomName currentRoom)
     {
         StartCoroutine(ExtinguishCoroutine(currentRoom));
     }

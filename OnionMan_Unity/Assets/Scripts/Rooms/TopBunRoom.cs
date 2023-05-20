@@ -13,9 +13,9 @@ public class TopBunRoom : BunRoom
         takeFireExtinguisherAction = FindObjectOfType<RoomAction_TakeFireExtinguisher>();
     }
 
-    protected override List<IRoomAction> GetActionsToDisplay()
+    protected override List<RoomAction> GetActionsToDisplay()
     {
-        List<IRoomAction> roomActions = new List<IRoomAction>();
+        List<RoomAction> roomActions = new List<RoomAction>();
 
         roomActions.Add(computerAction);
         roomActions.Add(takeFireExtinguisherAction);

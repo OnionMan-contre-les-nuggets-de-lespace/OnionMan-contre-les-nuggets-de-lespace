@@ -42,7 +42,6 @@ public class MiddleRoom : BaseRoom
     private void Start()
     {
         roomManager.AddMiddleRoom(this);
-        roomManager.middleRooms.Add(roomName, this);
 
         scanAction = FindObjectOfType<RoomAction_Scan>();
         repairAction = FindObjectOfType<RoomAction_Repair>();
@@ -52,9 +51,9 @@ public class MiddleRoom : BaseRoom
         extinguishAction.OnExtinguishActionEnd += OnFinishedAction;
     }
 
-    protected override List<IRoomAction> GetActionsToDisplay()
+    protected override List<RoomAction> GetActionsToDisplay()
     {
-        List<IRoomAction> roomActions = new List<IRoomAction>();
+        List<RoomAction> roomActions = new List<RoomAction>();
 
         roomActions.Add(scanAction);
         roomActions.Add(repairAction);
@@ -112,7 +111,7 @@ public class MiddleRoom : BaseRoom
             fireRectTransform[i].gameObject.SetActive(true);
 
             Rect fireParentRect = criticalStateFeedback.GetComponent<RectTransform>().rect;
-            float offset = 50;
+            float offset = 200;
 
             fireRectTransform[i].anchoredPosition = new Vector2(UnityEngine.Random.Range(fireParentRect.xMin + offset, fireParentRect.xMax - offset), fireRectTransform[i].anchoredPosition.y);
             spawnedFireRectTransform.Add(fireRectTransform[i]);

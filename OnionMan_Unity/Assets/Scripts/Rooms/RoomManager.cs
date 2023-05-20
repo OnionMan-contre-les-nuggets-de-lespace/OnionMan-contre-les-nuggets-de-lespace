@@ -34,6 +34,7 @@ public class RoomManager : MonoBehaviour
     public void AddMiddleRoom(MiddleRoom middleRoom)
     {
         m_middleRooms.Add(middleRoom);
+        middleRooms.Add(middleRoom.roomName, middleRoom);
     }
 
     public void AddBunRoom(BunRoom bunRoom)

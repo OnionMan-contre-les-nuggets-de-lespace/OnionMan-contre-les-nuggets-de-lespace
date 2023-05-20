@@ -30,9 +30,9 @@ public class BaseRoom : MonoBehaviour
         mainCanvas.sortingOrder = 10;
     }
 
-    protected virtual List<IRoomAction> GetActionsToDisplay()
+    protected virtual List<RoomAction> GetActionsToDisplay()
     {
-        List<IRoomAction> roomActions = new List<IRoomAction>();
+        List<RoomAction> roomActions = new List<RoomAction>();
 
         return roomActions;
     }
