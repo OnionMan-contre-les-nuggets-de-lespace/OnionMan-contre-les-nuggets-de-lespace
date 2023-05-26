@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.unity": "yaml",
+        "*.asset": "yaml",
+        "*.prefab": "yaml",
+        "xiosbase": "cpp",
+        "chrono": "cpp",
+        "optional": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "xlocmon": "cpp",
+        "xtr1common": "cpp",
+        "xutility": "cpp"
+    }
+}
