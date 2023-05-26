@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoomAction_Computer : RoomAction
 {
+    public override bool CanBeDone => RoomActionConditions.hasScannedRoom;
     public override string GetActionName()
     {
         return actionName;

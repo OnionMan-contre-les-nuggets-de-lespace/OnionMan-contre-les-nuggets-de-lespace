@@ -51,17 +51,6 @@ public class MiddleRoom : BaseRoom
         extinguishAction.OnExtinguishActionEnd += OnFinishedAction;
     }
 
-    protected override List<RoomAction> GetActionsToDisplay()
-    {
-        List<RoomAction> roomActions = new List<RoomAction>();
-
-        roomActions.Add(scanAction);
-        roomActions.Add(repairAction);
-        roomActions.Add(extinguishAction);
-
-        return roomActions;
-    }
-
     private void Update()
     {
         roomHealthText.text = roomHealth.ToString() + "%";
@@ -99,6 +88,16 @@ public class MiddleRoom : BaseRoom
         }
     }
 
+    protected override List<RoomAction> GetActionsToDisplay()
+    {
+        List<RoomAction> roomActions = new List<RoomAction>();
+
+        roomActions.Add(scanAction);
+        roomActions.Add(repairAction);
+        roomActions.Add(extinguishAction);
+
+        return roomActions;
+    }
     private void StepIntoCriticalState()
     {
         spawnedFireRectTransform.Clear();
@@ -116,6 +115,11 @@ public class MiddleRoom : BaseRoom
             fireRectTransform[i].anchoredPosition = new Vector2(UnityEngine.Random.Range(fireParentRect.xMin + offset, fireParentRect.xMax - offset), fireRectTransform[i].anchoredPosition.y);
             spawnedFireRectTransform.Add(fireRectTransform[i]);
         }
+    }
+
+    protected override void OnFinishedAction()
+    {
+        base.OnFinishedAction();
     }
 
 }

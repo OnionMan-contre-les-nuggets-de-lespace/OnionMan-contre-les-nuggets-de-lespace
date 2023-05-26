@@ -9,7 +9,7 @@ public class RoomAction : MonoBehaviour
     public virtual bool CanBeDone { get => true ; }
     protected RoomManager roomManager;
 
-    public Action OnActionEnd;
+    //public Action OnActionEnd;
 
     private void Awake()
     {

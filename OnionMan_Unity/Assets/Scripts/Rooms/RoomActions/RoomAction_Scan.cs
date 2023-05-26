@@ -6,7 +6,7 @@ using System;
 public class RoomAction_Scan : RoomAction
 {
     [SerializeField] private float scanTime;
-    public override bool CanBeDone { get => true; }
+    public override bool CanBeDone => !RoomActionConditions.hasExtinguisher;
 
     public Action OnScanActionEnd;
 

@@ -9,6 +9,7 @@ public class RoomAction_ExtinguishFire : RoomAction
 
     public Action OnExtinguishActionEnd;
 
+    public override bool CanBeDone => RoomActionConditions.hasExtinguisher;
 
     private void Awake()
     {

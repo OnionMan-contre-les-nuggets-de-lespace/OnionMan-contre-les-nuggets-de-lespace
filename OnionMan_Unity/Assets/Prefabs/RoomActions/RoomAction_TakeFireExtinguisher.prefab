@@ -90,3 +90,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionName: Prendre l'extincteur
+  nameVariant: Poser l'extincteur
