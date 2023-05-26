@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PooledObject.h"
 #include "GameFramework/Actor.h"
 #include "EnemyActor.generated.h"
 
 UCLASS()
-class ONIONMAN_UNREAL_API AEnemyActor : public AActor
+class ONIONMAN_UNREAL_API AEnemyActor : public APooledObject
 {
 	GENERATED_BODY()
 	
@@ -29,9 +30,13 @@ public:
 		bool IsArmored;
 	// Create Property Weapons ! (donc un script C++ weapon)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+		TSubclassOf<AActor> Weapon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		FVector Location;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		TSubclassOf<AActor> m_actorBP;
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Class Options")
+	// 	TSubclassOf<AActor> m_objectPoolBP;
 	/*UFUNCTION(BlueprintCallable, Category = "Enemy")
 		void SpawnActor(FVector Location);*/
 
