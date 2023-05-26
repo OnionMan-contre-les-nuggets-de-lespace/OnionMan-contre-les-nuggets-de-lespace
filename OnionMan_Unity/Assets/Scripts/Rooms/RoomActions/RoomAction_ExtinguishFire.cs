@@ -9,8 +9,6 @@ public class RoomAction_ExtinguishFire : RoomAction
 
     public Action OnExtinguishActionEnd;
 
-    public override bool CanBeDone => RoomActionConditions.hasExtinguisher;
-
     private void Awake()
     {
     }
@@ -18,6 +16,10 @@ public class RoomAction_ExtinguishFire : RoomAction
     public override string GetActionName()
     {
         return actionName;
+    }
+    public override bool CanBeDone(BaseRoom baseRoom)
+    {
+        return RoomActionConditions.hasExtinguisher && roomManager.middleRooms[baseRoom.roomName].isInCriticalState;
     }
 
     public override void LaunchAction(RoomName currentRoom)

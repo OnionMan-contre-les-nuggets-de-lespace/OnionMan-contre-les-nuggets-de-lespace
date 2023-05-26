@@ -6,12 +6,11 @@ using System;
 public class RoomAction : MonoBehaviour
 {
     [SerializeField] protected string actionName;
-    public virtual bool CanBeDone { get => true ; }
     protected RoomManager roomManager;
 
     //public Action OnActionEnd;
 
-    private void Awake()
+    private void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
     }
@@ -19,6 +18,11 @@ public class RoomAction : MonoBehaviour
     public virtual void LaunchAction(RoomName roomName)
     {
 
+    }
+
+    public virtual bool CanBeDone(BaseRoom baseRoom)
+    {
+        return true;
     }
 
     public virtual string GetActionName()

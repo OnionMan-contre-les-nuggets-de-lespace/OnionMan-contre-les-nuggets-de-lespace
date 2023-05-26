@@ -606,7 +606,7 @@ RectTransform:
   - {fileID: 7509260808160118867}
   - {fileID: 8163633298539093411}
   m_Father: {fileID: 3636955176674613474}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -725,7 +725,7 @@ RectTransform:
   - {fileID: 6740014645129287397}
   - {fileID: 6156883672838736386}
   m_Father: {fileID: 3636955176674613474}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -992,6 +992,7 @@ MonoBehaviour:
   - {fileID: 3329771680319659088}
   spawnedFireRectTransform: []
   scanEffect: {fileID: 8865046308895692681}
+  isScanned: 0
   isInCriticalState: 0
 --- !u!1 &3636955176149839049
 GameObject:
@@ -1162,7 +1163,7 @@ RectTransform:
   - {fileID: 3636955177470150761}
   - {fileID: 3636955177382648988}
   m_Father: {fileID: 3636955176674613474}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1309,6 +1310,7 @@ MonoBehaviour:
   - {fileID: 3007390053423374440}
   spawnedFireRectTransform: []
   scanEffect: {fileID: 7226790919775070594}
+  isScanned: 0
   isInCriticalState: 0
 --- !u!1 &3636955176674613473
 GameObject:
@@ -1340,12 +1342,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3460453970231768511}
   - {fileID: 3636955176400611089}
   - {fileID: 3654114696884788310}
   - {fileID: 4723365703448054389}
   - {fileID: 3191543106306687104}
   - {fileID: 866436128995161088}
+  - {fileID: 3460453970231768511}
   m_Father: {fileID: 3636955176886578730}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1926,6 +1928,7 @@ MonoBehaviour:
   - {fileID: 8606203654077552765}
   spawnedFireRectTransform: []
   scanEffect: {fileID: 1793668150501417505}
+  isScanned: 0
   isInCriticalState: 0
 --- !u!1 &3636955177694737550
 GameObject:
@@ -2306,6 +2309,7 @@ MonoBehaviour:
   - {fileID: 8587449008463819138}
   spawnedFireRectTransform: []
   scanEffect: {fileID: 2727108841871938094}
+  isScanned: 0
   isInCriticalState: 0
 --- !u!1 &3636955177797379054
 GameObject:
@@ -2680,7 +2684,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3636955176674613474}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2757,7 +2761,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3636955176674613474}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2899,7 +2903,7 @@ RectTransform:
   - {fileID: 712477631686802537}
   - {fileID: 1534843897312125661}
   m_Father: {fileID: 3636955176674613474}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

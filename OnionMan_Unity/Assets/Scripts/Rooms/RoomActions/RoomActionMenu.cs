@@ -30,10 +30,10 @@ public class RoomActionMenu : MonoBehaviour
             m_actionButton[i].gameObject.SetActive(true);
             m_actionButton[i].GetComponentInChildren<TMP_Text>().text = actionList[i].GetActionName();
 
-            m_actionButton[i].interactable = actionList[i].CanBeDone;
+            m_actionButton[i].interactable = actionList[i].CanBeDone(roomToLaunchAction);
             //TODO : Rajouter un encart dynamique pour afficher une phrase de feedback quand on ne peut pas réaliser une action ("Vous avez l'extincteur/ Vous n'avez pas encore scanné de salles/etc...)
 
-            if(actionList[i].CanBeDone)
+            if(actionList[i].CanBeDone(roomToLaunchAction))
             {
                 int x = i;
                 m_actionButton[i].onClick.AddListener(delegate { 
@@ -63,6 +63,6 @@ public class RoomActionMenu : MonoBehaviour
         }
 
 
-        clickBlocker.SetActive(false);
+        //clickBlocker.SetActive(false);
     }
 }

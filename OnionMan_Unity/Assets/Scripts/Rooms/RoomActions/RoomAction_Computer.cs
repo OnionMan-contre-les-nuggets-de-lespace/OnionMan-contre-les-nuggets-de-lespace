@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class RoomAction_Computer : RoomAction
 {
-    public override bool CanBeDone => RoomActionConditions.hasScannedRoom;
     public override string GetActionName()
     {
         return actionName;
+    }
+
+    public override bool CanBeDone(BaseRoom baseRoom)
+    {
+        return RoomActionConditions.hasScannedRoom;
     }
 
     public override void LaunchAction(RoomName currentRoom)

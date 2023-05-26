@@ -25,6 +25,7 @@ public class MiddleRoom : BaseRoom
 
     [Header("Scan")]
     [SerializeField] public GameObject scanEffect;
+    public bool isScanned; //Set dans le repair manager
 
     private float m_timeBeforeDecay;
     private bool m_hasAlreadyEnterCriticalState;
@@ -53,6 +54,7 @@ public class MiddleRoom : BaseRoom
 
     private void Update()
     {
+        //TODO : Capé les pv a 10% si la room a été scanné
         roomHealthText.text = roomHealth.ToString() + "%";
 
         if(m_timerBeforeStartDecay > 0)
@@ -120,6 +122,8 @@ public class MiddleRoom : BaseRoom
     protected override void OnFinishedAction()
     {
         base.OnFinishedAction();
+
+        
     }
 
 }

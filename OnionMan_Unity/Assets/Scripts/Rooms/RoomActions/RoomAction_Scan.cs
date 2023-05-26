@@ -6,7 +6,6 @@ using System;
 public class RoomAction_Scan : RoomAction
 {
     [SerializeField] private float scanTime;
-    public override bool CanBeDone => !RoomActionConditions.hasExtinguisher;
 
     public Action OnScanActionEnd;
 
@@ -19,6 +18,10 @@ public class RoomAction_Scan : RoomAction
     {
         StartCoroutine(ScanCoroutine(currentRoom));
     }
+    public override bool CanBeDone(BaseRoom baseRoom)
+    {
+        return !RoomActionConditions.hasExtinguisher && !roomManager.middleRooms[baseRoom.roomName].isScanned;
+    }
 
     IEnumerator ScanCoroutine(RoomName roomToScan)
     {
@@ -28,6 +31,7 @@ public class RoomAction_Scan : RoomAction
         yield return new WaitForSeconds(scanTime);
 
         roomManager.middleRooms[roomToScan].scanEffect.SetActive(false);
+        RoomActionConditions.hasScannedRoom = true;
         OnScanActionEnd?.Invoke();
 
         Debug.Log("Scan Action Ended");

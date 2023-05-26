@@ -8,6 +8,10 @@ public class RoomAction_Repair : RoomAction
     {
         return actionName;
     }
+    public override bool CanBeDone(BaseRoom baseRoom)
+    {
+        return !RoomActionConditions.hasExtinguisher && !roomManager.middleRooms[baseRoom.roomName].isInCriticalState && roomManager.middleRooms[baseRoom.roomName].isScanned;
+    }
 
     public override void LaunchAction(RoomName currentRoom)
     {
