@@ -57,6 +57,11 @@ public class MiddleRoom : BaseRoom
         //TODO : Capé les pv a 10% si la room a été scanné
         roomHealthText.text = roomHealth.ToString() + "%";
 
+        if(isScanned && roomHealth <= 10)
+        {
+            return;
+        }
+
         if(m_timerBeforeStartDecay > 0)
         {
             m_timerBeforeStartDecay -= Time.deltaTime;

@@ -16,6 +16,12 @@ public class RoomAction_Computer : RoomAction
 
     public override void LaunchAction(RoomName currentRoom)
     {
+        StartCoroutine(ComputerCoroutine(currentRoom));
+    }
+
+    IEnumerator ComputerCoroutine(RoomName currentRoom)
+    {
         Debug.Log("LAUNCHING COMPUTER");
+        yield return new WaitForEndOfFrame();
     }
 }

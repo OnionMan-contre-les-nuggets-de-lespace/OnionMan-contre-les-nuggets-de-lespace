@@ -8,7 +8,6 @@ public class RoomActionMenu : MonoBehaviour
 {
     [SerializeField] private List<Button> m_actionButton = new List<Button>();
     [SerializeField] private CanvasGroup actionChoiceMenuCanvasGroup;
-    [SerializeField] private GameObject clickBlocker;
 
 
     private CanvasGroup canvasGroup;
@@ -16,11 +15,6 @@ public class RoomActionMenu : MonoBehaviour
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    private void DisableNavigation(bool state)
-    {
-        clickBlocker.SetActive(state);
     }
 
     public void ShowActionMenu(List<RoomAction> actionList, BaseRoom roomToLaunchAction)
@@ -38,7 +32,7 @@ public class RoomActionMenu : MonoBehaviour
                 int x = i;
                 m_actionButton[i].onClick.AddListener(delegate { 
                     actionList[x].LaunchAction(roomToLaunchAction.roomName);
-                    DisableNavigation(true); //TODO : Reenable Navigation
+                    GameManager.DisablePlayerNavigation(true); //TODO : Reenable Navigation
                     HideAndResetActionMenu();
                 });
             }

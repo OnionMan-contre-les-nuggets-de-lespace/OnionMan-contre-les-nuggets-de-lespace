@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OnionMan.Utils;
+using System;
 
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonMonoBehaviour<GameManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject clickBlocker;
+
+    public static Action<bool> DisablePlayerNavigation;
+
+    private void Awake()
     {
-        
+        DisablePlayerNavigation += DisableNavigation;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DisableNavigation(bool state)
     {
-        
+        clickBlocker.SetActive(state);
     }
 }

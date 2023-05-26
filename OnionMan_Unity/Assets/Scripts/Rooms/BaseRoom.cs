@@ -46,5 +46,6 @@ public class BaseRoom : MonoBehaviour
     {
         roomActionMenu.HideAndResetActionMenu();
         mainCanvas.sortingOrder = 0;
+        GameManager.DisablePlayerNavigation(false);
     }
 }

@@ -10,6 +10,7 @@ public class RoomAction_Repair : RoomAction
     }
     public override bool CanBeDone(BaseRoom baseRoom)
     {
+        //TODO Empecher l'action d'être faite tant que le mini jeu de l'ordi est pas réussi
         return !RoomActionConditions.hasExtinguisher && !roomManager.middleRooms[baseRoom.roomName].isInCriticalState && roomManager.middleRooms[baseRoom.roomName].isScanned;
     }
 
