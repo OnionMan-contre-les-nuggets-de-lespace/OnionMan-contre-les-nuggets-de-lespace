@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "PooledObject.h"
 #include "GameFramework/Actor.h"
 #include "EnemyActor.generated.h"
 
 UCLASS()
-class ONIONMAN_UNREAL_API AEnemyActor : public AActor
+class ONIONMAN_UNREAL_API AEnemyActor : public APooledObject
 {
 	GENERATED_BODY()
 	
