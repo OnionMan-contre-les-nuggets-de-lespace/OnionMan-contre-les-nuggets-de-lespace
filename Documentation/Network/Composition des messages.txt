@@ -1,0 +1,8 @@
+EncodedProperty : 
+[Size : int][PropertyID : ushort][Data : T]
+
+EncodedObject : 
+[Size : int][ObjectID : uint][Properties : EncodedProperty * n]
+
+NetworkMessage : 
+[Size : int][Objects : EncodedObject * n]
