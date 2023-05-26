@@ -34,7 +34,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(TArray<FVector3f>& newValue)
+    inline void SetValue(UPARAM(ref) TArray<FVector3f>& newValue)
     {
         SetValueGeneric<FVector3f>(newValue, m_value);
     }
