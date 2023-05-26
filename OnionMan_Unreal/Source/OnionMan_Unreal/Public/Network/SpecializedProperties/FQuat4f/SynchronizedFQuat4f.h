@@ -31,7 +31,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(FQuat4f& newValue)
+    inline void SetValue(UPARAM(ref) FQuat4f& newValue)
     {
         SetValueGeneric<FQuat4f>(newValue, m_value);
     }

@@ -29,7 +29,7 @@ public:
         return GetValueGeneric<FIntVector2>(m_value);
     }
 
-    inline void SetValue(FIntVector2& newValue)
+    inline void SetValue(UPARAM(ref) FIntVector2& newValue)
     {
         SetValueGeneric<FIntVector2>(newValue, m_value);
     }

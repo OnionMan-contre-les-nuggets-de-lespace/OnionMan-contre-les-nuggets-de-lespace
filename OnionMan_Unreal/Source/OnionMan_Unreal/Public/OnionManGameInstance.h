@@ -16,7 +16,7 @@ class ONIONMAN_UNREAL_API UOnionManGameInstance : public UGameInstance
     GENERATED_BODY()
 public:
     UPROPERTY(BlueprintReadWrite)
-    TObjectPtr<UNetworkManager> NetworkManager;
+    UNetworkManager* NetworkManager;
 
     virtual void Init() override;
 };
