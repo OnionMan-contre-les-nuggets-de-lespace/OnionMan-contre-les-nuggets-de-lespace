@@ -59,6 +59,19 @@ void AEnemyActor::Move(float deltaTime, float timeSinceSpawn)
 {
 }
 
+AEnemyActor* AEnemyActor::Clone()
+{
+	FActorSpawnParameters Parameters;
+
+	Parameters.Template = this;
+
+	AEnemyActor* Item = GetWorld()->SpawnActor<AEnemyActor>(GetClass(), Parameters);
+
+	Item->SetOwner(GetOwner());
+
+	return Item;
+}
+
 void AEnemyActor::EditorLoad(float timeSinceSpawn)
 {
 }

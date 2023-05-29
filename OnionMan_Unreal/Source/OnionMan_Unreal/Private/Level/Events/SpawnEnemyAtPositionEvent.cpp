@@ -19,8 +19,7 @@ void USpawnEnemyAtPositionEvent::EditorLoad(float timeSinceStart)
 
 	for (int i {0}; i < m_numberOfEnemiesToSpawn; i++)
 	{
-		// @TODO Instanciate a copy of the enemy
-		AIndependantEnemyActor* spawnedEnemy = m_enemyPrefab;
+		AIndependantEnemyActor* spawnedEnemy = (AIndependantEnemyActor*)m_enemyPrefab->Clone();
 
         float spawnTime = GetTime() + i * m_timeBetweenSpawns;
 		bool hidden = timeSinceStart < spawnTime;
@@ -71,7 +70,7 @@ void USpawnEnemyAtPositionEvent::EditorUnload()
 	for (int i {0}; i < m_numberOfEnemiesToSpawn; i++)
 	{
 		AIndependantEnemyActor* enemy = m_editorEnemies[i];
-		// @TODO Destroy enemy
+		enemy->SetHidden(true);
 	}
     m_editorEnemies.Empty();
 }
@@ -88,9 +87,7 @@ void USpawnEnemyAtPositionEvent::EditorSave()
 
 TObjectPtr<AEnemyActor> USpawnEnemyAtPositionEvent::SpawnEnemy()
 {
-	// Request enemy from pool
-	// @TODO : Impl�menter la pool 
-	AIndependantEnemyActor* requestedEnemy = m_enemyPrefab;
+	AIndependantEnemyActor* requestedEnemy = (AIndependantEnemyActor*)m_enemyPrefab->Clone();
 	requestedEnemy->SetHidden(false);
 	requestedEnemy->Spawn(m_startPosition);
 	return requestedEnemy;

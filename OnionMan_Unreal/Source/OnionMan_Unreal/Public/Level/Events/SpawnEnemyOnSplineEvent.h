@@ -16,13 +16,27 @@ class ONIONMAN_UNREAL_API USpawnEnemyOnSplineEvent : public USpawnEnemyEvent
 {
 	GENERATED_BODY()
 protected:
-	UPROPERTY(EditAnywhere, DisplayName = "Enemy Prefab")
-	AEnemyOnSplineActor* m_enemyPrefab;
-	UPROPERTY(EditAnywhere, DisplayName = "Spline")
-    USplineComponent* m_spline;
 
+	UPROPERTY(
+		EditAnywhere, 
+		DisplayName = "Spline", 
+		BlueprintReadWrite)
+    FComponentReference m_splineComponent;
+
+	UPROPERTY(
+		EditAnywhere,
+		DisplayName = "Enemy Prefab",
+		BlueprintReadWrite)
+	FComponentReference m_childActorComponent;
+	
 
 	TArray<AEnemyOnSplineActor*> m_editorEnemies;
+
+private:
+	bool m_initilizedSuccessfully = false;
+
+	AEnemyOnSplineActor* m_enemyPrefab = nullptr;
+	USplineComponent* m_spline = nullptr;
 
 
 public:
@@ -37,5 +51,7 @@ public:
 
 protected:
 	virtual TObjectPtr<AEnemyActor> SpawnEnemy() override;
-	
+
+private:
+	void Initialize();
 };

@@ -5,15 +5,15 @@
 
 
 
-ULevelAsset::ULevelAsset(/* args */)
+ALevelAsset::ALevelAsset(/* args */)
 {
 }
 
-void ULevelAsset::Load()
+void ALevelAsset::Load()
 {
 }
 
-void ULevelAsset::Update(float deltaTime)
+void ALevelAsset::Update(float deltaTime)
 {
     m_currentLevelTime += deltaTime;
     m_currentWaveTime += deltaTime;

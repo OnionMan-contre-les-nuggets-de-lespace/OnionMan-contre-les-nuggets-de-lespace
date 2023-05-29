@@ -47,6 +47,8 @@ public:
 
 	virtual void Move(float deltaTime, float timeSinceSpawn);
 
+	AEnemyActor* Clone();
+
 
 	// Editor
 	virtual void EditorLoad(float timeSinceSpawn);

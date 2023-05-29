@@ -14,7 +14,7 @@
  */
 
 UCLASS(BlueprintType)
-class ONIONMAN_UNREAL_API ULevelAsset : public UDataAsset
+class ONIONMAN_UNREAL_API ALevelAsset : public AActor
 {
 	GENERATED_BODY()
 protected:
@@ -29,7 +29,7 @@ private:
     TObjectPtr<UWave> m_currentWave;
 
 public:
-    ULevelAsset(/* args */);
+    ALevelAsset(/* args */);
 
     UFUNCTION(BlueprintCallable)
     inline float CurrentLevelTime() const

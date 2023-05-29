@@ -11,12 +11,17 @@ void USpawnEnemyOnSplineEvent::EditorLoad(float timeSinceStart)
 {
 	USpawnEnemyEvent::EditorLoad(timeSinceStart);
 
-	for (int i {0}; i < m_numberOfEnemiesToSpawn; i++)
+	Initialize();
+	if (!m_initilizedSuccessfully) 
 	{
-		// @TODO Instanciate a copy of the enemy
-		AEnemyOnSplineActor* spawnedEnemy = m_enemyPrefab;
+		return;
+	}
 
-        float spawnTime = GetTime() + i * m_timeBetweenSpawns;
+	for (int i{ 0 }; i < m_numberOfEnemiesToSpawn; i++)
+	{
+		AEnemyOnSplineActor* spawnedEnemy = (AEnemyOnSplineActor*) m_enemyPrefab->Clone();
+
+		float spawnTime = GetTime() + i * m_timeBetweenSpawns;
 		bool hidden = timeSinceStart < GetTime() + spawnTime;
 
 		spawnedEnemy->SetHidden(hidden);
@@ -63,7 +68,7 @@ void USpawnEnemyOnSplineEvent::EditorUnload()
 	for (int i {0}; i < m_numberOfEnemiesToSpawn; i++)
 	{
 		AEnemyOnSplineActor* enemy = m_editorEnemies[i];
-		// @TODO Destroy Enemy
+		enemy->SetHidden(true);
 	}
 	m_editorEnemies.Empty();
 }
@@ -75,15 +80,44 @@ void USpawnEnemyOnSplineEvent::EditorSave()
     {
         return;
     }
+	//m_spline->GetSplinePointsPosition().Points[0].
 	// @TODO Save Spline
 }
 
 TObjectPtr<AEnemyActor> USpawnEnemyOnSplineEvent::SpawnEnemy()
 {
-	// Request enemy from pool
-	// @TODO : Impl�menter la pool 
-	AEnemyOnSplineActor* requestedEnemy = m_enemyPrefab;
+	Initialize();
+	if (!m_initilizedSuccessfully)
+	{
+		return nullptr;
+	}
+
+	AEnemyOnSplineActor* requestedEnemy = (AEnemyOnSplineActor*)m_enemyPrefab->Clone();
 	requestedEnemy->SetHidden(false);
 	requestedEnemy->Spawn(m_spline);
 	return requestedEnemy;
 }
+
+void USpawnEnemyOnSplineEvent::Initialize()
+{
+	if (m_initilizedSuccessfully) 
+	{
+		return;
+	}
+
+	if (USplineComponent* splineComponent = Cast<USplineComponent>(m_splineComponent.GetComponent((m_splineComponent.OtherActor).Get())))
+	{
+		if (UChildActorComponent* childActorComponent = Cast<UChildActorComponent>(m_childActorComponent.GetComponent((m_childActorComponent.OtherActor).Get())))
+		{
+			if (AEnemyOnSplineActor* enemyOnSpline = Cast<AEnemyOnSplineActor>(childActorComponent->GetChildActor()))
+			{
+				m_enemyPrefab = enemyOnSpline;
+				m_spline = splineComponent;
+
+				m_initilizedSuccessfully = true;
+			}
+		}
+	}
+}
+
+

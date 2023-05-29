@@ -18,7 +18,7 @@ protected:
 	UPROPERTY(EditAnywhere, DisplayName = "Enemy Prefab")
 	AIndependantEnemyActor* m_enemyPrefab;
 	UPROPERTY(EditAnywhere, DisplayName = "Start Position")
-	FVector3f m_startPosition;
+	FVector m_startPosition;
 
 
 	TArray<AIndependantEnemyActor*> m_editorEnemies;
