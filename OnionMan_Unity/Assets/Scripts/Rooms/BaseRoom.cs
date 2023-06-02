@@ -7,15 +7,12 @@ public class BaseRoom : MonoBehaviour
     [SerializeField] public RoomName roomName;
     [SerializeField] private Canvas mainCanvas;
 
-    protected RoomManager roomManager;
-    protected RepairManager repairManager;
+    [SerializeField] protected RoomManager roomManager;
     protected PlayerMovement playerMovement;
-    private RoomActionMenu roomActionMenu;
+    [SerializeField] private RoomActionMenu roomActionMenu;
 
     private void Awake()
     {
-        roomManager = FindObjectOfType<RoomManager>();
-        roomActionMenu = FindObjectOfType<RoomActionMenu>();
         playerMovement = FindObjectOfType<PlayerMovement>();
     }
 

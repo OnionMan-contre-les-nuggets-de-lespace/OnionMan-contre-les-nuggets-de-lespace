@@ -11,7 +11,8 @@ public class MiddleRoom : BaseRoom
     [SerializeField] private Vector2 rangeOfTimerBeforeDecay;
     [SerializeField] private float m_timerBeforeStartDecay;
     [SerializeField] private TMP_Text roomHealthText;
-    
+    [SerializeField] protected RepairManager repairManager;
+
     [Space]
 
     [Header("Critical State")]
@@ -36,14 +37,16 @@ public class MiddleRoom : BaseRoom
 
     public Action<RoomName> OnRoomScanned;
     public bool isInCriticalState;
-    
 
+    private void Awake()
+    {
+        repairManager.AddMiddleRoom(this);
+        roomManager.AddMiddleRoom(this);
+    }
 
 
     private void Start()
     {
-        roomManager.AddMiddleRoom(this);
-
         scanAction = FindObjectOfType<RoomAction_Scan>();
         repairAction = FindObjectOfType<RoomAction_Repair>();
         extinguishAction = FindObjectOfType<RoomAction_ExtinguishFire>();

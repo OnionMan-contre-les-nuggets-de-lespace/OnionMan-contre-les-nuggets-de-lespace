@@ -33,6 +33,7 @@ public class RoomAction_Scan : RoomAction
         roomManager.middleRooms[roomToScan].scanEffect.SetActive(false);
         RoomActionConditions.hasScannedRoom = true;
         OnScanActionEnd?.Invoke();
+        roomManager.middleRooms[roomToScan].OnRoomScanned?.Invoke(roomToScan);
 
         Debug.Log("Scan Action Ended");
     }

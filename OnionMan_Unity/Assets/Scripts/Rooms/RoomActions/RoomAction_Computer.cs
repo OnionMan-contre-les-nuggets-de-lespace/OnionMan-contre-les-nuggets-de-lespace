@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RoomAction_Computer : RoomAction
 {
+    [SerializeField] private RepairManager repairManager;
     public override string GetActionName()
     {
         return actionName;
@@ -21,6 +22,7 @@ public class RoomAction_Computer : RoomAction
 
     IEnumerator ComputerCoroutine(RoomName currentRoom)
     {
+        repairManager.ShowComputer();
         Debug.Log("LAUNCHING COMPUTER");
         yield return new WaitForEndOfFrame();
     }
