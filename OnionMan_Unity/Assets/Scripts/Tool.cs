@@ -4,6 +4,12 @@ using UnityEngine;
 
 public struct Tool
 {
-    Color toolColor;
-    Sprite toolSprite;
+    public Tool (Color toolColor, Sprite toolSprite)
+    {
+        ToolColor = toolColor;
+        ToolSprite = toolSprite;
+    }
+
+    public Color ToolColor { get; }
+    public Sprite ToolSprite { get; }
 }

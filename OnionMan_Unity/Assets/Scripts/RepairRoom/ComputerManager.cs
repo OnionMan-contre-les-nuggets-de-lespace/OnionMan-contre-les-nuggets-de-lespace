@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System;
 
@@ -8,10 +9,13 @@ public class ComputerManager : MonoBehaviour
 {
     [SerializeField] private GameObject m_welcomePanel;
     [SerializeField] private GameObject m_winPanel;
+    [SerializeField] private Image m_toolImage;
     [SerializeField] private TMP_Text m_winText;
     [SerializeField] private GameObject m_loosePanel;
     [SerializeField] private TMP_Text m_welcomingMessage;
     [SerializeField] private List<GameObject> m_sparklePanelList = new List<GameObject>();
+    [SerializeField] private List<Sprite> toolsSpriteList = new List<Sprite>();
+    [SerializeField] private List<Color> colorList = new List<Color>();
 
     [SerializeField] public GameObject m_computerPanel;
 
@@ -31,7 +35,7 @@ public class ComputerManager : MonoBehaviour
         m_computerPanel.SetActive(true);
         m_welcomePanel.SetActive(true);
         m_welcomingMessage.text = "Vous avez scanné la salle : " + roomName;
-        m_winText.text = "Gagné ! Vous pouvez maintenant réparer la salle : " + roomName;
+        m_winText.text = "Gagné ! Vous pouvez maintenant réparer la salle : " + roomName + " grâce à l'outil suivant : ";
     }
 
     public void HideComputer()
@@ -46,8 +50,9 @@ public class ComputerManager : MonoBehaviour
     private void CheckResult()
     {
         m_winPanel.SetActive(true);
-
-        ComputerGameResult computerGameResult = new ComputerGameResult();
+        ComputerGameResult computerGameResult = new ComputerGameResult(colorList, toolsSpriteList);
+        m_toolImage.sprite = computerGameResult.correctTool.ToolSprite;
+        m_toolImage.color = computerGameResult.correctTool.ToolColor;
 
         OnComputerGameFinished?.Invoke(computerGameResult);
     }

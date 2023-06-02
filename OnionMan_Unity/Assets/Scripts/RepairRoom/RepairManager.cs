@@ -7,8 +7,6 @@ public class RepairManager : MonoBehaviour
 {
     [Header("Reparation")]
     [SerializeField] public GameObject repairPanel;
-    [SerializeField] private List<Sprite> toolsSpriteList = new List<Sprite>();
-    [SerializeField] private List<Color> colorList = new List<Color>();
 
 
     private ComputerManager m_computerManager;
