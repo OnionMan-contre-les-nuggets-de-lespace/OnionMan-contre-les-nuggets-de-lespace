@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class RoomAction_Computer : RoomAction
 {
     [SerializeField] private RepairManager repairManager;
+
+    public Action OnComputerActionEnd;
     public override string GetActionName()
     {
         return actionName;

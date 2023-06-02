@@ -26,7 +26,8 @@ public class MiddleRoom : BaseRoom
 
     [Header("Scan")]
     [SerializeField] public GameObject scanEffect;
-    public bool isScanned; //Set dans le repair manager
+    public bool isScanned; //Set dans la Room Action Scan
+    public bool canBeRepaired;
 
     private float m_timeBeforeDecay;
     private bool m_hasAlreadyEnterCriticalState;
@@ -53,6 +54,7 @@ public class MiddleRoom : BaseRoom
 
         scanAction.OnScanActionEnd += OnFinishedAction;
         extinguishAction.OnExtinguishActionEnd += OnFinishedAction;
+        repairAction.OnRepairActionEnd += OnFinishedAction;
     }
 
     private void Update()

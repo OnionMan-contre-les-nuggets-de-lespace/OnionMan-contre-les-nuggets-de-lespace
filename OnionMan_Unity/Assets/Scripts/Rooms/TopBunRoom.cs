@@ -13,6 +13,7 @@ public class TopBunRoom : BunRoom
         takeFireExtinguisherAction = FindObjectOfType<RoomAction_TakeFireExtinguisher>();
 
         takeFireExtinguisherAction.OnTakeFireExtinguisherActionEnd += OnFinishedAction;
+        computerAction.OnComputerActionEnd += OnFinishedAction;
     }
 
     protected override List<RoomAction> GetActionsToDisplay()
