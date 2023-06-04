@@ -7,6 +7,7 @@ using TMPro;
 public class MiddleRoom : BaseRoom
 {
     [SerializeField] private int roomHealth;
+    [SerializeField] private int reparationHeal;
     [SerializeField] private int decayDamage;
     [SerializeField] private Vector2 rangeOfTimerBeforeDecay;
     [SerializeField] private float m_timerBeforeStartDecay;
@@ -127,6 +128,11 @@ public class MiddleRoom : BaseRoom
             fireRectTransform[i].anchoredPosition = new Vector2(UnityEngine.Random.Range(fireParentRect.xMin + offset, fireParentRect.xMax - offset), fireRectTransform[i].anchoredPosition.y);
             spawnedFireRectTransform.Add(fireRectTransform[i]);
         }
+    }
+
+    public void OnRoomRepaired()
+    {
+        roomHealth += reparationHeal;
     }
 
     protected override void OnFinishedAction()

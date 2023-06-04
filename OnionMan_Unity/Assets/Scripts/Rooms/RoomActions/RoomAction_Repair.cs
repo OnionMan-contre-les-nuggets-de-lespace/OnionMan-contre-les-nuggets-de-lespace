@@ -5,7 +5,9 @@ using System;
 
 public class RoomAction_Repair : RoomAction
 {
+    [SerializeField] private RepairManager repairManager;
     public Action OnRepairActionEnd;
+
     public override string GetActionName()
     {
         return actionName;
@@ -18,8 +20,17 @@ public class RoomAction_Repair : RoomAction
 
     public override void LaunchAction(RoomName currentRoom)
     {
-        Debug.Log("LAUNCHING REPAIR");
-        OnRepairActionEnd?.Invoke();
+        StartCoroutine(RepairCoroutine(currentRoom));
+    }
 
+    IEnumerator RepairCoroutine(RoomName roomToScan)
+    {
+        Debug.Log("LAUNCHING REPAIR");
+        repairManager.repairPanel.SetActive(true);
+        yield return new WaitUntil(() => repairManager.reparationDone);
+        RoomActionConditions.hasScannedRoom = false;
+        roomManager.middleRooms[roomToScan].isScanned = false;
+        //repairManager.repairPanel.SetActive(false);
+        OnRepairActionEnd?.Invoke();
     }
 }

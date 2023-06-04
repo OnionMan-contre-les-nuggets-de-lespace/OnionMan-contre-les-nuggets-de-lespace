@@ -17,10 +17,12 @@ public class ComputerManager : MonoBehaviour
     [SerializeField] private List<Sprite> toolsSpriteList = new List<Sprite>();
     [SerializeField] private List<Color> colorList = new List<Color>();
 
+    [SerializeField] public List<Button> valveButtonList = new List<Button>();
     [SerializeField] public GameObject m_computerPanel;
 
     private List<GameObject> m_variableSparklePanelList = new List<GameObject>();
     private RoomAction_Computer computerAction;
+    private RoomName currentScannedRoom;
 
     public Action<ComputerGameResult> OnComputerGameFinished;
     public Vector3Int playerChoices = new Vector3Int(); //x = shape, y = color, z = orientation
@@ -32,10 +34,10 @@ public class ComputerManager : MonoBehaviour
 
     public void ShowComputer(RoomName roomName)
     {
+        currentScannedRoom = roomName;
         m_computerPanel.SetActive(true);
         m_welcomePanel.SetActive(true);
-        m_welcomingMessage.text = "Vous avez scanné la salle : " + roomName;
-        m_winText.text = "Gagné ! Vous pouvez maintenant réparer la salle : " + roomName + " grâce à l'outil suivant : ";
+        m_welcomingMessage.text = "Vous avez scanné la salle : " + GameManager.userRoomName[currentScannedRoom];
     }
 
     public void HideComputer()
@@ -50,7 +52,9 @@ public class ComputerManager : MonoBehaviour
     private void CheckResult()
     {
         m_winPanel.SetActive(true);
-        ComputerGameResult computerGameResult = new ComputerGameResult(colorList, toolsSpriteList);
+        ComputerGameResult computerGameResult = new ComputerGameResult(colorList, toolsSpriteList, valveButtonList);
+        m_winText.text = "Gagné ! Une avarie a été détectée sur la <u><b> valve " + (computerGameResult.valveIndex + 1).ToString() + "</b></u>. " +
+            "Vous pouvez maintenant réparer la salle : " + GameManager.userRoomName[currentScannedRoom] + " grâce à l'outil suivant : ";
         m_toolImage.sprite = computerGameResult.correctTool.ToolSprite;
         m_toolImage.color = computerGameResult.correctTool.ToolColor;
 
