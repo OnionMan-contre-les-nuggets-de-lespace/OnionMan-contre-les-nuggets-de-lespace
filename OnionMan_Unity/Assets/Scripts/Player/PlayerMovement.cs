@@ -137,7 +137,10 @@ public class PlayerMovement : Subject
         }
         else
         {
-            roomManager.NotifyRoom(currentPlayerFloor);
+            if(isAtDestination)
+            {
+                roomManager.NotifyRoom(currentPlayerFloor);
+            }
         }
     }
 
@@ -149,7 +152,7 @@ public class PlayerMovement : Subject
         targetIsRight = playerTargetedPos.position.x < playerTransform.position.x;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(!isAtDestination)
         {
