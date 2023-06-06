@@ -135,6 +135,10 @@ public class PlayerMovement : Subject
             doHorizontalMove = true;
             isAtDestination = false;
         }
+        else
+        {
+            roomManager.NotifyRoom(currentPlayerFloor);
+        }
     }
 
     private void CheckTargetRelativePosition()
