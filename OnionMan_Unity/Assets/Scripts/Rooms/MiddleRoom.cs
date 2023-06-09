@@ -40,8 +40,9 @@ public class MiddleRoom : BaseRoom
     public Action<RoomName> OnRoomScanned;
     public bool isInCriticalState;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         repairManager.AddMiddleRoom(this);
         roomManager.AddMiddleRoom(this);
     }

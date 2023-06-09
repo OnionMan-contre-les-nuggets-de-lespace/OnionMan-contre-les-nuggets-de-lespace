@@ -16,8 +16,10 @@ public class RoomAction_Scan : RoomAction
 
     public override void LaunchAction(RoomName currentRoom)
     {
+        base.LaunchAction(currentRoom);
         StartCoroutine(ScanCoroutine(currentRoom));
     }
+
     public override bool CanBeDone(BaseRoom baseRoom, out int indexOfFalseStatement)
     {
         List<bool> statements = new List<bool>();

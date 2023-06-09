@@ -31,6 +31,7 @@ public class RoomAction_Repair : RoomAction
 
     public override void LaunchAction(RoomName currentRoom)
     {
+        base.LaunchAction(currentRoom);
         StartCoroutine(RepairCoroutine(currentRoom));
     }
 

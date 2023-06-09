@@ -35,6 +35,7 @@ public class RoomAction_ExtinguishFire : RoomAction
 
     public override void LaunchAction(RoomName currentRoom)
     {
+        base.LaunchAction(currentRoom);
         StartCoroutine(ExtinguishCoroutine(currentRoom));
     }
 

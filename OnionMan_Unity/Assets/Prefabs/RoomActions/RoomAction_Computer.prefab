@@ -92,4 +92,5 @@ MonoBehaviour:
   actionName: Utiliser le super ordinateur
   cantBeDoneFeedbackMessageList:
   - "Aucune salle n'a \xE9t\xE9 scann\xE9e"
+  - "Veuillez d\xE9poser l'extincteur"
   repairManager: {fileID: 0}

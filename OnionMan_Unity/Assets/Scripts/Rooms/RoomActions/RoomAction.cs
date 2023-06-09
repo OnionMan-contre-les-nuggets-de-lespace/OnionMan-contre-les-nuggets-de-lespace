@@ -6,19 +6,22 @@ using System;
 public class RoomAction : MonoBehaviour
 {
     [SerializeField] protected string actionName;
-    protected RoomManager roomManager;
     [SerializeField] public List<string> cantBeDoneFeedbackMessageList = new List<string>();
+
+    protected RoomManager roomManager;
+    protected PlayerAnimatorController playerAnimatorController;
 
     //public Action OnActionEnd;
 
     private void Start()
     {
         roomManager = FindObjectOfType<RoomManager>();
+        playerAnimatorController = FindObjectOfType<PlayerAnimatorController>();
     }
 
     public virtual void LaunchAction(RoomName roomName)
     {
-
+        playerAnimatorController.EnterCraftAnimation();
     }
 
     public virtual bool CanBeDone(BaseRoom baseRoom, out int indexOfFalseStatement)

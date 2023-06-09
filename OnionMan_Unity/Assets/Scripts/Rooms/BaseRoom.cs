@@ -9,11 +9,13 @@ public class BaseRoom : MonoBehaviour
 
     [SerializeField] protected RoomManager roomManager;
     protected PlayerMovement playerMovement;
+    protected PlayerAnimatorController playerAnimatorController;
     [SerializeField] private RoomActionMenu roomActionMenu;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
+        playerAnimatorController = FindObjectOfType<PlayerAnimatorController>();
     }
 
     private void Start()
@@ -41,6 +43,7 @@ public class BaseRoom : MonoBehaviour
 
     protected virtual void OnFinishedAction()
     {
+        playerAnimatorController.ExitCraftAnimation();
         roomActionMenu.HideAndResetActionMenu();
         mainCanvas.sortingOrder = 0;
         GameManager.DisablePlayerNavigation(false);

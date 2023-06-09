@@ -20,6 +20,7 @@ public class RoomAction_Computer : RoomAction
         bool canBeDone;
 
         statements.Add(RoomActionConditions.hasScannedRoom);
+        statements.Add(!RoomActionConditions.hasExtinguisher);
 
         indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
 
@@ -30,6 +31,7 @@ public class RoomAction_Computer : RoomAction
 
     public override void LaunchAction(RoomName currentRoom)
     {
+        base.LaunchAction(currentRoom);
         StartCoroutine(ComputerCoroutine(currentRoom));
     }
 
