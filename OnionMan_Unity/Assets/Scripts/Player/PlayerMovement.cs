@@ -238,7 +238,7 @@ public class PlayerMovement : Subject
 
                 Transform targetLadderTransform = sideCheckBuffer[0].transform;
 
-                yield return new WaitUntil(() => Mathf.Abs(targetLadderTransform.position.x - playerTransform.position.x) < 0.1f);
+                yield return new WaitUntil(() => Mathf.Abs(targetLadderTransform.position.x - playerTransform.position.x) < 0.05f);
 
                 isOnAFloor = false;
 
@@ -280,7 +280,7 @@ public class PlayerMovement : Subject
                 movementDirection = MovementDirection.RIGHT;
             }
 
-            yield return new WaitUntil(() => Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) < 0.1f);
+            yield return new WaitUntil(() => Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) < 0.05f);
 
             while(targetFloor != currentPlayerFloor)
             {
