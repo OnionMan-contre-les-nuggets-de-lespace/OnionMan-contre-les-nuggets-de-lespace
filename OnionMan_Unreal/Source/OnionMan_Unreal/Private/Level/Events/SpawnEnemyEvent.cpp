@@ -9,9 +9,9 @@ USpawnEnemyEvent::USpawnEnemyEvent(/* args */)
 }
 
 
-void USpawnEnemyEvent::Load()
+void USpawnEnemyEvent::Load(AActor* levelAsset)
 {
-    UBaseWaveEvent::Load();
+    UBaseWaveEvent::Load(levelAsset);
     m_spawnedEnemies.Reserve(sizeof(SpawnedEnemy) * m_numberOfEnemiesToSpawn);
     // Request enemies from pool
 }
@@ -26,26 +26,51 @@ void USpawnEnemyEvent::Start()
 void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
 {
     UBaseWaveEvent::Update(deltaTime, currentWaveTime);
+    LOG_ERROR("Event Update");
     //Spawn the new enemies
     if (m_spawnedEnemiesCount < m_numberOfEnemiesToSpawn) 
     {
         if (m_spawnTimer >= m_timeBetweenSpawns) 
         {
             m_spawnTimer = 0;
-            TObjectPtr<AEnemyActor> newEnemy = SpawnEnemy();
-            m_spawnedEnemies.Add(SpawnedEnemy{ newEnemy, currentWaveTime });
-            m_spawnedEnemiesCount++;
+            if (const TObjectPtr<AEnemyActor> newEnemy = SpawnEnemy())
+            {
+                newEnemy->Initialize();
+                newEnemy->SetHidden(false);
+                m_spawnedEnemies.Add(SpawnedEnemy{ newEnemy, currentWaveTime });
+                m_spawnedEnemiesCount++;
+            }
         }
         m_spawnTimer += deltaTime;
     }
 
     //Update the position of all spawned enemies
+    bool noEnemiesAlive = true;
     for (SpawnedEnemy spawned : m_spawnedEnemies)
     {
-        if (spawned.Enemy()->IsAlive())
+        if (spawned.Enemy())
         {
-            spawned.Enemy()->Move(deltaTime, currentWaveTime - spawned.SpawnTime());
+            if (spawned.Enemy()->IsAlive())
+            {
+                LOG_WARNING("Moving Enemy");
+                LOG_WARNING("IsHidden : %s", spawned.Enemy()->IsHidden() ? *FString("True") : *FString("False"))
+                spawned.Enemy()->Move(deltaTime, currentWaveTime - spawned.SpawnTime());
+                noEnemiesAlive = false;
+            }
+            else
+            {
+                LOG_ERROR("Enemy is not alive");
+            }
         }
+        else
+        {
+            LOG_ERROR("Enemy is Null");
+        }
+    }
+
+    if (m_spawnedEnemiesCount == m_numberOfEnemiesToSpawn && noEnemiesAlive)
+    {
+        Finish();
     }
 }
 
@@ -55,9 +80,9 @@ void USpawnEnemyEvent::OnWaveEnd()
     //Release the enemies
 }
 
-void USpawnEnemyEvent::EditorLoad(float timeSinceStart)
+void USpawnEnemyEvent::EditorLoad(float timeSinceStart, AActor* levelAsset)
 {
-    UBaseWaveEvent::EditorLoad(timeSinceStart);
+    UBaseWaveEvent::EditorLoad(timeSinceStart, levelAsset);
     // Display the spline
     if(m_isEditorLoaded)
     {
@@ -76,12 +101,12 @@ void USpawnEnemyEvent::EditorUpdate(float newTimeSinceStart)
 
 void USpawnEnemyEvent::EditorUnload()
 {
-    UBaseWaveEvent::EditorUnload();
     if(!m_isEditorLoaded)
     {
         return;
     }
     //Unload all enemies
+    UBaseWaveEvent::EditorUnload();
 }
 
 void USpawnEnemyEvent::EditorSave()

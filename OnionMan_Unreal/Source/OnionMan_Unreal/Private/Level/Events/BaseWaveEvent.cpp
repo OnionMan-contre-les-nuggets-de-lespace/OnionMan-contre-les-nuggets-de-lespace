@@ -8,9 +8,10 @@ UBaseWaveEvent::UBaseWaveEvent(/* args */)
     m_isFinished = false;
 }
 
-void UBaseWaveEvent::Load()
+void UBaseWaveEvent::Load(AActor* levelAsset)
 {
     m_isFinished = false;
+    m_levelAsset = levelAsset;
 }
 
 void UBaseWaveEvent::Start()
@@ -25,13 +26,14 @@ void UBaseWaveEvent::OnWaveEnd()
 {
 }
 
-void UBaseWaveEvent::EditorLoad(float timeSinceStart)
+void UBaseWaveEvent::EditorLoad(float timeSinceStart, AActor* levelAsset)
 {
     if(m_isEditorLoaded)
     {
         return;
     }
     m_isEditorLoaded = true;
+    m_levelAsset = levelAsset;
 }
 
 void UBaseWaveEvent::EditorUpdate(float newTimeSinceWaveStart)

@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 
 #include "BaseWaveEvent.generated.h"
 
@@ -18,6 +17,8 @@ class ONIONMAN_UNREAL_API UBaseWaveEvent : public UObject
 protected:
     UPROPERTY(EditAnywhere, DisplayName = "Time")
     float m_time = 0.0f;
+
+    AActor* m_levelAsset = nullptr;
 
 private:
     bool m_isFinished = false;
@@ -42,7 +43,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    virtual void Load();
+    virtual void Load(AActor* levelAsset);
     UFUNCTION(BlueprintCallable)
     virtual void Start();
     UFUNCTION(BlueprintCallable)
@@ -52,7 +53,7 @@ public:
 
     // Editor
     UFUNCTION(BlueprintCallable)
-    virtual void EditorLoad(float timeSinceStart);
+    virtual void EditorLoad(float timeSinceStart, AActor* levelAsset);
     UFUNCTION(BlueprintCallable)
     virtual void EditorUpdate(float newTimeSinceWaveStart);
     UFUNCTION(BlueprintCallable)

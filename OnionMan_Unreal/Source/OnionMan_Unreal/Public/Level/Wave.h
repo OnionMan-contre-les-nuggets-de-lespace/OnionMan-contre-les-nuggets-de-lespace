@@ -19,12 +19,14 @@ class ONIONMAN_UNREAL_API UWave : public UObject
 
 protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, meta = (ShowInnerProperties), DisplayName = "Wave Events")
-    TArray<TObjectPtr<UBaseWaveEvent>> m_waveEvents;
+    TArray<TObjectPtr<UBaseWaveEvent>> m_waveEvents{};
 
     bool m_isEditorLoaded = false;
 
 private:
-    TArray<TObjectPtr<UBaseWaveEvent>> m_eventsThatStarted;
+    TArray<TObjectPtr<UBaseWaveEvent>> m_eventsThatStarted{};
+
+    int m_eventsCount{};
 
     bool m_isFinished = false;
     int m_eventToStartIndex = 0;
@@ -39,7 +41,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    void Load();
+    void Load(AActor* levelAsset);
     UFUNCTION(BlueprintCallable)
     void Update(float deltaTime, float currentWaveTime);
     UFUNCTION(BlueprintCallable)
@@ -47,7 +49,7 @@ public:
 
     // Editor
     UFUNCTION(BlueprintCallable)
-    void EditorLoad(float timeSinceWaveStart);
+    void EditorLoad(float timeSinceWaveStart, AActor* levelAsset);
     UFUNCTION(BlueprintCallable)
     void EditorUpdate(float newTimeSinceWaveStart);
     UFUNCTION(BlueprintCallable)

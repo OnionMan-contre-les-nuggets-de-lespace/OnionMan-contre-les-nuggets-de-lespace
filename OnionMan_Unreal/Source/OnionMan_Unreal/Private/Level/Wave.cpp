@@ -3,13 +3,17 @@
 
 #include "Level/Wave.h"
 
+#include "LogUtils.h"
+
 UWave::UWave(/* args */)
 {
     m_isFinished = false;
 }
 
-void UWave::Load()
+void UWave::Load(AActor* levelAsset)
 {
+    m_eventsCount = m_waveEvents.Num(); 
+    m_eventToStartIndex = 0;
     m_waveEvents.Sort(
         [&](UBaseWaveEvent& event1, UBaseWaveEvent& event2) 
         {
@@ -18,39 +22,49 @@ void UWave::Load()
 
     for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
-        event->Load();
+        if (event)
+        {
+            event->Load(levelAsset);
+        }
     }
 }
 
 void UWave::Update(float deltaTime, float currentWaveTime)
 {
     // Starts the new events
-    int eventsCount = m_waveEvents.Num();
-    while (m_eventToStartIndex <= eventsCount && currentWaveTime >= m_waveEvents[m_eventToStartIndex]->GetTime())
+    while (m_eventToStartIndex < m_eventsCount 
+        && m_waveEvents[m_eventToStartIndex] != nullptr 
+        && currentWaveTime >= m_waveEvents[m_eventToStartIndex]->GetTime())
     {
         TObjectPtr<UBaseWaveEvent> eventToStart = m_waveEvents[m_eventToStartIndex];
-        m_eventsThatStarted.Add(eventToStart);
+        if (eventToStart)
+        {
+            m_eventsThatStarted.Add(eventToStart);
 
-        eventToStart->Start();
-
+            eventToStart->Start();
+        }
         m_eventToStartIndex++;
     }
-
+    LOG_WARNING("WaveUpdate")
     // Updates all started evants
     bool allEventFinished = true;
     for (TObjectPtr<UBaseWaveEvent> event : m_eventsThatStarted)
     {
-        if (event->IsFinished())
+        if (event)
         {
-            continue;
+            if (event->IsFinished())
+            {
+                continue;
+            }
+            allEventFinished = false;
+            event->Update(deltaTime, currentWaveTime);
         }
-        allEventFinished = false;
-        event->Update(deltaTime, currentWaveTime);
     }
 
-    // Checks wether the wave is finished by checking wether all events started and finished
-    if (allEventFinished && m_eventsThatStarted.Num() == eventsCount)
+    // Checks whether the wave is finished by checking whether all events started and finished
+    if (allEventFinished && m_eventsThatStarted.Num() == m_eventsCount)
     {
+        LOG_ERROR("WaveFinished");
         m_isFinished = true;
     }
 
@@ -60,11 +74,14 @@ void UWave::FinishWave()
 {
     for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
-        event->OnWaveEnd();
+        if (event)
+        {
+            event->OnWaveEnd();
+        }
     }
 }
 
-void UWave::EditorLoad(float timeSinceWaveStart)
+void UWave::EditorLoad(float timeSinceWaveStart, AActor* levelAsset)
 {
     if (m_isEditorLoaded)
     {
@@ -72,7 +89,8 @@ void UWave::EditorLoad(float timeSinceWaveStart)
     }
     for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
-        event->EditorLoad(timeSinceWaveStart);
+        event->EditorLoad(timeSinceWaveStart, levelAsset);
+        m_isEditorLoaded = true;
     }
 }
 
@@ -90,14 +108,21 @@ void UWave::EditorUpdate(float newTimeSinceWaveStart)
 
 void UWave::EditorUnload()
 {
+    LOG_ERROR("UWave::EditorUnload()")
     if (!m_isEditorLoaded)
     {
+        LOG_ERROR("Wave Not loaded")
         return;
     }
     for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
-        event->EditorUnload();
+        if (event)
+        {
+            LOG_ERROR("UnloadingEvent")
+            event->EditorUnload();
+        }
     }
+    m_isEditorLoaded = false;
 }
 
 void UWave::EditorSave()
@@ -108,6 +133,9 @@ void UWave::EditorSave()
     }
     for (TObjectPtr<UBaseWaveEvent> event : m_waveEvents)
     {
-        event->EditorSave();
+        if (event)
+        {
+            event->EditorSave();
+        }
     }
 }

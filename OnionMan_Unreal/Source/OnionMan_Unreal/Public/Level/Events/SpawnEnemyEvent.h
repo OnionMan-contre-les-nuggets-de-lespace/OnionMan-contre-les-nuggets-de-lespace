@@ -55,13 +55,13 @@ protected:
 public:
     USpawnEnemyEvent(/* args */);
 
-    virtual void Load() override;
+    virtual void Load(AActor* levelAsset) override;
     virtual void Start() override;
     virtual void Update(float deltaTime, float currentWaveTime) override;
     virtual void OnWaveEnd() override;
 
     // Editor
-    virtual void EditorLoad(float timeSinceStart) override;
+    virtual void EditorLoad(float timeSinceStart, AActor* levelAsset) override;
     virtual void EditorUpdate(float newTimeSinceStart) override;
     virtual void EditorUnload() override;
 

@@ -20,13 +20,15 @@ protected:
 	UPROPERTY(
 		EditAnywhere, 
 		DisplayName = "Spline", 
-		BlueprintReadWrite)
+		BlueprintReadWrite, 
+		meta = (UseComponentPicker, AllowedClasses = "/Script/Engine.SplineComponent"))
     FComponentReference m_splineComponent;
 
 	UPROPERTY(
 		EditAnywhere,
 		DisplayName = "Enemy Prefab",
-		BlueprintReadWrite)
+		BlueprintReadWrite, 
+		meta = (UseComponentPicker, AllowedClasses = "/Script/Engine.ChildActorComponent"))
 	FComponentReference m_childActorComponent;
 	
 
@@ -41,13 +43,16 @@ private:
 
 public:
 	USpawnEnemyOnSplineEvent(/* args */);
+	~USpawnEnemyOnSplineEvent();
 
     // Editor
-    virtual void EditorLoad(float timeSinceStart) override;
+    virtual void EditorLoad(float timeSinceStart, AActor* levelAsset) override;
     virtual void EditorUpdate(float newTimeSinceStart) override;
     virtual void EditorUnload() override;
 
     virtual void EditorSave() override;
+
+	void DestroyEditorActors();
 
 protected:
 	virtual TObjectPtr<AEnemyActor> SpawnEnemy() override;

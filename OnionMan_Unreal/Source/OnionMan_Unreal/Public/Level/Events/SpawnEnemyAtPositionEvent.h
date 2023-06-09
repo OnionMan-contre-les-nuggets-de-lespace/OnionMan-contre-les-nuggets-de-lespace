@@ -27,7 +27,7 @@ public:
 	USpawnEnemyAtPositionEvent(/* args */);
 
 	// Editor
-	virtual void EditorLoad(float timeSinceStart) override;
+	virtual void EditorLoad(float timeSinceStart, AActor* levelAsset) override;
 	virtual void EditorUpdate(float newTimeSinceStart) override;
 	virtual void EditorUnload() override;
 

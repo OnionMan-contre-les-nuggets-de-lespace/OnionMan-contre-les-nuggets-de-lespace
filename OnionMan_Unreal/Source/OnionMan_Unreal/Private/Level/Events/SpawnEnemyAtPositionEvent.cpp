@@ -3,13 +3,16 @@
 
 #include "Level/Events/SpawnEnemyAtPositionEvent.h"
 
+#include "ObjectPoolActorComponent.h"
+
+
 USpawnEnemyAtPositionEvent::USpawnEnemyAtPositionEvent()
 {
 }
 
-void USpawnEnemyAtPositionEvent::EditorLoad(float timeSinceStart)
+void USpawnEnemyAtPositionEvent::EditorLoad(float timeSinceStart, AActor* levelAsset)
 {
-	USpawnEnemyEvent::EditorLoad(timeSinceStart);
+	USpawnEnemyEvent::EditorLoad(timeSinceStart, levelAsset);
 
     if(m_isEditorLoaded)
     {
@@ -19,7 +22,7 @@ void USpawnEnemyAtPositionEvent::EditorLoad(float timeSinceStart)
 
 	for (int i {0}; i < m_numberOfEnemiesToSpawn; i++)
 	{
-		AIndependantEnemyActor* spawnedEnemy = (AIndependantEnemyActor*)m_enemyPrefab->Clone();
+		AIndependantEnemyActor* spawnedEnemy = (AIndependantEnemyActor*)m_enemyPrefab->CloneForEditor();
 
         float spawnTime = GetTime() + i * m_timeBetweenSpawns;
 		bool hidden = timeSinceStart < spawnTime;
@@ -87,8 +90,14 @@ void USpawnEnemyAtPositionEvent::EditorSave()
 
 TObjectPtr<AEnemyActor> USpawnEnemyAtPositionEvent::SpawnEnemy()
 {
-	AIndependantEnemyActor* requestedEnemy = (AIndependantEnemyActor*)m_enemyPrefab->Clone();
-	requestedEnemy->SetHidden(false);
-	requestedEnemy->Spawn(m_startPosition);
-	return requestedEnemy;
+	if (UObjectPoolActorComponent* poolComponent = Cast<UObjectPoolActorComponent>(m_enemyPrefab->GetComponentByClass(UObjectPoolActorComponent::StaticClass())))
+	{
+		if (AIndependantEnemyActor* requestedEnemy = Cast<AIndependantEnemyActor>(poolComponent->SpawnPooledObject()))
+		{
+			requestedEnemy->SetHidden(false);
+			requestedEnemy->Spawn(m_startPosition);
+			return requestedEnemy;
+		}
+	}
+	return nullptr;
 }
