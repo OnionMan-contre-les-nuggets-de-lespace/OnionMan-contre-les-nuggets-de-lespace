@@ -13,9 +13,19 @@ public class RoomAction_Computer : RoomAction
         return actionName;
     }
 
-    public override bool CanBeDone(BaseRoom baseRoom)
+    public override bool CanBeDone(BaseRoom baseRoom, out int indexOfFalseStatement)
     {
-        return RoomActionConditions.hasScannedRoom;
+        List<bool> statements = new List<bool>();
+
+        bool canBeDone;
+
+        statements.Add(RoomActionConditions.hasScannedRoom);
+
+        indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
+
+
+        return canBeDone;
+        //return RoomActionConditions.hasScannedRoom;
     }
 
     public override void LaunchAction(RoomName currentRoom)

@@ -17,9 +17,20 @@ public class RoomAction_ExtinguishFire : RoomAction
     {
         return actionName;
     }
-    public override bool CanBeDone(BaseRoom baseRoom)
+    public override bool CanBeDone(BaseRoom baseRoom, out int indexOfFalseStatement)
     {
-        return RoomActionConditions.hasExtinguisher && roomManager.middleRooms[baseRoom.roomName].isInCriticalState;
+        List<bool> statements = new List<bool>();
+
+        bool canBeDone;
+
+        statements.Add(roomManager.middleRooms[baseRoom.roomName].isInCriticalState);
+        statements.Add(RoomActionConditions.hasExtinguisher);
+
+        indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
+
+
+        return canBeDone;
+        //return roomManager.middleRooms[baseRoom.roomName].isInCriticalState && RoomActionConditions.hasExtinguisher;
     }
 
     public override void LaunchAction(RoomName currentRoom)

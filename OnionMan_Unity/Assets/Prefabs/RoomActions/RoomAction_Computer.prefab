@@ -90,3 +90,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionName: Utiliser le super ordinateur
+  cantBeDoneFeedbackMessageList:
+  - "Aucune salle n'a \xE9t\xE9 scann\xE9e"
+  repairManager: {fileID: 0}

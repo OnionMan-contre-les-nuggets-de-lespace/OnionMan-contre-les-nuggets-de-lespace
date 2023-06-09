@@ -7,7 +7,8 @@ using TMPro;
 public class RoomActionMenu : MonoBehaviour
 {
     [SerializeField] private List<Button> m_actionButton = new List<Button>();
-    [SerializeField] private CanvasGroup actionChoiceMenuCanvasGroup;
+    [SerializeField] private CanvasGroup m_actionChoiceMenuCanvasGroup;
+    [SerializeField] private List<TMP_Text> m_cantBeDoneFeedbackText = new List<TMP_Text>();
 
 
     private CanvasGroup canvasGroup;
@@ -19,16 +20,19 @@ public class RoomActionMenu : MonoBehaviour
 
     public void ShowActionMenu(List<RoomAction> actionList, BaseRoom roomToLaunchAction)
     {
+        int indexOfFalseStament;
         for (int i = 0; i < actionList.Count; i++)
         {
             m_actionButton[i].gameObject.SetActive(true);
+            m_cantBeDoneFeedbackText[i].gameObject.SetActive(true);
             m_actionButton[i].GetComponentInChildren<TMP_Text>().text = actionList[i].GetActionName();
 
-            m_actionButton[i].interactable = actionList[i].CanBeDone(roomToLaunchAction);
+            m_actionButton[i].interactable = actionList[i].CanBeDone(roomToLaunchAction, out indexOfFalseStament);
             //TODO : Rajouter un encart dynamique pour afficher une phrase de feedback quand on ne peut pas réaliser une action ("Vous avez l'extincteur/ Vous n'avez pas encore scanné de salles/etc...)
 
-            if(actionList[i].CanBeDone(roomToLaunchAction))
+            if(actionList[i].CanBeDone(roomToLaunchAction, out indexOfFalseStament))
             {
+                m_cantBeDoneFeedbackText[i].text = "L'action est disponible";
                 int x = i;
                 m_actionButton[i].onClick.AddListener(delegate { 
                     actionList[x].LaunchAction(roomToLaunchAction.roomName);
@@ -36,8 +40,12 @@ public class RoomActionMenu : MonoBehaviour
                     HideAndResetActionMenu();
                 });
             }
+            else
+            {
+                m_cantBeDoneFeedbackText[i].text = "Action impossible : " + actionList[i].cantBeDoneFeedbackMessageList[indexOfFalseStament];
+            }
         }
-        actionChoiceMenuCanvasGroup.alpha = 1f;
+        m_actionChoiceMenuCanvasGroup.alpha = 1f;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
     }
@@ -46,13 +54,19 @@ public class RoomActionMenu : MonoBehaviour
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
-        actionChoiceMenuCanvasGroup.alpha = 0f;
+        m_actionChoiceMenuCanvasGroup.alpha = 0f;
 
         foreach (Button entry in m_actionButton)
         {
             entry.GetComponentInChildren<TMP_Text>().text = string.Empty;
             entry.onClick.RemoveAllListeners();
             entry.interactable = true;
+            entry.gameObject.SetActive(false);
+        }
+
+        foreach(TMP_Text entry in m_cantBeDoneFeedbackText)
+        {
+            entry.text = string.Empty;
             entry.gameObject.SetActive(false);
         }
 

@@ -12,10 +12,21 @@ public class RoomAction_Repair : RoomAction
     {
         return actionName;
     }
-    public override bool CanBeDone(BaseRoom baseRoom)
+    public override bool CanBeDone(BaseRoom baseRoom, out int indexOfFalseStatement)
     {
-        //TODO Empecher l'action d'être faite tant que le mini jeu de l'ordi est pas réussi
-        return !RoomActionConditions.hasExtinguisher && !roomManager.middleRooms[baseRoom.roomName].isInCriticalState && roomManager.middleRooms[baseRoom.roomName].canBeRepaired;
+        List<bool> statements = new List<bool>();
+
+        bool canBeDone;
+
+        statements.Add(!RoomActionConditions.hasExtinguisher);
+        statements.Add(!roomManager.middleRooms[baseRoom.roomName].isInCriticalState);
+        statements.Add(roomManager.middleRooms[baseRoom.roomName].canBeRepaired);
+
+        indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
+
+
+        return canBeDone;
+        //return !RoomActionConditions.hasExtinguisher && !roomManager.middleRooms[baseRoom.roomName].isInCriticalState && roomManager.middleRooms[baseRoom.roomName].canBeRepaired;
     }
 
     public override void LaunchAction(RoomName currentRoom)

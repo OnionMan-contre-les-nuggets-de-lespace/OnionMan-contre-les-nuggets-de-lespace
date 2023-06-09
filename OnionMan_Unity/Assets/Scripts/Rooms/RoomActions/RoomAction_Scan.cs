@@ -18,9 +18,20 @@ public class RoomAction_Scan : RoomAction
     {
         StartCoroutine(ScanCoroutine(currentRoom));
     }
-    public override bool CanBeDone(BaseRoom baseRoom)
+    public override bool CanBeDone(BaseRoom baseRoom, out int indexOfFalseStatement)
     {
-        return !RoomActionConditions.hasExtinguisher && !roomManager.middleRooms[baseRoom.roomName].isScanned;
+        List<bool> statements = new List<bool>();
+
+        bool canBeDone;
+
+        statements.Add(!RoomActionConditions.hasExtinguisher);
+        statements.Add(!roomManager.middleRooms[baseRoom.roomName].isScanned);
+
+        indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
+
+
+        return canBeDone;
+        //return !RoomActionConditions.hasExtinguisher && !roomManager.middleRooms[baseRoom.roomName].isScanned;
     }
 
     IEnumerator ScanCoroutine(RoomName roomToScan)

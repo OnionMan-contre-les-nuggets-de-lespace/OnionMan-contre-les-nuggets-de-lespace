@@ -89,7 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6d431ce88ba8640a238d4d41f86fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanEffects: []
   actionName: "Scanner la pi\xE8ce"
+  cantBeDoneFeedbackMessageList:
+  - "Veuillez d\xE9poser l'extincteur"
+  - "La pi\xE8ce est d\xE9j\xE0 scann\xE9e"
   scanTime: 5
-  canBeDone: 0
