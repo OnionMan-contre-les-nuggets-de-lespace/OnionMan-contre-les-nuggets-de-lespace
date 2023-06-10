@@ -691,7 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_serverIPInputField: {fileID: 1465228775}
   m_connectButton: {fileID: 1146964871}
-  m_nextSceneName: NetworkTestScene
+  m_nextSceneName: SampleScene
 --- !u!114 &1315528602
 MonoBehaviour:
   m_ObjectHideFlags: 0
