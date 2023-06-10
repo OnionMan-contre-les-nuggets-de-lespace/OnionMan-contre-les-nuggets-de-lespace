@@ -8,12 +8,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private int m_isClimbingId = Animator.StringToHash("isClimbing");
     private int m_isCraftingId = Animator.StringToHash("isCrafting");
 
-    private Animator _playerAnimator;
-
-    private void Awake()
-    {
-        _playerAnimator = GetComponent<Animator>();
-    }
+    [SerializeField] private Animator _playerAnimator;
 
     public void EnterIdleAnimation()
     {
