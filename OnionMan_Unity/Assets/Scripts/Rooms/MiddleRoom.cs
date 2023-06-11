@@ -18,6 +18,7 @@ public class MiddleRoom : BaseRoom
 
     [Header("Critical State")]
     [SerializeField] private GameObject criticalStateFeedback;
+    [SerializeField] private GameObject criticalStateFeedbackVisual;
     [SerializeField] private int numberOfFireToSpawn;
     [SerializeField] private List<RectTransform> fireRectTransform;
     [HideInInspector]
@@ -117,9 +118,10 @@ public class MiddleRoom : BaseRoom
         spawnedFireRectTransform.Clear();
         m_hasAlreadyEnterCriticalState = true;
         criticalStateFeedback.SetActive(true);
+        criticalStateFeedbackVisual.SetActive(true);
 
 
-        for(int i = 0; i < numberOfFireToSpawn; i++)
+        for (int i = 0; i < numberOfFireToSpawn; i++)
         {
             fireRectTransform[i].gameObject.SetActive(true);
 

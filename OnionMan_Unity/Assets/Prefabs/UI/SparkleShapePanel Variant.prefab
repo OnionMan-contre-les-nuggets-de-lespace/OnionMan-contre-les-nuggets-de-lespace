@@ -31,9 +31,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 458095595770373147, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 4
+      objectReference: {fileID: 0}
     - target: {fileID: 812911329384573917, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_text
       value: Shape 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027238757786787367, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_text
+      value: De quelle forme sont les etincelles sortant du B.U.R.G.E.R
       objectReference: {fileID: 0}
     - target: {fileID: 1324353092401700179, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_text
@@ -66,6 +74,10 @@ PrefabInstance:
     - target: {fileID: 1908855936386726148, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_Name
       value: SparkleShapePanel Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137468314862025495, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 3
       objectReference: {fileID: 0}
     - target: {fileID: 2367787496221095656, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_Pivot.x
@@ -151,6 +163,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3128557817548826556, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3524093380256377481, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -177,7 +193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3726925077333906705, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_text
-      value: Shape 1
+      value: <u>S</u>hape 1
       objectReference: {fileID: 0}
     - target: {fileID: 3943667446215636668, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_text
@@ -215,6 +231,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Shape 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5390717833803829232, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6720168220092467686, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -238,6 +258,10 @@ PrefabInstance:
     - target: {fileID: 6720168220092467686, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296944268352395435, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 5
       objectReference: {fileID: 0}
     - target: {fileID: 9078631865557492398, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_AnchorMax.y

@@ -10,6 +10,7 @@ public class RoomActionMenu : MonoBehaviour
     [SerializeField] private List<Button> m_actionButton = new List<Button>();
     [SerializeField] private CanvasGroup m_actionChoiceMenuCanvasGroup;
     [SerializeField] private List<TMP_Text> m_cantBeDoneFeedbackText = new List<TMP_Text>();
+    [SerializeField] private Canvas mainCanvas;
     [Space]
     [Header("DoTween ref")]
     [SerializeField] RectTransform panelTransform;
@@ -28,6 +29,7 @@ public class RoomActionMenu : MonoBehaviour
 
     public void ShowActionMenu(List<RoomAction> actionList, BaseRoom roomToLaunchAction)
     {
+        mainCanvas.sortingOrder = 15;
         Sequence seq = DOTween.Sequence();
 
         seq.Insert(0f, panelTransform.DOAnchorMin(minAnchorAnimEnd, .3f).From(minAnchorAnimStart).SetEase(Ease.OutBack));
@@ -64,9 +66,9 @@ public class RoomActionMenu : MonoBehaviour
                 //m_cantBeDoneFeedbackText[i].text = "L'action est disponible";
                 int x = i;
                 m_actionButton[i].onClick.AddListener(delegate {
+                    HideAndResetActionMenu();
                     actionList[x].LaunchAction(roomToLaunchAction.roomName);
                     GameManager.DisablePlayerNavigation(true); //TODO : Reenable Navigation
-                    HideAndResetActionMenu();
                 });
             }
             else
@@ -83,6 +85,7 @@ public class RoomActionMenu : MonoBehaviour
 
     public void HideAndResetActionMenu()
     {
+        mainCanvas.sortingOrder = 0;
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
         m_actionChoiceMenuCanvasGroup.alpha = 0f;

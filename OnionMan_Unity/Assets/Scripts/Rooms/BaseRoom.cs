@@ -26,7 +26,7 @@ public class BaseRoom : MonoBehaviour
     public void StartRoomInteraction()
     {
         roomActionMenu.ShowActionMenu(GetActionsToDisplay(), this);
-        mainCanvas.sortingOrder = 10;
+        //mainCanvas.sortingOrder = 10;
     }
 
     protected virtual List<RoomAction> GetActionsToDisplay()
@@ -45,7 +45,7 @@ public class BaseRoom : MonoBehaviour
     {
         playerAnimatorController.ExitCraftAnimation();
         roomActionMenu.HideAndResetActionMenu();
-        mainCanvas.sortingOrder = 0;
+        //mainCanvas.sortingOrder = 0;
         GameManager.DisablePlayerNavigation(false);
     }
 }
