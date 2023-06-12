@@ -18,7 +18,7 @@ void AEnemyActor::TakeDamage(float damageAmount)
 	CurrentHealth -= damageAmount;
 	if (CurrentHealth <= 0)
 	{
-		// Destroy l'objet ou renvoyer dans la pool
+		KillActor();
 	}
 }
 
@@ -30,7 +30,7 @@ void AEnemyActor::DoubleHealth()
 void AEnemyActor::SetCurrentHealth()
 {
 	CurrentHealth = MaxHealth;
-	LOG_ERROR("CurrentHealth : %f", CurrentHealth);
+	LOG_ERROR("SET CurrentHealth : %f", CurrentHealth);
 }
 
 // Called when the game starts or when spawned
@@ -49,7 +49,7 @@ void AEnemyActor::Tick(float DeltaTime)
 
 bool AEnemyActor::IsAlive() const
 {
-	LOG_WARNING("Current Health : %f", CurrentHealth);
+	LOG_WARNING("IS ALIVE ? : %f", CurrentHealth);
 	return CurrentHealth > 0.0f;
 }
 
@@ -71,6 +71,7 @@ void AEnemyActor::GetValuesFromActor(AEnemyActor* other)
     SpeedFactor = other->SpeedFactor;
     ContactDamage = other->ContactDamage;
     IsArmored = other->IsArmored;
+	SetActorScale3D(other->GetActorScale());
 }
 
 void AEnemyActor::Initialize()

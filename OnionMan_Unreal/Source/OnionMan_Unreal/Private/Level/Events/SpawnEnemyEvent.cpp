@@ -46,8 +46,9 @@ void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
 
     //Update the position of all spawned enemies
     bool noEnemiesAlive = true;
-    for (SpawnedEnemy spawned : m_spawnedEnemies)
+    for (int i {0}; i < m_spawnedEnemies.Num(); i++)
     {
+        SpawnedEnemy spawned = m_spawnedEnemies[i];
         if (spawned.Enemy())
         {
             if (spawned.Enemy()->IsAlive())
@@ -60,11 +61,13 @@ void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
             else
             {
                 LOG_ERROR("Enemy is not alive");
+                m_spawnedEnemies.RemoveAt(i--);
             }
         }
         else
         {
             LOG_ERROR("Enemy is Null");
+            m_spawnedEnemies.RemoveAt(i--);
         }
     }
 
