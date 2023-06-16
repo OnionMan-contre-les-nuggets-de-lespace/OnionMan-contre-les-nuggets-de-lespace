@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using DG.Tweening;
 
 public class ComputerManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class ComputerManager : MonoBehaviour
     [SerializeField] private GameObject m_beamPanel;
     [SerializeField] private GameObject m_beamDesktopIcon;
     [SerializeField] private GameObject m_installationPanel;
+    [SerializeField] private Slider m_installProgressionSlider;
     [SerializeField] private GameObject m_beamSetupPanel;
     [SerializeField] private GameObject m_beamisReadyPanel;
 
@@ -81,7 +83,27 @@ public class ComputerManager : MonoBehaviour
 
     private void StartBeamInstallation(float installTime)
     {
-        StartCoroutine(InstallationCoroutine(installTime));
+        mainCanvas.sortingOrder = 15;
+        m_reparatorWelcomePanel.SetActive(false);
+        m_desktopIcons.SetActive(false);
+        m_computerPanel.SetActive(true);
+        m_beamPanel.SetActive(true);
+        m_installationPanel.SetActive(true);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Insert(0, m_installProgressionSlider.DOValue(1, installTime));
+        seq.AppendCallback(() =>
+        {
+            m_desktopIcons.SetActive(true);
+            m_installationPanel.SetActive(false);
+            m_beamPanel.SetActive(false);
+            m_beamDesktopIcon.SetActive(true);
+        });
+
+        seq.Play();
+
+
+        //StartCoroutine(InstallationCoroutine(installTime));
     }
 
     IEnumerator InstallationCoroutine(float installTime)

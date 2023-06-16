@@ -5892,7 +5892,7 @@ PrefabInstance:
     - target: {fileID: 1686159714137794910, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: scanEffect
       value: 
-      objectReference: {fileID: 1770043776}
+      objectReference: {fileID: 1726482367}
     - target: {fileID: 1686159714137794910, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: criticalStateFeedbackVisual
       value: 
@@ -6032,7 +6032,7 @@ PrefabInstance:
     - target: {fileID: 8746408027846427803, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: scanEffect
       value: 
-      objectReference: {fileID: 1237926171}
+      objectReference: {fileID: 326679529}
     - target: {fileID: 8746408027846427803, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: criticalStateFeedbackVisual
       value: 
