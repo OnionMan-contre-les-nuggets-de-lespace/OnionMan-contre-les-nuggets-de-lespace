@@ -93,4 +93,6 @@ MonoBehaviour:
   cantBeDoneFeedbackMessageList:
   - "Veuillez d\xE9poser l'extincteur"
   - Le collecteur est vide
+  actionTime: 5
   collectorActionTime: 5
+  upgradeManager: {fileID: 0}

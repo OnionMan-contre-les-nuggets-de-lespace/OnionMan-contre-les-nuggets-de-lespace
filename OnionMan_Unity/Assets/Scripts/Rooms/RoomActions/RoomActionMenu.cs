@@ -11,6 +11,7 @@ public class RoomActionMenu : MonoBehaviour
     [SerializeField] private CanvasGroup m_actionChoiceMenuCanvasGroup;
     [SerializeField] private List<TMP_Text> m_cantBeDoneFeedbackText = new List<TMP_Text>();
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] private Slider actionTimeSlider;
     [Space]
     [Header("DoTween ref")]
     [SerializeField] RectTransform panelTransform;

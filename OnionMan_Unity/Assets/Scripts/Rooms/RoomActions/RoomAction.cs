@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class RoomAction : MonoBehaviour
 {
     [SerializeField] protected string actionName;
     [SerializeField] public List<string> cantBeDoneFeedbackMessageList = new List<string>();
+    [SerializeField] public float actionTime;
 
     protected RoomManager roomManager;
     protected PlayerAnimatorController playerAnimatorController;
@@ -22,6 +25,7 @@ public class RoomAction : MonoBehaviour
     public virtual void LaunchAction(RoomName roomName)
     {
         playerAnimatorController.EnterCraftAnimation();
+        ShowActionTimeSlider(roomName);
     }
 
     public virtual bool CanBeDone(BaseRoom baseRoom, out int indexOfFalseStatement)
@@ -45,6 +49,21 @@ public class RoomAction : MonoBehaviour
         }
 
         return index;
+    }
+
+    private void ShowActionTimeSlider(RoomName roomName)
+    {
+        Slider actionTimeSlider = roomManager.allRooms[roomName].actionTimeSlider;
+        actionTimeSlider.gameObject.SetActive(true);
+        Sequence seq = DOTween.Sequence();
+        seq.Insert(0, actionTimeSlider.DOValue(0, actionTime));
+        seq.AppendCallback(() =>
+        {
+            seq.Rewind();
+            actionTimeSlider.gameObject.SetActive(false);
+        });
+
+        seq.Play();
     }
 
     public virtual string GetActionName()

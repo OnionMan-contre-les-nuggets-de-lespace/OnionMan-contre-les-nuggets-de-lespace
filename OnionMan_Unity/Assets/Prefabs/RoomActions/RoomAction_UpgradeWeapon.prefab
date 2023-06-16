@@ -93,5 +93,6 @@ MonoBehaviour:
   cantBeDoneFeedbackMessageList:
   - "Veuillez d\xE9poser l'extincteur"
   - 
+  actionTime: 7
   upgradeTime: 7
   upgradeManager: {fileID: 0}

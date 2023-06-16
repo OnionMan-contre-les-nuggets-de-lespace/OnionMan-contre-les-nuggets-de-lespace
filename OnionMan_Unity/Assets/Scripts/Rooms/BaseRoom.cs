@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class BaseRoom : MonoBehaviour
 {
     [SerializeField] public RoomName roomName;
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] public Slider actionTimeSlider;
 
     [SerializeField] protected RoomManager roomManager;
     protected PlayerMovement playerMovement;
@@ -18,7 +21,7 @@ public class BaseRoom : MonoBehaviour
         playerAnimatorController = FindObjectOfType<PlayerAnimatorController>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         roomManager.AddRoom(this);
     }

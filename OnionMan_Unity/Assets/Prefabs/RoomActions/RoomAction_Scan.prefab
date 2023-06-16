@@ -93,4 +93,5 @@ MonoBehaviour:
   cantBeDoneFeedbackMessageList:
   - "Veuillez d\xE9poser l'extincteur"
   - "La pi\xE8ce est d\xE9j\xE0 scann\xE9e"
+  actionTime: 5
   scanTime: 5

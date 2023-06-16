@@ -8,8 +8,9 @@ public class BottomBunRoom : BunRoom
     private RoomAction_Collector collectorAction;
     private RoomAction_UpgradeWeapon upgradeAction;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         collectorAction = FindObjectOfType<RoomAction_Collector>();
         upgradeAction = FindObjectOfType<RoomAction_UpgradeWeapon>();
 

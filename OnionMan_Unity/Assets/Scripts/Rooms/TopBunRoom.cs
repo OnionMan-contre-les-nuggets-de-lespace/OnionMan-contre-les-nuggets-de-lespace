@@ -7,8 +7,9 @@ public class TopBunRoom : BunRoom
     private RoomAction_Computer computerAction;
     private RoomAction_TakeFireExtinguisher takeFireExtinguisherAction;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         computerAction = FindObjectOfType<RoomAction_Computer>();
         takeFireExtinguisherAction = FindObjectOfType<RoomAction_TakeFireExtinguisher>();
 

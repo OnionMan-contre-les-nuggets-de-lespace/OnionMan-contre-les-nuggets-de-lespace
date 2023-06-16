@@ -11,6 +11,7 @@ public class RoomManager : MonoBehaviour
     private List<BunRoom> m_bunRooms = new List<BunRoom>();
 
     public Dictionary<RoomName, MiddleRoom> middleRooms = new Dictionary<RoomName, MiddleRoom>();
+    public Dictionary<RoomName, BaseRoom> allRooms = new Dictionary<RoomName, BaseRoom>();
 
     private void Update()
     {
@@ -44,6 +45,7 @@ public class RoomManager : MonoBehaviour
 
     public void AddRoom(BaseRoom baseRoom)
     {
+        allRooms.Add(baseRoom.roomName, baseRoom);
         m_rooms.Add(baseRoom);
     }
 }

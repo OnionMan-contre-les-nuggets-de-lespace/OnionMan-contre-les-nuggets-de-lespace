@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BunRoom : BaseRoom
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         roomManager.AddBunRoom(this);
     }
 }

@@ -50,8 +50,9 @@ public class MiddleRoom : BaseRoom
     }
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         scanAction = FindObjectOfType<RoomAction_Scan>();
         repairAction = FindObjectOfType<RoomAction_Repair>();
         extinguishAction = FindObjectOfType<RoomAction_ExtinguishFire>();

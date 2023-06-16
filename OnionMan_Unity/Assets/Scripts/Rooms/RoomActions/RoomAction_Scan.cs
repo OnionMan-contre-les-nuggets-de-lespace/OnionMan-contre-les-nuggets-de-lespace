@@ -40,7 +40,6 @@ public class RoomAction_Scan : RoomAction
     {
         roomManager.middleRooms[roomToScan].scanEffect.SetActive(true);
         Debug.Log("LAUNCHING SCAN");
-
         yield return new WaitForSeconds(scanTime);
 
         roomManager.middleRooms[roomToScan].scanEffect.SetActive(false);
