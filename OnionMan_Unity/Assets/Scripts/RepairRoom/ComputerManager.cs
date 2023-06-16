@@ -7,12 +7,13 @@ using System;
 
 public class ComputerManager : MonoBehaviour
 {
-    [SerializeField] private GameObject m_welcomePanel;
+    [SerializeField] private GameObject m_reparatorWelcomePanel;
     [SerializeField] private GameObject m_winPanel;
     [SerializeField] private Image m_toolImage;
     [SerializeField] private TMP_Text m_winText;
     [SerializeField] private GameObject m_loosePanel;
-    [SerializeField] private TMP_Text m_welcomingMessage;
+    [SerializeField] private TMP_Text m_reparatorWelcomingMessage;
+    [SerializeField] private GameObject m_beamPanel;
     [SerializeField] private List<GameObject> m_sparklePanelList = new List<GameObject>();
     [SerializeField] private List<Sprite> toolsSpriteList = new List<Sprite>();
     [SerializeField] private List<Color> colorList = new List<Color>();
@@ -24,6 +25,7 @@ public class ComputerManager : MonoBehaviour
     private List<GameObject> m_variableSparklePanelList = new List<GameObject>();
     private RoomAction_Computer computerAction;
     private RoomName currentScannedRoom;
+    private bool beamPhaseRady; //TODO : SynchronizedProperty
 
     public Action<ComputerGameResult> OnComputerGameFinished;
     public Vector3Int playerChoices = new Vector3Int(); //x = shape, y = color, z = orientation
@@ -38,14 +40,14 @@ public class ComputerManager : MonoBehaviour
         mainCanvas.sortingOrder = 15;
         currentScannedRoom = roomName;
         m_computerPanel.SetActive(true);
-        m_welcomePanel.SetActive(true);
-        m_welcomingMessage.text = "Bienvenue dans le Reparator v022251212. Vous avez scanné la salle : " + GameManager.userRoomName[currentScannedRoom];
+        m_reparatorWelcomePanel.SetActive(true);
+        m_reparatorWelcomingMessage.text = "Bienvenue dans le Reparator v022251212. Vous avez scanné la salle : " + GameManager.userRoomName[currentScannedRoom];
     }
 
     public void HideComputer()
     {
         mainCanvas.sortingOrder = 0;
-        m_welcomePanel.SetActive(false);
+        m_reparatorWelcomePanel.SetActive(false);
         m_computerPanel.SetActive(false);
         m_winPanel.SetActive(false);
 
@@ -72,13 +74,13 @@ public class ComputerManager : MonoBehaviour
     public void OC_OnRetryButtonClicked()
     {
         m_loosePanel.SetActive(false);
-        m_welcomePanel.SetActive(true);
+        m_reparatorWelcomePanel.SetActive(true);
     }
 
     public void OC_OnProceedButtonClicked()
     {
         m_variableSparklePanelList.Clear();
-        m_welcomePanel.SetActive(false);
+        m_reparatorWelcomePanel.SetActive(false);
 
         for (int i = 0; i < m_sparklePanelList.Count; i++)
         {
