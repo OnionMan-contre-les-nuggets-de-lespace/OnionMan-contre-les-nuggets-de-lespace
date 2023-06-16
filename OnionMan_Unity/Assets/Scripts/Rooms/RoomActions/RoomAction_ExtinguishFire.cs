@@ -44,7 +44,6 @@ public class RoomAction_ExtinguishFire : RoomAction
         Debug.Log("LAUNCHING EXTINGUISH");
 
         yield return new WaitForSeconds(extinguishTime);
-
         OnExtinguishActionEnd?.Invoke();
         Debug.Log("Extinguish Action Ended");
     }

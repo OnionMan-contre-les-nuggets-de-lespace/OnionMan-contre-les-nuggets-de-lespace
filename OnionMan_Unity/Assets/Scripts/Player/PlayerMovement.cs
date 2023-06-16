@@ -157,7 +157,7 @@ public class PlayerMovement : Subject
         targetIsRight = playerTargetedPos.position.x < playerTransform.position.x;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if(!isAtDestination)
         {

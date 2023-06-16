@@ -5,8 +5,8 @@ using UnityEngine;
 public class RoomActionConditions : MonoBehaviour
 {
     public static bool hasExtinguisher;
-    public static bool hasScannedRoom;
-    public static bool collectorIsFull;
+    public static bool hasScannedRoom; //TODO : SynchronizedProperty
+    public static bool collectorIsFull; //TODO : SynchronizedProperty
 
     private void Awake()
     {

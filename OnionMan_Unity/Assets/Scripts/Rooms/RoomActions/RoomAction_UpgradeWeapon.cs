@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
-public class RoomAction_Collector : RoomAction
+public class RoomAction_UpgradeWeapon : RoomAction
 {
-    [SerializeField] private float collectorActionTime;
+    [SerializeField] private float upgradeTime;
     [SerializeField] private UpgradeManager upgradeManager;
 
-    public Action OnCollectorActionEnd;
+    public Action OnUpgradeActionEnd;
+
+    private void Awake()
+    {
+    }
 
     public override string GetActionName()
     {
@@ -19,9 +23,12 @@ public class RoomAction_Collector : RoomAction
         List<bool> statements = new List<bool>();
 
         bool canBeDone;
+        int costOfNextUpgrade;
 
         statements.Add(!RoomActionConditions.hasExtinguisher);
-        statements.Add(RoomActionConditions.collectorIsFull);
+        statements.Add(upgradeManager.NextUpgradeAvailable(out costOfNextUpgrade));
+
+        cantBeDoneFeedbackMessageList[1] = "Vous devez disposer de " + costOfNextUpgrade + " pièces détachées pour améliorer l'arme";
 
         indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
 
@@ -36,11 +43,12 @@ public class RoomAction_Collector : RoomAction
 
     IEnumerator UpgradeCoroutine(RoomName currentRoom)
     {
-        Debug.Log("LAUNCHING COLLECTOR");
+        Debug.Log("LAUNCHING UPGRADE");
 
-        yield return new WaitForSeconds(collectorActionTime);
-        upgradeManager.numberOfScrappedPart++;
-        OnCollectorActionEnd?.Invoke();
-        Debug.Log("Collector Action Ended");
+        yield return new WaitForSeconds(upgradeTime);
+        upgradeManager.UpgradeWeapon();
+        upgradeManager.UpdateScrappedPartCountText();
+        OnUpgradeActionEnd?.Invoke();
+        Debug.Log("Upgrade Action Ended");
     }
 }

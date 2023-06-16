@@ -8,6 +8,7 @@ public class MiddleRoom : BaseRoom
 {
     [SerializeField] private int roomHealth;
     [SerializeField] private int reparationHeal;
+    [SerializeField] private int healWhenExtinguishFire;
     [SerializeField] private int decayDamage;
     [SerializeField] private Vector2 rangeOfTimerBeforeDecay;
     [SerializeField] private float m_timerBeforeStartDecay;
@@ -56,7 +57,7 @@ public class MiddleRoom : BaseRoom
         extinguishAction = FindObjectOfType<RoomAction_ExtinguishFire>();
 
         scanAction.OnScanActionEnd += OnFinishedAction;
-        extinguishAction.OnExtinguishActionEnd += OnFinishedAction;
+        extinguishAction.OnExtinguishActionEnd += OnExtinguishFireActionEnd;
         repairAction.OnRepairActionEnd += OnFinishedAction;
     }
 
@@ -136,6 +137,12 @@ public class MiddleRoom : BaseRoom
     public void OnRoomRepaired()
     {
         roomHealth += reparationHeal;
+    }
+
+    private void OnExtinguishFireActionEnd()
+    {
+        OnFinishedAction();
+        roomHealth += healWhenExtinguishFire;
     }
 
     protected override void OnFinishedAction()
