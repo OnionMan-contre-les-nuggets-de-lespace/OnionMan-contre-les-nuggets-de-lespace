@@ -254,11 +254,11 @@ RectTransform:
   m_Father: {fileID: 2837807457544216259}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -316.1294, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 25, y: 0}
   m_SizeDelta: {x: 365.2412, y: 37.1892}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7968248734132492042
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -566,7 +566,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: De quelle forme sont les etincelles sortant du B.U.R.G.E.R
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9fb72713462bd34a99acbf23a40dd74, type: 2}
   m_sharedMaterial: {fileID: -4406428672775297824, guid: a9fb72713462bd34a99acbf23a40dd74, type: 2}
@@ -645,6 +645,10 @@ PrefabInstance:
     - target: {fileID: 1442981929904973848, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Name
       value: WindowsButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208847111679318758, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 1
       objectReference: {fileID: 0}
     - target: {fileID: 5337800830431943115, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Pivot.x
@@ -748,6 +752,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WindowsButton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208847111679318758, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5337800830431943115, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -850,6 +858,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WindowsButton (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4208847111679318758, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5337800830431943115, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -951,6 +963,10 @@ PrefabInstance:
     - target: {fileID: 1442981929904973848, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Name
       value: WindowsButton (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208847111679318758, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 4
       objectReference: {fileID: 0}
     - target: {fileID: 5337800830431943115, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Pivot.x
@@ -1155,6 +1171,10 @@ PrefabInstance:
     - target: {fileID: 1442981929904973848, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Name
       value: WindowsButton (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208847111679318758, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 5
       objectReference: {fileID: 0}
     - target: {fileID: 5337800830431943115, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Pivot.x
@@ -1461,6 +1481,10 @@ PrefabInstance:
     - target: {fileID: 1442981929904973848, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Name
       value: WindowsButton (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208847111679318758, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
+      propertyPath: m_text
+      value: <u>S</u>hape 6
       objectReference: {fileID: 0}
     - target: {fileID: 5337800830431943115, guid: 4c10bfd9c2b188f4580fa768c928984b, type: 3}
       propertyPath: m_Pivot.x

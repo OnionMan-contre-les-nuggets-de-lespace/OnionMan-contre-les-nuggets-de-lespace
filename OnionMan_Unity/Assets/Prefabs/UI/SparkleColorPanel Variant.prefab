@@ -67,6 +67,14 @@ PrefabInstance:
       propertyPath: m_text
       value: De quelle couleur sont les etincelles sortant du B.U.R.G.E.R
       objectReference: {fileID: 0}
+    - target: {fileID: 1027238757786787367, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_fontSize
+      value: 22.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027238757786787367, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1324353092401700179, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_text
       value: Vert

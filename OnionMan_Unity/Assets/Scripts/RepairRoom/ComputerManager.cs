@@ -13,26 +13,40 @@ public class ComputerManager : MonoBehaviour
     [SerializeField] private TMP_Text m_winText;
     [SerializeField] private GameObject m_loosePanel;
     [SerializeField] private TMP_Text m_reparatorWelcomingMessage;
-    [SerializeField] private GameObject m_beamPanel;
+    [SerializeField] private GameObject m_desktopIcons;
     [SerializeField] private List<GameObject> m_sparklePanelList = new List<GameObject>();
     [SerializeField] private List<Sprite> toolsSpriteList = new List<Sprite>();
     [SerializeField] private List<Color> colorList = new List<Color>();
     [SerializeField] private Canvas mainCanvas;
+    [Space]
+    [Header("Beam Panel")]
+    [SerializeField] private GameObject m_beamPanel;
+    [SerializeField] private GameObject m_beamDesktopIcon;
+    [SerializeField] private GameObject m_installationPanel;
+    [SerializeField] private GameObject m_beamSetupPanel;
+    [SerializeField] private GameObject m_beamisReadyPanel;
+
 
     [SerializeField] public List<Button> valveButtonList = new List<Button>();
     [SerializeField] public GameObject m_computerPanel;
 
     private List<GameObject> m_variableSparklePanelList = new List<GameObject>();
-    private RoomAction_Computer computerAction;
+    private RoomAction_Computer m_computerAction;
+    private RoomAction_InstallBeamSetup m_installAction;
     private RoomName currentScannedRoom;
-    private bool beamPhaseRady; //TODO : SynchronizedProperty
 
     public Action<ComputerGameResult> OnComputerGameFinished;
     public Vector3Int playerChoices = new Vector3Int(); //x = shape, y = color, z = orientation
 
+    private bool beamIsReady; //TODO : SynchronizedProperty
+
+
     private void Start()
     {
-        computerAction = FindObjectOfType<RoomAction_Computer>();
+        beamIsReady = false;
+        m_computerAction = FindObjectOfType<RoomAction_Computer>();
+        m_installAction = FindObjectOfType<RoomAction_InstallBeamSetup>();
+        m_installAction.OnInstallStarted += StartBeamInstallation;
     }
 
     public void ShowComputer(RoomName roomName)
@@ -40,8 +54,6 @@ public class ComputerManager : MonoBehaviour
         mainCanvas.sortingOrder = 15;
         currentScannedRoom = roomName;
         m_computerPanel.SetActive(true);
-        m_reparatorWelcomePanel.SetActive(true);
-        m_reparatorWelcomingMessage.text = "Bienvenue dans le Reparator v022251212. Vous avez scanné la salle : " + GameManager.userRoomName[currentScannedRoom];
     }
 
     public void HideComputer()
@@ -50,8 +62,9 @@ public class ComputerManager : MonoBehaviour
         m_reparatorWelcomePanel.SetActive(false);
         m_computerPanel.SetActive(false);
         m_winPanel.SetActive(false);
+        m_desktopIcons.SetActive(true);
 
-        computerAction.OnComputerActionEnd?.Invoke();
+        m_computerAction.OnComputerActionEnd?.Invoke();
     }
 
     private void CheckResult()
@@ -64,6 +77,46 @@ public class ComputerManager : MonoBehaviour
         m_toolImage.color = computerGameResult.correctTool.ToolColor;
 
         OnComputerGameFinished?.Invoke(computerGameResult);
+    }
+
+    private void StartBeamInstallation(float installTime)
+    {
+        StartCoroutine(InstallationCoroutine(installTime));
+    }
+
+    IEnumerator InstallationCoroutine(float installTime)
+    {
+        m_reparatorWelcomePanel.SetActive(false);
+        m_computerPanel.SetActive(true);
+        m_beamPanel.SetActive(true);
+        m_installationPanel.SetActive(true);
+
+        yield return new WaitForSeconds(installTime);
+
+        m_installationPanel.SetActive(false);
+        m_beamPanel.SetActive(false);
+        m_beamDesktopIcon.SetActive(true);
+    }
+
+    public void OC_OnReparatorIconClicked()
+    {
+        m_desktopIcons.SetActive(false);
+        m_reparatorWelcomePanel.SetActive(true);
+        m_reparatorWelcomingMessage.text = "Bienvenue dans le Reparator v022251212. Vous avez scanné la salle : " + GameManager.userRoomName[currentScannedRoom];
+    }
+
+    public void OC_OnBeamSetupIconClicked()
+    {
+        m_desktopIcons.SetActive(false);
+        m_beamPanel.SetActive(true);
+        m_beamSetupPanel.SetActive(true);
+    }
+
+    public void OC_OnSetupButtonClicked()
+    {
+        beamIsReady = true;
+        m_beamSetupPanel.SetActive(false);
+        m_beamisReadyPanel.SetActive(true);
     }
 
     public void OC_OnQuitComputerButtonClicked()

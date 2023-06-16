@@ -5897,10 +5897,6 @@ PrefabInstance:
       propertyPath: criticalStateFeedbackVisual
       value: 
       objectReference: {fileID: 72076524}
-    - target: {fileID: 2099295884436528558, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3636955176149839051, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
