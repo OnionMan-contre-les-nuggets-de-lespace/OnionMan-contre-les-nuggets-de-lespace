@@ -37,7 +37,13 @@ public:
 	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Class Options")
 	// 	TSubclassOf<AActor> m_objectPoolBP;
 	/*UFUNCTION(BlueprintCallable, Category = "Enemy")
-		void SpawnActor(FVector Location);*/
+	void SpawnActor(FVector Location);*/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+	TSubclassOf<AActor> WeaponPartBP;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+	float ChanceToSpawnWeaponPart = 1/50.0f;
+
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
 		void TakeDamage(float DamageAmount);
@@ -52,7 +58,7 @@ public:
 	virtual void Move(float deltaTime, float timeSinceSpawn);
 	virtual void GetValuesFromActor(AEnemyActor* other);
 	virtual void Initialize();
-	virtual void KillActor();
+	virtual void KillActor(bool killedByPlayer);
 
 	AEnemyActor* CloneForEditor();
 

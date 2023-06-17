@@ -19,7 +19,7 @@ void AEnemyOnSplineActor::Move(float deltaTime, float timeSinceSpawn)
 	}
 	else
 	{
-		KillActor();
+		KillActor(false);
 	}
 }
 

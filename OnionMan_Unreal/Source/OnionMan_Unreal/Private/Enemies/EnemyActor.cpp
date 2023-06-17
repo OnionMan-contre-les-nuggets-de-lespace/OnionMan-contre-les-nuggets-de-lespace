@@ -2,6 +2,8 @@
 
 
 #include "Enemies/EnemyActor.h"
+
+#include "MathUtil.h"
 #include "Editor/EditorEngine.h"
 #include "UnrealEd.h"
 
@@ -18,7 +20,7 @@ void AEnemyActor::TakeDamage(float damageAmount)
 	CurrentHealth -= damageAmount;
 	if (CurrentHealth <= 0)
 	{
-		KillActor();
+		KillActor(true);
 	}
 }
 
@@ -72,6 +74,9 @@ void AEnemyActor::GetValuesFromActor(AEnemyActor* other)
     ContactDamage = other->ContactDamage;
     IsArmored = other->IsArmored;
 	SetActorScale3D(other->GetActorScale());
+
+	WeaponPartBP = other->WeaponPartBP;
+	ChanceToSpawnWeaponPart = other->ChanceToSpawnWeaponPart;
 }
 
 void AEnemyActor::Initialize()
@@ -86,9 +91,22 @@ void AEnemyActor::Initialize()
 	LOG_ERROR("AfterInitialize CurrentHealth : %f", CurrentHealth);
 }
 
-void AEnemyActor::KillActor()
+void AEnemyActor::KillActor(bool killedByPlayer)
 {
 	CurrentHealth = 0;
+
+	if (killedByPlayer)
+	{
+		if (FMath::RandRange(0.0f, 1.0f) <= ChanceToSpawnWeaponPart)
+		{
+			UWorld* const World = GetWorld();
+			if (World && WeaponPartBP)
+			{
+				World->SpawnActor<AActor>(WeaponPartBP, GetActorLocation(), FRotator().ZeroRotator);
+			}
+		}
+	}
+	
 	Deactivate();
 }
 
