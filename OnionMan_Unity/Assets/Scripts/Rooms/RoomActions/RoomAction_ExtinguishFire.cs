@@ -42,9 +42,11 @@ public class RoomAction_ExtinguishFire : RoomAction
     IEnumerator ExtinguishCoroutine(RoomName currentRoom)
     {
         Debug.Log("LAUNCHING EXTINGUISH");
+        OnExtinguishActionEnd += roomManager.middleRooms[currentRoom].OnExtinguishFireActionEnd;
 
         yield return new WaitForSeconds(extinguishTime);
         OnExtinguishActionEnd?.Invoke();
+        OnExtinguishActionEnd = null;
         Debug.Log("Extinguish Action Ended");
     }
 }

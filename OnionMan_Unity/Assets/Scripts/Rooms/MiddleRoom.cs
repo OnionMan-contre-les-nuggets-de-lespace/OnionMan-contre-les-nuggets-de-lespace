@@ -58,7 +58,7 @@ public class MiddleRoom : BaseRoom
         extinguishAction = FindObjectOfType<RoomAction_ExtinguishFire>();
 
         scanAction.OnScanActionEnd += OnFinishedAction;
-        extinguishAction.OnExtinguishActionEnd += OnExtinguishFireActionEnd;
+        //extinguishAction.OnExtinguishActionEnd += OnExtinguishFireActionEnd;
         repairAction.OnRepairActionEnd += OnFinishedAction;
     }
 
@@ -83,7 +83,14 @@ public class MiddleRoom : BaseRoom
             {
                 if (m_timeBeforeDecay <= 0)
                 {
-                    roomHealth -= decayDamage;
+                    if(roomHealth < decayDamage)
+                    {
+                        roomHealth -= roomHealth;
+                    }
+                    else
+                    {
+                        roomHealth -= decayDamage;
+                    }
                     m_timeBeforeDecay = UnityEngine.Random.Range(rangeOfTimerBeforeDecay.x, rangeOfTimerBeforeDecay.y);
                 }
 
@@ -122,12 +129,12 @@ public class MiddleRoom : BaseRoom
         criticalStateFeedback.SetActive(true);
         criticalStateFeedbackVisual.SetActive(true);
 
+        Rect fireParentRect = criticalStateFeedback.GetComponent<RectTransform>().rect;
 
         for (int i = 0; i < numberOfFireToSpawn; i++)
         {
             fireRectTransform[i].gameObject.SetActive(true);
 
-            Rect fireParentRect = criticalStateFeedback.GetComponent<RectTransform>().rect;
             float offset = 200;
 
             fireRectTransform[i].anchoredPosition = new Vector2(UnityEngine.Random.Range(fireParentRect.xMin + offset, fireParentRect.xMax - offset), fireRectTransform[i].anchoredPosition.y);
@@ -140,17 +147,25 @@ public class MiddleRoom : BaseRoom
         roomHealth += reparationHeal;
     }
 
-    private void OnExtinguishFireActionEnd()
+    public void OnExtinguishFireActionEnd()
     {
         OnFinishedAction();
         roomHealth += healWhenExtinguishFire;
+        isInCriticalState = false;
+        m_hasAlreadyEnterCriticalState = false;
+
+        for (int i = 0; i < numberOfFireToSpawn; i++)
+        {
+            fireRectTransform[i].GetComponent<Animator>().Play("End");
+            fireRectTransform[i].gameObject.SetActive(false);
+        }
+        criticalStateFeedback.SetActive(false);
+        criticalStateFeedbackVisual.SetActive(false);
     }
 
     protected override void OnFinishedAction()
     {
-        base.OnFinishedAction();
-
-        
+        base.OnFinishedAction();        
     }
 
 }
