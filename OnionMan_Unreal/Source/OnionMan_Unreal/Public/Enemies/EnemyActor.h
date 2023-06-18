@@ -26,7 +26,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		float SpeedFactor = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		float ContactDamage = 0;
+		int ContactDamage = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		bool IsArmored = false;
 	// Create Property Weapons ! (donc un script C++ weapon)
