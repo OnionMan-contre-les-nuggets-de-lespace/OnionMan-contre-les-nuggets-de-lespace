@@ -5,9 +5,9 @@ using OnionMan.Network;
 
 public class SO_IsPlayerHit : SynchronizedMonoBehaviour
 {
-    public SynchronizedProperty<bool> isPlayerHit;
+    [SerializeField] private SynchronizedProperty<bool> m_isPlayerHit;
     public override void LoadProperties()
     {
-        AddSynchronizedProperty(isPlayerHit);
+        AddSynchronizedProperty(m_isPlayerHit);
     }
 }
