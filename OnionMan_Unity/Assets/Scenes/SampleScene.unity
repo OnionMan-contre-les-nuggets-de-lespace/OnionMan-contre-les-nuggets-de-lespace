@@ -2014,9 +2014,9 @@ MonoBehaviour:
     m_propertyID: 315
     m_needSync: 0
   m_hasReperaidCriticalRoom:
-    m_role: 1
+    m_role: 0
     m_value: 0
-    m_propertyID: 215
+    m_propertyID: 316
     m_needSync: 0
 --- !u!4 &845933604
 Transform:
