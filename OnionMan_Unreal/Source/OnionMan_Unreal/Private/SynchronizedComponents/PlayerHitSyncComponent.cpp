@@ -17,5 +17,6 @@ void UPlayerHitSyncComponent::LoadProperties()
 {
 	USynchronizedActorComponent::LoadProperties();
 	AddSynchronizedProperty(IsPlayerHit);
+	AddSynchronizedProperty(HasRepairedCriticalRoom);
 }
 

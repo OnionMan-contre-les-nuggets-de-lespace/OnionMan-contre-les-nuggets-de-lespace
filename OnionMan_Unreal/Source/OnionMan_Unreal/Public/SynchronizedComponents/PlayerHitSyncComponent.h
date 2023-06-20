@@ -16,6 +16,8 @@ class ONIONMAN_UNREAL_API UPlayerHitSyncComponent : public USynchronizedActorCom
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
 	USynchronizedBool* IsPlayerHit;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Instanced, Category = "Network", meta = (ShowInnerProperties))
+	USynchronizedBool* HasRepairedCriticalRoom;
 
 public:	
 	// Sets default values for this component's properties
