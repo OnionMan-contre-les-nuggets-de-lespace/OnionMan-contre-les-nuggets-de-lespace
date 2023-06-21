@@ -9,9 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e84b278-3960-4376-bf09-d0cd5aece868" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../OnionMan_Unity/Assets/Prefabs/UI/MainCanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../OnionMan_Unity/Assets/Prefabs/UI/MainCanvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../OnionMan_Unity/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/../OnionMan_Unity/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OnionMan_Unreal/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OnionMan_Unreal/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/SyncPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/SyncPlayer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Migrate/BP/Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Migrate/BP/Player.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Maps/Minimal_Default.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/PlayerBP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TwinStickBP/Blueprints/PlayerBP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/OnionMan_Unreal.sln" beforeDir="false" afterPath="$PROJECT_DIR$/OnionMan_Unreal.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,9 +42,9 @@
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\yan_d\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\yan_d\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\yan_d\\AppData\\Local\\Symbols\\src&quot;
+      &quot;C:\\Users\\paull\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\paull\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\paull\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
@@ -175,6 +177,8 @@
       <workItem from="1684861139247" duration="1940000" />
       <workItem from="1684956523939" duration="1330000" />
       <workItem from="1686407269476" duration="1054000" />
+      <workItem from="1687296115933" duration="836000" />
+      <workItem from="1687366804555" duration="3217000" />
     </task>
     <servers />
   </component>
