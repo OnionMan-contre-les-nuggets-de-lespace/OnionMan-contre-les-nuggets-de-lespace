@@ -6,13 +6,17 @@ public class TopBunRoom : BunRoom
 {
     private RoomAction_Computer computerAction;
     private RoomAction_TakeFireExtinguisher takeFireExtinguisherAction;
+    private RoomAction_InstallBeamSetup installBeamSetupAction;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         computerAction = FindObjectOfType<RoomAction_Computer>();
         takeFireExtinguisherAction = FindObjectOfType<RoomAction_TakeFireExtinguisher>();
+        installBeamSetupAction = FindObjectOfType<RoomAction_InstallBeamSetup>();
 
         takeFireExtinguisherAction.OnTakeFireExtinguisherActionEnd += OnFinishedAction;
+        computerAction.OnComputerActionEnd += OnFinishedAction;
     }
 
     protected override List<RoomAction> GetActionsToDisplay()
@@ -21,6 +25,7 @@ public class TopBunRoom : BunRoom
 
         roomActions.Add(computerAction);
         roomActions.Add(takeFireExtinguisherAction);
+        roomActions.Add(installBeamSetupAction);
 
         return roomActions;
     }

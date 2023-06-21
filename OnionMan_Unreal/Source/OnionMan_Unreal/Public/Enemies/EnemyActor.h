@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "PooledObject.h"
 #include "GameFramework/Actor.h"
+#include "LogUtils.h"
 #include "EnemyActor.generated.h"
 
 UCLASS()
@@ -17,35 +18,49 @@ public:
 	AEnemyActor();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		float m_maxHealth;
+		float MaxHealth = 10;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		float m_currentHealth;
+		float CurrentHealth = 10;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		float m_defaultSpeed;
+		float DefaultSpeed = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		float m_speedFactor;
+		float SpeedFactor = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		float m_contactDamage;
+		int ContactDamage = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		bool IsArmored;
+		bool IsArmored = false;
 	// Create Property Weapons ! (donc un script C++ weapon)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		TSubclassOf<AActor> Weapon;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
-		FVector Location;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 		TSubclassOf<AActor> m_actorBP;
 	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Class Options")
 	// 	TSubclassOf<AActor> m_objectPoolBP;
 	/*UFUNCTION(BlueprintCallable, Category = "Enemy")
-		void SpawnActor(FVector Location);*/
+	void SpawnActor(FVector Location);*/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+	TSubclassOf<AActor> WeaponPartBP;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+	float ChanceToSpawnWeaponPart = 1/50.0f;
+
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
 		void TakeDamage(float DamageAmount);
 
-	bool IsAlive();
+	bool IsAlive() const;
+
+	inline float GetSpeed() const
+	{
+		return DefaultSpeed* SpeedFactor;
+	}
 
 	virtual void Move(float deltaTime, float timeSinceSpawn);
+	virtual void GetValuesFromActor(AEnemyActor* other);
+	virtual void Initialize();
+	virtual void KillActor(bool killedByPlayer);
+
+	AEnemyActor* CloneForEditor();
 
 
 	// Editor
@@ -60,7 +75,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	void DoubleHealth();
-	void SetCurrentHealt();
+	void SetCurrentHealth();
 	
 public:	
 	// Called every frame

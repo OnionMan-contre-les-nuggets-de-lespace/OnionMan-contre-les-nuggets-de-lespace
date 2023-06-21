@@ -30,7 +30,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable)
-    inline void SetValue(FString& newValue)
+    inline void SetValue(UPARAM(ref) FString& newValue)
     {
         SetValueGeneric<FString>(newValue, m_value);
     }

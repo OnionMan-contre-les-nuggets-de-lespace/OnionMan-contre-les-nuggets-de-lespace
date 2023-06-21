@@ -1,25 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 public class BaseRoom : MonoBehaviour
 {
     [SerializeField] public RoomName roomName;
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] public Slider actionTimeSlider;
 
-    protected RoomManager roomManager;
-    protected RepairManager repairManager;
+    [SerializeField] protected RoomManager roomManager;
     protected PlayerMovement playerMovement;
-    private RoomActionMenu roomActionMenu;
+    protected PlayerAnimatorController playerAnimatorController;
+    [SerializeField] private RoomActionMenu roomActionMenu;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        roomManager = FindObjectOfType<RoomManager>();
-        roomActionMenu = FindObjectOfType<RoomActionMenu>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        playerAnimatorController = FindObjectOfType<PlayerAnimatorController>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         roomManager.AddRoom(this);
     }
@@ -27,7 +29,7 @@ public class BaseRoom : MonoBehaviour
     public void StartRoomInteraction()
     {
         roomActionMenu.ShowActionMenu(GetActionsToDisplay(), this);
-        mainCanvas.sortingOrder = 10;
+        //mainCanvas.sortingOrder = 10;
     }
 
     protected virtual List<RoomAction> GetActionsToDisplay()
@@ -44,7 +46,9 @@ public class BaseRoom : MonoBehaviour
 
     protected virtual void OnFinishedAction()
     {
+        playerAnimatorController.ExitCraftAnimation();
         roomActionMenu.HideAndResetActionMenu();
-        mainCanvas.sortingOrder = 0;
+        //mainCanvas.sortingOrder = 0;
+        GameManager.DisablePlayerNavigation(false);
     }
 }

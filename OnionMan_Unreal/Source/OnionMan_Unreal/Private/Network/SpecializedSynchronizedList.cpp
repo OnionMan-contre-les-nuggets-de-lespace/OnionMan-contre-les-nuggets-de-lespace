@@ -16,7 +16,6 @@ bool USpecializedSynchronizedList::NeedSync()
         return false;
     }
 
-    return true; // @TODO Remove it
     CheckNeedSync();
     return m_needSync;
 }

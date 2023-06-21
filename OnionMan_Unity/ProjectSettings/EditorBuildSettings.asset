@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/_Assets/POC_Network/Network_Test_Scene.unity
-    guid: a581837eb22c6c2478f916eace3d953f
+  - enabled: 0
+    path: Assets/Scenes/EntryScene.unity
+    guid: abd7442c0db81c84aa01786f21884fb3
+  - enabled: 0
+    path: Assets/Scenes/MainMenu.unity
+    guid: 73e6fa89b18f6ad47ae69569918fed2b
+  - enabled: 0
+    path: Assets/Scripts/Network/Tests/NetworkTestScene.unity
+    guid: 0a6a963cfe3b209478f11c12fd232837
   m_configObjects: {}

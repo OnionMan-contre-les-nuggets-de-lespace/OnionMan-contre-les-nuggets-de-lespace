@@ -90,3 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionName: "R\xE9parer la salle"
+  cantBeDoneFeedbackMessageList:
+  - "Veuillez d\xE9poser l'extincteur"
+  - "La salle est dans un \xE9tat critique"
+  - "Veuillez utiliser le super ordinateur pour pouvoir r\xE9parer"
+  repairManager: {fileID: 0}

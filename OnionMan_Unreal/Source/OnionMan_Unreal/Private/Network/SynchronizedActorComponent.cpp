@@ -145,16 +145,19 @@ void USynchronizedActorComponent::GetPropertiesToSync(TArray<TObjectPtr<ISynchro
 
 void USynchronizedActorComponent::AddSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty)
 {
-    synchronizedProperty->Init();
-
-    uint16 propID = synchronizedProperty->PropertyID();
-    if (m_synchronizedProperties.Contains(propID))
+    if (synchronizedProperty)
     {
-        LOG_ERROR("The ID %i is already used", propID);
-        return;
+        synchronizedProperty->Init();
+
+        uint16 propID = synchronizedProperty->PropertyID();
+        if (m_synchronizedProperties.Contains(propID))
+        {
+            LOG_ERROR("The ID %i is already used", propID);
+            return;
+        }
+        m_synchronizedProperties.Add(propID, synchronizedProperty);
+        m_propertiesArray.Add(synchronizedProperty);
     }
-    m_synchronizedProperties.Add(propID, synchronizedProperty);
-    m_propertiesArray.Add(synchronizedProperty);
 }
 
 void USynchronizedActorComponent::RemoveSynchronizedProperty(TObjectPtr<ISynchronizedPropertyBase> synchronizedProperty)
