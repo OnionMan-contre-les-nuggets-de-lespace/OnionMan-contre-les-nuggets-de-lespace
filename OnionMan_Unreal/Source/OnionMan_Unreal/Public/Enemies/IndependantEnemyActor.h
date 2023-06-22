@@ -15,7 +15,7 @@ class ONIONMAN_UNREAL_API AIndependantEnemyActor : public AEnemyActor
 	GENERATED_BODY()
 
 public:
-	void Spawn(FVector3f startPosition);
+	void Spawn(FVector startPosition);
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
 	virtual void Move(float deltaTime, float timeSinceSpawn) override;
@@ -23,9 +23,9 @@ public:
 
 	// Editor
 	virtual void EditorLoad(float timeSinceSpawn) override;
-	virtual void EditorLoadAtPosition(float timeSinceSpawn, FVector3f startPosition);
+	virtual void EditorLoadAtPosition(float timeSinceSpawn, FVector startPosition);
 	virtual void EditorUpdate(float newTimeSinceSpawn) override;
-	virtual void EditorUpdateAtPosition(float newTimeSinceSpawn, FVector3f startPosition);
+	virtual void EditorUpdateAtPosition(float newTimeSinceSpawn, FVector startPosition);
 	virtual void EditorUnload() override;
 	
 };

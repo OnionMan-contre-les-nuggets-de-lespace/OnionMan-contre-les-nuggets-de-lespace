@@ -7,15 +7,19 @@ using TMPro;
 public class MiddleRoom : BaseRoom
 {
     [SerializeField] private int roomHealth;
+    [SerializeField] private int reparationHeal;
+    [SerializeField] private int healWhenExtinguishFire;
     [SerializeField] private int decayDamage;
     [SerializeField] private Vector2 rangeOfTimerBeforeDecay;
     [SerializeField] private float m_timerBeforeStartDecay;
     [SerializeField] private TMP_Text roomHealthText;
-    
+    [SerializeField] protected RepairManager repairManager;
+
     [Space]
 
     [Header("Critical State")]
     [SerializeField] private GameObject criticalStateFeedback;
+    [SerializeField] private GameObject criticalStateFeedbackVisual;
     [SerializeField] private int numberOfFireToSpawn;
     [SerializeField] private List<RectTransform> fireRectTransform;
     [HideInInspector]
@@ -25,6 +29,8 @@ public class MiddleRoom : BaseRoom
 
     [Header("Scan")]
     [SerializeField] public GameObject scanEffect;
+    public bool isScanned; //Set dans la Room Action Scan
+    public bool canBeRepaired;
 
     private float m_timeBeforeDecay;
     private bool m_hasAlreadyEnterCriticalState;
@@ -35,25 +41,36 @@ public class MiddleRoom : BaseRoom
 
     public Action<RoomName> OnRoomScanned;
     public bool isInCriticalState;
-    
 
-
-
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+        repairManager.AddMiddleRoom(this);
         roomManager.AddMiddleRoom(this);
+    }
 
+
+    protected override void Start()
+    {
+        base.Start();
         scanAction = FindObjectOfType<RoomAction_Scan>();
         repairAction = FindObjectOfType<RoomAction_Repair>();
         extinguishAction = FindObjectOfType<RoomAction_ExtinguishFire>();
 
         scanAction.OnScanActionEnd += OnFinishedAction;
-        extinguishAction.OnExtinguishActionEnd += OnFinishedAction;
+        //extinguishAction.OnExtinguishActionEnd += OnExtinguishFireActionEnd;
+        repairAction.OnRepairActionEnd += OnFinishedAction;
     }
 
     private void Update()
     {
+        //TODO : Capé les pv a 10% si la room a été scanné
         roomHealthText.text = roomHealth.ToString() + "%";
+
+        if(isScanned && roomHealth <= 10)
+        {
+            return;
+        }
 
         if(m_timerBeforeStartDecay > 0)
         {
@@ -66,7 +83,14 @@ public class MiddleRoom : BaseRoom
             {
                 if (m_timeBeforeDecay <= 0)
                 {
-                    roomHealth -= decayDamage;
+                    if(roomHealth < decayDamage)
+                    {
+                        roomHealth -= roomHealth;
+                    }
+                    else
+                    {
+                        roomHealth -= decayDamage;
+                    }
                     m_timeBeforeDecay = UnityEngine.Random.Range(rangeOfTimerBeforeDecay.x, rangeOfTimerBeforeDecay.y);
                 }
 
@@ -103,13 +127,14 @@ public class MiddleRoom : BaseRoom
         spawnedFireRectTransform.Clear();
         m_hasAlreadyEnterCriticalState = true;
         criticalStateFeedback.SetActive(true);
+        criticalStateFeedbackVisual.SetActive(true);
 
+        Rect fireParentRect = criticalStateFeedback.GetComponent<RectTransform>().rect;
 
-        for(int i = 0; i < numberOfFireToSpawn; i++)
+        for (int i = 0; i < numberOfFireToSpawn; i++)
         {
             fireRectTransform[i].gameObject.SetActive(true);
 
-            Rect fireParentRect = criticalStateFeedback.GetComponent<RectTransform>().rect;
             float offset = 200;
 
             fireRectTransform[i].anchoredPosition = new Vector2(UnityEngine.Random.Range(fireParentRect.xMin + offset, fireParentRect.xMax - offset), fireRectTransform[i].anchoredPosition.y);
@@ -117,9 +142,30 @@ public class MiddleRoom : BaseRoom
         }
     }
 
+    public void OnRoomRepaired()
+    {
+        roomHealth += reparationHeal;
+    }
+
+    public void OnExtinguishFireActionEnd()
+    {
+        OnFinishedAction();
+        roomHealth += healWhenExtinguishFire;
+        isInCriticalState = false;
+        m_hasAlreadyEnterCriticalState = false;
+
+        for (int i = 0; i < numberOfFireToSpawn; i++)
+        {
+            fireRectTransform[i].GetComponent<Animator>().Play("End");
+            fireRectTransform[i].gameObject.SetActive(false);
+        }
+        criticalStateFeedback.SetActive(false);
+        criticalStateFeedbackVisual.SetActive(false);
+    }
+
     protected override void OnFinishedAction()
     {
-        base.OnFinishedAction();
+        base.OnFinishedAction();        
     }
 
 }

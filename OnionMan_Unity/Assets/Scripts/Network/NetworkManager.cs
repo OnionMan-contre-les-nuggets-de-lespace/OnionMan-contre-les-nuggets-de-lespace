@@ -33,11 +33,17 @@ namespace OnionMan.Network
         }
 
         public Action OnConnectedToServer;
+        public Action<int> OnGameStateChanged;
+
+        public int GameState => m_gameState.CurrentState;
 
         [SerializeField] private string m_acknoledgeMessage = "ServerAck";
 
         [SerializeField] private int m_senderPort = 0;
         [SerializeField] private int m_recieverPort = 0;
+
+        [Space]
+        [SerializeField] private SO_GameState m_gameState;
 
         private const int MAX_BATCH_SIZE = 8192;
 
@@ -58,6 +64,7 @@ namespace OnionMan.Network
         protected override void Start()
         {
             base.Start();
+            m_gameState.OnGameStateChange += OnGameStateChange;
             m_connectionState = ConnectionState.Disconnected;
         }
 
@@ -94,6 +101,7 @@ namespace OnionMan.Network
         {
             m_udpClient?.Close();
             m_udpClient?.Dispose();
+            m_gameState.OnGameStateChange -= OnGameStateChange;
             //m_udpClientReciever?.Close();
             //m_udpClientReciever?.Dispose();
         }
@@ -278,6 +286,11 @@ namespace OnionMan.Network
             IPHostEntry hostEntry = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress currentIpAddress = hostEntry.AddressList.FirstOrDefault(address => address.AddressFamily == AddressFamily.InterNetwork);
             return currentIpAddress;
+        }
+
+        private void OnGameStateChange(int obj)
+        {
+            OnGameStateChanged?.Invoke(obj);
         }
     }
 }

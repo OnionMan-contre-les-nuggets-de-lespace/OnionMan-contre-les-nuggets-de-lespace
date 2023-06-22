@@ -3,6 +3,10 @@
 
 #include "Enemies/EnemyActor.h"
 
+#include "MathUtil.h"
+#include "Editor/EditorEngine.h"
+#include "UnrealEd.h"
+
 // Sets default values
 AEnemyActor::AEnemyActor()
 {
@@ -13,34 +17,29 @@ AEnemyActor::AEnemyActor()
 
 void AEnemyActor::TakeDamage(float damageAmount)
 {
-	m_currentHealth -= damageAmount;
-	if (m_currentHealth <= 0)
+	CurrentHealth -= damageAmount;
+	if (CurrentHealth <= 0)
 	{
-		// Destroy l'objet ou renvoyer dans la pool
+		KillActor(true);
 	}
 }
 
 void AEnemyActor::DoubleHealth()
 {
-	m_maxHealth = m_maxHealth * 2;
+	MaxHealth = MaxHealth * 2;
 }
 
-void AEnemyActor::SetCurrentHealt()
+void AEnemyActor::SetCurrentHealth()
 {
-	m_currentHealth = m_maxHealth;
+	CurrentHealth = MaxHealth;
+	LOG_ERROR("SET CurrentHealth : %f", CurrentHealth);
 }
 
 // Called when the game starts or when spawned
 void AEnemyActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	if (IsArmored)
-	{
-		DoubleHealth();
-	}
-
-	SetCurrentHealt();
+	Initialize();
 }
 
 // Called every frame
@@ -50,13 +49,91 @@ void AEnemyActor::Tick(float DeltaTime)
 
 }
 
-bool AEnemyActor::IsAlive()
+bool AEnemyActor::IsAlive() const
 {
-	return m_currentHealth > 0.0f;
+	LOG_WARNING("IS ALIVE ? : %f", CurrentHealth);
+	return CurrentHealth > 0.0f;
 }
 
 void AEnemyActor::Move(float deltaTime, float timeSinceSpawn)
 {
+}
+
+void AEnemyActor::GetValuesFromActor(AEnemyActor* other)
+{
+	if (!other)
+	{
+		LOG_ERROR("Parameter 'other' is null");
+		return;
+	}
+
+	MaxHealth = other->MaxHealth;
+	CurrentHealth = other->CurrentHealth;
+	DefaultSpeed = other->DefaultSpeed;
+    SpeedFactor = other->SpeedFactor;
+    ContactDamage = other->ContactDamage;
+    IsArmored = other->IsArmored;
+	SetActorScale3D(other->GetActorScale());
+
+	WeaponPartBP = other->WeaponPartBP;
+	ChanceToSpawnWeaponPart = other->ChanceToSpawnWeaponPart;
+}
+
+void AEnemyActor::Initialize()
+{
+	if (IsArmored)
+	{
+		DoubleHealth();
+	}
+
+	SetCurrentHealth();
+	
+	LOG_ERROR("AfterInitialize CurrentHealth : %f", CurrentHealth);
+}
+
+void AEnemyActor::KillActor(bool killedByPlayer)
+{
+	CurrentHealth = 0;
+
+	if (killedByPlayer)
+	{
+		if (FMath::RandRange(0.0f, 1.0f) <= ChanceToSpawnWeaponPart)
+		{
+			UWorld* const World = GetWorld();
+			if (World && WeaponPartBP)
+			{
+				World->SpawnActor<AActor>(WeaponPartBP, GetActorLocation(), FRotator().ZeroRotator);
+			}
+		}
+	}
+	
+	Deactivate();
+}
+
+AEnemyActor* AEnemyActor::CloneForEditor()
+{
+	FActorSpawnParameters Parameters;
+
+	Parameters.Template = this;
+	if (UWorld* world = GEditor->GetEditorWorldContext().World())
+	{
+		if(AEnemyActor* clone = world->SpawnActor<AEnemyActor>(GetClass(), Parameters))
+		{
+			clone->SetOwner(GetOwner());
+			LOG_ERROR("Cloning Actor %s", *GetActorNameOrLabel())
+
+			return clone;
+		}
+		else
+		{
+			LOG_ERROR("Failedclone the Actor");
+		}
+	}
+	else
+	{
+		LOG_ERROR("Failed find the Editor World");
+	}
+	return nullptr;
 }
 
 void AEnemyActor::EditorLoad(float timeSinceSpawn)

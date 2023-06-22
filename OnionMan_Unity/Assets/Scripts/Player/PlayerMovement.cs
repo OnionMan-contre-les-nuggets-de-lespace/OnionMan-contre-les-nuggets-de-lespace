@@ -6,6 +6,7 @@ public class PlayerMovement : Subject
 {
     //[SerializeField] private RectTransform[] possiblePlayerPoses;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private Transform playerGFX;
     [SerializeField] private Transform[] possiblePlayerPoses;
     [SerializeField] private float horizontalSpeed;
     [SerializeField] private float verticalDownSpeed;
@@ -46,6 +47,8 @@ public class PlayerMovement : Subject
 
     private RoomManager roomManager;
 
+    private PlayerAnimatorController playerAnimatorController;
+
     public enum MovementDirection
     {
         RIGHT,
@@ -70,6 +73,8 @@ public class PlayerMovement : Subject
         isOnAFloor = true;
 
         roomManager = FindObjectOfType<RoomManager>();
+        playerAnimatorController = GetComponent<PlayerAnimatorController>();
+        playerAnimatorController.EnterIdleAnimation();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -135,6 +140,13 @@ public class PlayerMovement : Subject
             doHorizontalMove = true;
             isAtDestination = false;
         }
+        else
+        {
+            if(isAtDestination)
+            {
+                roomManager.NotifyRoom(currentPlayerFloor);
+            }
+        }
     }
 
     private void CheckTargetRelativePosition()
@@ -167,15 +179,19 @@ public class PlayerMovement : Subject
             switch (movementDirection)
             {
                 case MovementDirection.LEFT:
+                    playerAnimatorController.EnterWalkAnimation();
                     HorizontalMove(left);
                     break;
                 case MovementDirection.RIGHT:
+                    playerAnimatorController.EnterWalkAnimation();
                     HorizontalMove(right);
                     break;
                 case MovementDirection.UP:
+                    playerAnimatorController.EnterClimbAnimation();
                     VerticalUpMove();
                     break;
                 case MovementDirection.DOWN:
+                    playerAnimatorController.EnterClimbAnimation();
                     VerticalDownMove();
                     break;
                 case MovementDirection.STAY:
@@ -222,7 +238,7 @@ public class PlayerMovement : Subject
 
                 Transform targetLadderTransform = sideCheckBuffer[0].transform;
 
-                yield return new WaitUntil(() => Mathf.Abs(targetLadderTransform.position.x - playerTransform.position.x) < 0.1f);
+                yield return new WaitUntil(() => Mathf.Abs(targetLadderTransform.position.x - playerTransform.position.x) < 0.05f);
 
                 isOnAFloor = false;
 
@@ -248,6 +264,7 @@ public class PlayerMovement : Subject
             yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
             movementDirection = MovementDirection.STAY;
             isAtDestination = true;
+            playerAnimatorController.EnterIdleAnimation();
             //NotifyObservers();
             roomManager.NotifyRoom(currentPlayerFloor);
         }
@@ -263,7 +280,7 @@ public class PlayerMovement : Subject
                 movementDirection = MovementDirection.RIGHT;
             }
 
-            yield return new WaitUntil(() => Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) < 0.1f);
+            yield return new WaitUntil(() => Mathf.Abs(sideCheckBuffer[0].transform.position.x - playerTransform.position.x) < 0.05f);
 
             while(targetFloor != currentPlayerFloor)
             {
@@ -301,6 +318,7 @@ public class PlayerMovement : Subject
             yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
             movementDirection = MovementDirection.STAY;
             isAtDestination = true;
+            playerAnimatorController.EnterIdleAnimation();
             //NotifyObservers();
             roomManager.NotifyRoom(currentPlayerFloor);
         }
@@ -340,6 +358,7 @@ public class PlayerMovement : Subject
 
     private void HorizontalMove(int directionMultiplicator)
     {
+        playerGFX.localScale = new Vector3(directionMultiplicator, playerGFX.localScale.y, playerGFX.localScale.z);
         Vector2 tempPos = new Vector2(playerTransform.position.x + (horizontalSpeed * directionMultiplicator), playerTransform.position.y);
         playerTransform.position = tempPos;
     }

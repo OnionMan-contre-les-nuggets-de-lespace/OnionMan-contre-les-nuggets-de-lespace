@@ -25,6 +25,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
 	virtual void Move(float deltaTime, float timeSinceSpawn) override;
 
+	virtual float GetTimeOnSpline(float timeSinceSpawn);
+
+	UFUNCTION(BlueprintCallable, Category = "Enemy")
+	virtual FVector GetPositionOnSpline(float timeSinceSpawn, USplineComponent* trajectory);
+
+	virtual bool IsOnSpline(float timeSinceSpawn, USplineComponent* trajectory);
+
 
 	// Editor
 	virtual void EditorLoad(float timeSinceSpawn) override;

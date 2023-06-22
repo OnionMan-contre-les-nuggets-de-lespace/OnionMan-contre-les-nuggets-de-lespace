@@ -24,8 +24,16 @@ public class RoomAction_TakeFireExtinguisher : RoomAction
 
     public override void LaunchAction(RoomName currentRoom)
     {
+        base.LaunchAction(currentRoom);
+        StartCoroutine(TakeExtinguisherCoroutine(currentRoom));
+    }
+
+    IEnumerator TakeExtinguisherCoroutine(RoomName currentRoom)
+    {
         Debug.Log("LAUNCHING TAKE FIRE EXTINGUISHER");
         RoomActionConditions.hasExtinguisher = !RoomActionConditions.hasExtinguisher;
+        yield return new WaitForEndOfFrame();
         OnTakeFireExtinguisherActionEnd?.Invoke();
+
     }
 }

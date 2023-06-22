@@ -9,7 +9,7 @@
 #include "SynchronizedActorComponent.generated.h"
 
 
-UCLASS(Abstract/*, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) */)
+UCLASS(Blueprintable)
 class ONIONMAN_UNREAL_API USynchronizedActorComponent : public UActorComponent, public ISynchronizedObjectBase
 {
     GENERATED_BODY()

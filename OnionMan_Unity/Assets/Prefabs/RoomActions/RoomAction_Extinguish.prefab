@@ -90,4 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionName: Eteindre le feu
+  cantBeDoneFeedbackMessageList:
+  - "La pi\xE8ce n'est pas dans un \xE9tat critique"
+  - Vous n'avezpas l'extincteur
+  actionTime: 10
   extinguishTime: 10
