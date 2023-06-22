@@ -14,6 +14,7 @@ public class MiddleRoom : BaseRoom
     [SerializeField] private float m_timerBeforeStartDecay;
     [SerializeField] private TMP_Text roomHealthText;
     [SerializeField] protected RepairManager repairManager;
+    [SerializeField] private SO_PlayerHit SO_playerHit;
 
     [Space]
 
@@ -64,7 +65,6 @@ public class MiddleRoom : BaseRoom
 
     private void Update()
     {
-        //TODO : Capé les pv a 10% si la room a été scanné
         roomHealthText.text = roomHealth.ToString() + "%";
 
         if(isScanned && roomHealth <= 10)
@@ -101,8 +101,9 @@ public class MiddleRoom : BaseRoom
             }
         }
 
-        if(roomHealth <= 0)
+        if(roomHealth <= 0 || SO_playerHit.SP_IsPlayerHit.Value)
         {
+            SO_playerHit.SP_IsPlayerHit.Value = false;
             isInCriticalState = true;
         }
         
@@ -145,6 +146,7 @@ public class MiddleRoom : BaseRoom
     public void OnRoomRepaired()
     {
         roomHealth += reparationHeal;
+        SO_playerHit.SP_HasReperaidCriticalRoom.Value = true;
     }
 
     public void OnExtinguishFireActionEnd()

@@ -6011,14 +6011,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1102799704, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_ShipParticles
+      value: 
+      objectReference: {fileID: 1099444072}
     - target: {fileID: 1686159714137794910, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: scanEffect
       value: 
       objectReference: {fileID: 1726482367}
     - target: {fileID: 1686159714137794910, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_playerHit
+      value: 
+      objectReference: {fileID: 845933603}
+    - target: {fileID: 1686159714137794910, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: criticalStateFeedbackVisual
       value: 
       objectReference: {fileID: 72076524}
+    - target: {fileID: 1895231302198432514, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 2895584291834178549, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_collectorIsFull
+      value: 
+      objectReference: {fileID: 2121822149}
     - target: {fileID: 3636955176149839051, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -6135,18 +6151,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1671623280}
+    - target: {fileID: 4257854215703118670, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_shipParticles
+      value: 
+      objectReference: {fileID: 1099444072}
     - target: {fileID: 5392731125695981619, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: scanEffect
       value: 
       objectReference: {fileID: 956602380}
     - target: {fileID: 5392731125695981619, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_playerHit
+      value: 
+      objectReference: {fileID: 845933603}
+    - target: {fileID: 5392731125695981619, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: criticalStateFeedbackVisual
       value: 
       objectReference: {fileID: 1844421048}
+    - target: {fileID: 5655250035089935122, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_beamPhase
+      value: 
+      objectReference: {fileID: 661267332}
     - target: {fileID: 6032390151777892221, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: scanEffect
       value: 
       objectReference: {fileID: 1651873932}
+    - target: {fileID: 6032390151777892221, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_playerHit
+      value: 
+      objectReference: {fileID: 845933603}
     - target: {fileID: 6032390151777892221, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: criticalStateFeedbackVisual
       value: 
@@ -6155,6 +6187,10 @@ PrefabInstance:
       propertyPath: scanEffect
       value: 
       objectReference: {fileID: 326679529}
+    - target: {fileID: 8746408027846427803, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_playerHit
+      value: 
+      objectReference: {fileID: 845933603}
     - target: {fileID: 8746408027846427803, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: criticalStateFeedbackVisual
       value: 
