@@ -54,7 +54,10 @@ public class MainMenuController : MonoBehaviour
                 SceneManager.LoadScene(m_nextSceneName);
                 break;
 
-            case 2: // Game Ended
+            case 2: // Game Won
+                break;
+
+            case 3: // Game Lost
                 break;
 
             default:

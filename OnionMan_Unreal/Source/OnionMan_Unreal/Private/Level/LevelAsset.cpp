@@ -28,7 +28,7 @@ void ALevelAsset::Load()
     }
 }
 
-void ALevelAsset::Update(float deltaTime)
+bool ALevelAsset::Update(float deltaTime)
 {
     if (m_currentWave != nullptr)
     {
@@ -53,9 +53,11 @@ void ALevelAsset::Update(float deltaTime)
             {
                 m_currentWave = nullptr;
                 LOG_ERROR("LEVEL FINISHED")
+                return true;
             }
         }
     }
+    return false;
 }
 
 
