@@ -56,7 +56,7 @@ public:
     void Load();
 
     UFUNCTION(BlueprintCallable)
-    void Update(float deltaTime);
+    bool Update(float deltaTime);
 
     UFUNCTION(BlueprintCallable)
     void EditorLoad();
