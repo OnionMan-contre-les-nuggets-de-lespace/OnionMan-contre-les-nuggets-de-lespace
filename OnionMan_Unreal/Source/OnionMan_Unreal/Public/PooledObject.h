@@ -21,6 +21,8 @@ public:
 
 	FOnPooledObjectDespawned OnPooledObjectDespawned;
 
+	virtual void BeginPlay() override;
+
 	UFUNCTION(BlueprintCallable, Category = "Pooled Object")
 		void Deactivate();
 
@@ -37,6 +39,9 @@ protected:
 	bool Active;
 	float LifeSpan = 0.0f;
 	int PoolIndex;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FVector DisabledObjectsPosition {0, 0, -50};
 
 	FTimerHandle LifeSpanTimer;
 };

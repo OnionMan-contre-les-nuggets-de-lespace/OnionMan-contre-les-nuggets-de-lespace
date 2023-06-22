@@ -27,11 +27,18 @@ void APooledObject::SetPoolIndex(int Index)
     PoolIndex = Index;
 }
 
+void APooledObject::BeginPlay()
+{
+    AActor::BeginPlay();
+ 	SetActorLocation(DisabledObjectsPosition);
+}
+
 void APooledObject::Deactivate()
 {
     SetActive(false);
     GetWorldTimerManager().ClearAllTimersForObject(this);
     OnPooledObjectDespawned.Broadcast(this);
+    SetActorLocation(DisabledObjectsPosition);
 }
 
 bool APooledObject::IsActive()

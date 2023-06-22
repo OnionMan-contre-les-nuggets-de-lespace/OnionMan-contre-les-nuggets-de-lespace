@@ -74,6 +74,7 @@ void AEnemyActor::GetValuesFromActor(AEnemyActor* other)
     ContactDamage = other->ContactDamage;
     IsArmored = other->IsArmored;
 	SetActorScale3D(other->GetActorScale());
+	SetActorRotation(other->GetActorRotation());
 
 	WeaponPartBP = other->WeaponPartBP;
 	ChanceToSpawnWeaponPart = other->ChanceToSpawnWeaponPart;
@@ -97,12 +98,15 @@ void AEnemyActor::KillActor(bool killedByPlayer)
 
 	if (killedByPlayer)
 	{
+		LOG_ERROR("Killed Actor %s", *GetActorNameOrLabel());
 		if (FMath::RandRange(0.0f, 1.0f) <= ChanceToSpawnWeaponPart)
 		{
 			UWorld* const World = GetWorld();
 			if (World && WeaponPartBP)
 			{
-				World->SpawnActor<AActor>(WeaponPartBP, GetActorLocation(), FRotator().ZeroRotator);
+				FVector actorLocation = GetActorLocation();
+				World->SpawnActor<AActor>(WeaponPartBP, actorLocation, FRotator().ZeroRotator);
+				LOG_ERROR("Spawned a WeaponPart at {%f, %f, %f}", actorLocation.X, actorLocation.Y, actorLocation.Z);
 			}
 		}
 	}
