@@ -7,7 +7,7 @@ public class RoomAction_Collector : RoomAction
 {
     [SerializeField] private float collectorActionTime;
     [SerializeField] private UpgradeManager upgradeManager;
-    [SerializeField] private SO_CollectorIsFull SO_collectorIsFull;
+    [SerializeField] public SO_CollectorIsFull SO_collectorIsFull;
 
     public Action OnCollectorActionEnd;
 

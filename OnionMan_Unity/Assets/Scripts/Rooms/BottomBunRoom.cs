@@ -7,6 +7,7 @@ public class BottomBunRoom : BunRoom
     [SerializeField] private UpgradeManager upgradeManager;
     private RoomAction_Collector collectorAction;
     private RoomAction_UpgradeWeapon upgradeAction;
+    [SerializeField] private GameObject emptyCollector;
 
     protected override void Start()
     {
@@ -29,13 +30,13 @@ public class BottomBunRoom : BunRoom
 
     private void Update()
     {
-        if(RoomActionConditions.collectorIsFull)
+        if(collectorAction.SO_collectorIsFull.SP_CollectorIsFull.Value)
         {
-            //Activer le sprite du collector full
+            emptyCollector.SetActive(false);
         }
         else
         {
-            //Activer le sprite du collector vide
+            emptyCollector.SetActive(true);
         }
     }
 
