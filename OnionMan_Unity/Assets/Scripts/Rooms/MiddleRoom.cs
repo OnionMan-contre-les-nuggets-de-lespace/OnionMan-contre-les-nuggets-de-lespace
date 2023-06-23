@@ -101,10 +101,10 @@ public class MiddleRoom : BaseRoom
             }
         }
 
-        if(roomHealth <= 0 || SO_playerHit.SP_IsPlayerHit.Value)
+        if(roomHealth <= 0)
         {
-            SO_playerHit.SP_IsPlayerHit.Value = false;
             isInCriticalState = true;
+            SO_playerHit.SP_IsPlayerHit.Value = true;
         }
         
         if(isInCriticalState && !m_hasAlreadyEnterCriticalState)
