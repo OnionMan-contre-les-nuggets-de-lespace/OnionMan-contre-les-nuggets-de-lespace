@@ -6015,6 +6015,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 737037911, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_playerHit
+      value: 
+      objectReference: {fileID: 845933603}
     - target: {fileID: 1102799704, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: SO_ShipParticles
       value: 
