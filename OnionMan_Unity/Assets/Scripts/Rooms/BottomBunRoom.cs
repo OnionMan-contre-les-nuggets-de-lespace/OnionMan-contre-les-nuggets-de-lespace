@@ -15,7 +15,7 @@ public class BottomBunRoom : BunRoom
         collectorAction = FindObjectOfType<RoomAction_Collector>();
         upgradeAction = FindObjectOfType<RoomAction_UpgradeWeapon>();
 
-        collectorAction.OnCollectorActionEnd += OnCollectorActionEnd;
+        collectorAction.OnCollectorActionEnd += OnFinishedAction;
     }
 
     protected override List<RoomAction> GetActionsToDisplay()

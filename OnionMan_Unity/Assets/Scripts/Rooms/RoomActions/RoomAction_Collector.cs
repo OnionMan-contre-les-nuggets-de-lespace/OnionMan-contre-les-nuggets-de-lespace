@@ -32,10 +32,10 @@ public class RoomAction_Collector : RoomAction
     public override void LaunchAction(RoomName currentRoom)
     {
         base.LaunchAction(currentRoom);
-        StartCoroutine(UpgradeCoroutine(currentRoom));
+        StartCoroutine(CollectorCoroutine(currentRoom));
     }
 
-    IEnumerator UpgradeCoroutine(RoomName currentRoom)
+    IEnumerator CollectorCoroutine(RoomName currentRoom)
     {
         Debug.Log("LAUNCHING COLLECTOR");
 
