@@ -22,7 +22,7 @@ public class RoomAction_Collector : RoomAction
         bool canBeDone;
 
         statements.Add(!RoomActionConditions.hasExtinguisher);
-        statements.Add(RoomActionConditions.collectorIsFull);
+        statements.Add(SO_collectorIsFull.SP_CollectorIsFull.Value);
 
         indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
 

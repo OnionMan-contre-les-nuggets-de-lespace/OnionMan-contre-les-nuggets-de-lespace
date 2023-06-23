@@ -6203,6 +6203,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 17.704002
       objectReference: {fileID: 0}
+    - target: {fileID: 8194762967698554268, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8746408027846427803, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: scanEffect
       value: 
