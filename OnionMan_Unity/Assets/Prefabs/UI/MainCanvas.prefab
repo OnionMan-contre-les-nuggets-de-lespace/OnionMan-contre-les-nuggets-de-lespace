@@ -24517,6 +24517,10 @@ PrefabInstance:
       value: RoomAction_Repair
       objectReference: {fileID: 0}
     - target: {fileID: 2966789150594608935, guid: a1ecab149123ad843a6936ea485be53d, type: 3}
+      propertyPath: mainCanvas
+      value: 
+      objectReference: {fileID: 3636955176886578729}
+    - target: {fileID: 2966789150594608935, guid: a1ecab149123ad843a6936ea485be53d, type: 3}
       propertyPath: repairManager
       value: 
       objectReference: {fileID: 2142421483}

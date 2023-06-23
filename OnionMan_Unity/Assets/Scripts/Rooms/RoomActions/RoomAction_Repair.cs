@@ -6,6 +6,8 @@ using System;
 public class RoomAction_Repair : RoomAction
 {
     [SerializeField] private RepairManager repairManager;
+    [SerializeField] private Canvas mainCanvas;
+
     public Action OnRepairActionEnd;
 
     public override string GetActionName()
@@ -39,6 +41,7 @@ public class RoomAction_Repair : RoomAction
     {
         Debug.Log("LAUNCHING REPAIR");
         repairManager.repairPanel.SetActive(true);
+        mainCanvas.sortingOrder = 15;
         yield return new WaitUntil(() => repairManager.reparationDone);
         RoomActionConditions.hasScannedRoom = false;
         roomManager.middleRooms[roomToScan].isScanned = false;

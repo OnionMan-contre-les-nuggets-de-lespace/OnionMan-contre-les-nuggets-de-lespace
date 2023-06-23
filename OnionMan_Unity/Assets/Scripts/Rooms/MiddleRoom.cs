@@ -145,6 +145,7 @@ public class MiddleRoom : BaseRoom
 
     public void OnRoomRepaired()
     {
+        OnFinishedAction();
         roomHealth += reparationHeal;
         SO_playerHit.SP_HasReperaidCriticalRoom.Value = true;
     }
