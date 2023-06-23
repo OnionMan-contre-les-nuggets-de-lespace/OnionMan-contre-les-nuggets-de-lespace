@@ -30,9 +30,7 @@ float AEnemyOnSplineActor::GetTimeOnSpline(float timeSinceSpawn)
 
 FVector AEnemyOnSplineActor::GetPositionOnSpline(float timeSinceSpawn, USplineComponent* trajectory)
 {
-	FVector pos = trajectory->GetLocationAtTime(GetTimeOnSpline(timeSinceSpawn), ESplineCoordinateSpace::World);
-	LOG_WARNING("Position at %f : {%d, %d, %d}", GetTimeOnSpline(timeSinceSpawn), pos.X, pos.Y, pos.Z);
-	return pos;
+	return trajectory->GetLocationAtTime(GetTimeOnSpline(timeSinceSpawn), ESplineCoordinateSpace::World);
 }
 
 bool AEnemyOnSplineActor::IsOnSpline(float timeSinceSpawn, USplineComponent* trajectory)

@@ -51,7 +51,6 @@ void AEnemyActor::Tick(float DeltaTime)
 
 bool AEnemyActor::IsAlive() const
 {
-	LOG_WARNING("IS ALIVE ? : %f", CurrentHealth);
 	return CurrentHealth > 0.0f;
 }
 
