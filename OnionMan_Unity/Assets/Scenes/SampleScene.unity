@@ -6047,6 +6047,10 @@ PrefabInstance:
       propertyPath: SO_collectorIsFull
       value: 
       objectReference: {fileID: 2121822149}
+    - target: {fileID: 3362068873040030662, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_indexOfCurrentWeapon
+      value: 
+      objectReference: {fileID: 1230806017}
     - target: {fileID: 3636955176149839051, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
