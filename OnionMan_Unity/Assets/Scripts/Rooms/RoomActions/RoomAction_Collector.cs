@@ -7,6 +7,7 @@ public class RoomAction_Collector : RoomAction
 {
     [SerializeField] private float collectorActionTime;
     [SerializeField] private UpgradeManager upgradeManager;
+    [SerializeField] private SO_CollectorIsFull SO_collectorIsFull;
 
     public Action OnCollectorActionEnd;
 
@@ -39,6 +40,7 @@ public class RoomAction_Collector : RoomAction
         Debug.Log("LAUNCHING COLLECTOR");
 
         yield return new WaitForSeconds(collectorActionTime);
+        SO_collectorIsFull.SP_CollectorIsFull.Value = false;
         upgradeManager.numberOfScrappedPart++;
         OnCollectorActionEnd?.Invoke();
         Debug.Log("Collector Action Ended");

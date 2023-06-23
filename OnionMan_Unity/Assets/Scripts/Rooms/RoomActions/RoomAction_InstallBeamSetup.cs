@@ -6,6 +6,7 @@ using System;
 public class RoomAction_InstallBeamSetup : RoomAction
 {
     [SerializeField] private float installTime;
+    [SerializeField] public SO_BeamPhase SO_beamPhase;
 
     public Action<float> OnInstallStarted;
     public Action OnInstallActionEnd;
@@ -27,7 +28,7 @@ public class RoomAction_InstallBeamSetup : RoomAction
 
         bool canBeDone;
 
-        statements.Add(!RoomActionConditions.beamPhaseIsReady);
+        statements.Add(SO_beamPhase.SP_BeamPhaseReady);
 
         indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
 
