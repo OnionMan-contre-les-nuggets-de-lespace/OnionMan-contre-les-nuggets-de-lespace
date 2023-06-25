@@ -31,6 +31,7 @@ public class ComputerManager : MonoBehaviour
 
     [SerializeField] public List<Button> valveButtonList = new List<Button>();
     [SerializeField] public GameObject m_computerPanel;
+    [SerializeField] private SO_ShipParticles SO_ShipParticles;
 
     private List<GameObject> m_variableSparklePanelList = new List<GameObject>();
     private RoomAction_Computer m_computerAction;
@@ -39,6 +40,7 @@ public class ComputerManager : MonoBehaviour
 
     public Action<ComputerGameResult> OnComputerGameFinished;
     public Vector3Int playerChoices = new Vector3Int(); //x = shape, y = color, z = orientation
+
 
     private bool beamIsReady; //TODO : SynchronizedProperty
 
@@ -64,6 +66,7 @@ public class ComputerManager : MonoBehaviour
         m_reparatorWelcomePanel.SetActive(false);
         m_computerPanel.SetActive(false);
         m_winPanel.SetActive(false);
+        m_loosePanel.SetActive(false);
         m_desktopIcons.SetActive(true);
 
         m_computerAction.OnComputerActionEnd?.Invoke();
@@ -71,14 +74,22 @@ public class ComputerManager : MonoBehaviour
 
     private void CheckResult()
     {
-        m_winPanel.SetActive(true);
-        ComputerGameResult computerGameResult = new ComputerGameResult(colorList, toolsSpriteList, valveButtonList);
-        m_winText.text = "Gagne ! Une avarie a ete detectee sur la <u><b> valve " + (computerGameResult.valveIndex + 1).ToString() + "</b></u>. " +
-            "Vous pouvez maintenant reparer la salle : " + GameManager.userRoomName[currentScannedRoom] + " grace à l'outil suivant : ";
-        m_toolImage.sprite = computerGameResult.correctTool.ToolSprite;
-        m_toolImage.color = computerGameResult.correctTool.ToolColor;
+        if(playerChoices == SO_ShipParticles.SP_RightComputerResultAnswer)
+        {
+            m_winPanel.SetActive(true);
+            ComputerGameResult computerGameResult = new ComputerGameResult(colorList, toolsSpriteList, valveButtonList);
+            m_winText.text = "Gagne ! Une avarie a ete detectee sur la <u><b> valve " + (computerGameResult.valveIndex + 1).ToString() + "</b></u>. " +
+                "Vous pouvez maintenant reparer la salle : " + GameManager.userRoomName[currentScannedRoom] + " grace à l'outil suivant : ";
+            m_toolImage.sprite = computerGameResult.correctTool.ToolSprite;
+            m_toolImage.color = computerGameResult.correctTool.ToolColor;
+            OnComputerGameFinished?.Invoke(computerGameResult);
+            SO_ShipParticles.SP_RoomIsScanned.Value = false;
+        }
+        else
+        {
+            m_loosePanel.SetActive(true);
+        }
 
-        OnComputerGameFinished?.Invoke(computerGameResult);
     }
 
     private void StartBeamInstallation(float installTime)
@@ -98,6 +109,7 @@ public class ComputerManager : MonoBehaviour
             m_installationPanel.SetActive(false);
             m_beamPanel.SetActive(false);
             m_beamDesktopIcon.SetActive(true);
+            m_installAction.SO_beamPhase.SP_BeamIsReady.Value = true;
         });
 
         seq.Play();

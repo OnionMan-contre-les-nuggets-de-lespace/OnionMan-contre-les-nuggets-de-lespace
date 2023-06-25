@@ -12,7 +12,7 @@ public class SO_PlayerHit : SynchronizedMonoBehaviour
     {
         get => m_isPlayerHit;
     }
-    public SynchronizedProperty<bool> HasReperaidCriticalRoom
+    public SynchronizedProperty<bool> SP_HasReperaidCriticalRoom
     {
         get => m_hasReperaidCriticalRoom;
     }
