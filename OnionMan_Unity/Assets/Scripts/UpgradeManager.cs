@@ -7,6 +7,7 @@ public class UpgradeManager : MonoBehaviour
 {
     [SerializeField] private List<int> costOfWeaponUpgrade = new List<int>();
     [SerializeField] private TMP_Text numberOfScrappedPartText;
+    [SerializeField] private SO_IndexOfCurrentWeapon SO_indexOfCurrentWeapon;
 
 
 
@@ -15,14 +16,15 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeWeapon()
     {
-        indexOfCurrentWeapon++;
-        numberOfScrappedPart -= costOfWeaponUpgrade[indexOfCurrentWeapon];
+        SO_indexOfCurrentWeapon.SP_IndexOfCurrentWeapon.Value++;
+        //indexOfCurrentWeapon++;
+        numberOfScrappedPart -= costOfWeaponUpgrade[SO_indexOfCurrentWeapon.SP_IndexOfCurrentWeapon.Value];
     }
 
     public bool NextUpgradeAvailable(out int costOfNextUpgrade)
     {
-        costOfNextUpgrade = costOfWeaponUpgrade[indexOfCurrentWeapon + 1];
-        return costOfWeaponUpgrade[indexOfCurrentWeapon + 1] <= numberOfScrappedPart;
+        costOfNextUpgrade = costOfWeaponUpgrade[SO_indexOfCurrentWeapon.SP_IndexOfCurrentWeapon.Value + 1];
+        return costOfWeaponUpgrade[SO_indexOfCurrentWeapon.SP_IndexOfCurrentWeapon.Value + 1] <= numberOfScrappedPart;
     }
 
     public void UpdateScrappedPartCountText()

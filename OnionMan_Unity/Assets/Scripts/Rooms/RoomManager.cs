@@ -6,6 +6,7 @@ public class RoomManager : MonoBehaviour
 {
     [SerializeField] private List<BaseRoom> m_rooms = new List<BaseRoom>();
     [SerializeField] private bool isPlayerHit; //TODO passer en synchronized property
+    [SerializeField] private SO_PlayerHit SO_playerHit;
 
     private List<MiddleRoom> m_middleRooms = new List<MiddleRoom>();
     private List<BunRoom> m_bunRooms = new List<BunRoom>();
@@ -13,12 +14,17 @@ public class RoomManager : MonoBehaviour
     public Dictionary<RoomName, MiddleRoom> middleRooms = new Dictionary<RoomName, MiddleRoom>();
     public Dictionary<RoomName, BaseRoom> allRooms = new Dictionary<RoomName, BaseRoom>();
 
-    private void Update()
+    private void Start()
     {
-        if(isPlayerHit)
+        SO_playerHit.SP_IsPlayerHit.OnValueChanged += CheckIfHit;
+    }
+
+    private void CheckIfHit(bool isPlayerHit)
+    {
+        if (isPlayerHit)
         {
             ChooseRoomInCriticalState();
-            isPlayerHit = false;
+            SO_playerHit.SP_IsPlayerHit.Value = false;
         }
     }
 

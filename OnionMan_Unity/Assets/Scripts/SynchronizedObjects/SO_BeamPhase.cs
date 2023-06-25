@@ -7,7 +7,7 @@ public class SO_BeamPhase : SynchronizedMonoBehaviour
 {
     [SerializeField] private SynchronizedProperty<bool> m_beamPhaseReady;
     [SerializeField] private SynchronizedProperty<bool> m_beamIsReady;
-    public bool SP_RightComputerResultAnswer
+    public bool SP_BeamPhaseReady
     {
         get => m_beamPhaseReady.Value;
     }

@@ -53,8 +53,6 @@ void USpawnEnemyEvent::Update(float deltaTime, float currentWaveTime)
         {
             if (spawned.Enemy()->IsAlive())
             {
-                LOG_WARNING("Moving Enemy");
-                LOG_WARNING("IsHidden : %s", spawned.Enemy()->IsHidden() ? *FString("True") : *FString("False"))
                 spawned.Enemy()->Move(deltaTime, currentWaveTime - spawned.SpawnTime());
                 noEnemiesAlive = false;
             }

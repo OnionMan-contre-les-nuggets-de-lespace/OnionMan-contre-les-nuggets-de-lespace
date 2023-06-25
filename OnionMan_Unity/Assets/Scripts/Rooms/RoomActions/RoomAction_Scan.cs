@@ -6,6 +6,7 @@ using System;
 public class RoomAction_Scan : RoomAction
 {
     [SerializeField] private float scanTime;
+    [SerializeField] SO_ShipParticles SO_shipParticles;
 
     public Action OnScanActionEnd;
 
@@ -54,6 +55,7 @@ public class RoomAction_Scan : RoomAction
         roomManager.middleRooms[roomToScan].isScanned = true;
         OnScanActionEnd?.Invoke();
         roomManager.middleRooms[roomToScan].OnRoomScanned?.Invoke(roomToScan);
+        SO_shipParticles.SP_RoomIsScanned.Value = true;
 
         Debug.Log("Scan Action Ended");
     }
