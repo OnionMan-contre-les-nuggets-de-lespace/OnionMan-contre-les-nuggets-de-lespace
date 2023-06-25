@@ -4,8 +4,10 @@
 #include "Level/Events/SpawnEnemyOnSplineEvent.h"
 
 #include "ObjectPoolActorComponent.h"
+#if WITH_EDITOR
 #include "Editor/EditorEngine.h"
 #include "UnrealEd.h"
+#endif
 
 USpawnEnemyOnSplineEvent::USpawnEnemyOnSplineEvent()
 {
@@ -13,9 +15,12 @@ USpawnEnemyOnSplineEvent::USpawnEnemyOnSplineEvent()
 
 USpawnEnemyOnSplineEvent::~USpawnEnemyOnSplineEvent()
 {
+	#if WITH_EDITOR
 	DestroyEditorActors();
+	#endif
 }
 
+#if WITH_EDITOR
 void USpawnEnemyOnSplineEvent::EditorLoad(float timeSinceStart, AActor* levelAsset)
 {
 	USpawnEnemyEvent::EditorLoad(timeSinceStart, levelAsset);
@@ -101,7 +106,7 @@ void USpawnEnemyOnSplineEvent::EditorSave()
         return;
     }
 	//m_spline->GetSplinePointsPosition().Points[0].
-	// @TODO Save Spline
+	// @TODO Save Spline*
 }
 
 void USpawnEnemyOnSplineEvent::DestroyEditorActors()
@@ -119,6 +124,7 @@ void USpawnEnemyOnSplineEvent::DestroyEditorActors()
 	}
 	m_editorEnemies.Empty();
 }
+#endif
 
 TObjectPtr<AEnemyActor> USpawnEnemyOnSplineEvent::SpawnEnemy()
 {

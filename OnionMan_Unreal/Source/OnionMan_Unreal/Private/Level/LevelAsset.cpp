@@ -11,10 +11,13 @@ ALevelAsset::ALevelAsset(/* args */)
 
 void ALevelAsset::Load()
 {
+    
+#if WITH_EDITOR
     for (UWave* wave : m_waves) 
     {
         wave->EditorUnload();
     }
+#endif
 
     m_currentWaveIndex = 0;
     if (m_waves.Num() > 0)
@@ -60,8 +63,7 @@ bool ALevelAsset::Update(float deltaTime)
     return false;
 }
 
-
-
+#if WITH_EDITOR
 void ALevelAsset::EditorLoad()
 {
     if (0 <= m_waveToLoad && m_waveToLoad < m_waves.Num())
@@ -100,3 +102,4 @@ void ALevelAsset::EditorUnload()
         LOG_ERROR("Could not unload the wave %i", m_waveToLoad)
     }
 }
+#endif

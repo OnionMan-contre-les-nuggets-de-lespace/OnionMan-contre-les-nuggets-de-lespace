@@ -81,6 +81,7 @@ void UWave::FinishWave()
     }
 }
 
+#if WITH_EDITOR
 void UWave::EditorLoad(float timeSinceWaveStart, AActor* levelAsset)
 {
     if (m_isEditorLoaded)
@@ -139,3 +140,4 @@ void UWave::EditorSave()
         }
     }
 }
+#endif

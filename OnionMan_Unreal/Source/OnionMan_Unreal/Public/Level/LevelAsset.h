@@ -58,6 +58,7 @@ public:
     UFUNCTION(BlueprintCallable)
     bool Update(float deltaTime);
 
+#if WITH_EDITOR
     UFUNCTION(BlueprintCallable)
     void EditorLoad();
 
@@ -66,4 +67,5 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void EditorUnload();
+#endif
 };

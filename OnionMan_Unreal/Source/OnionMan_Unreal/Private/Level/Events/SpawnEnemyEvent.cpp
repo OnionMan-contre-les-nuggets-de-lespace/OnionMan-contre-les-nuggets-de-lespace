@@ -81,6 +81,7 @@ void USpawnEnemyEvent::OnWaveEnd()
     //Release the enemies
 }
 
+#if WITH_EDITOR
 void USpawnEnemyEvent::EditorLoad(float timeSinceStart, AActor* levelAsset)
 {
     UBaseWaveEvent::EditorLoad(timeSinceStart, levelAsset);
@@ -119,6 +120,7 @@ void USpawnEnemyEvent::EditorSave()
     }
     // Save values
 }
+#endif
 
 void USpawnEnemyEvent::OnFinish()
 {
