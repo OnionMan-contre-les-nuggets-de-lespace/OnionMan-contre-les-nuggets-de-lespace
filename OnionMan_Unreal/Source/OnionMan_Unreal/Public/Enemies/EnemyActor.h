@@ -60,15 +60,18 @@ public:
 	virtual void Initialize();
 	virtual void KillActor(bool killedByPlayer);
 
+	
+	// Editor
+#if WITH_EDITOR
 	AEnemyActor* CloneForEditor();
 
 
-	// Editor
 	virtual void EditorLoad(float timeSinceSpawn);
 	virtual void EditorUpdate(float newTimeSinceSpawn);
 	virtual void EditorUnload();
 
 	virtual void EditorSave(); // Possibly useless
+#endif
 
 protected:
 	// Called when the game starts or when spawned

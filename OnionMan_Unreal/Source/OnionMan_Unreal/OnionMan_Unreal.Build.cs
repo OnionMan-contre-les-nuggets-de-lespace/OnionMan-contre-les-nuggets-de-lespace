@@ -8,7 +8,14 @@ public class OnionMan_Unreal : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UnrealEd" });
+		PublicDependencyModuleNames.AddRange(new string[] { 
+			"Core",
+			"CoreUObject", 
+			"Engine", 
+			"InputCore",
+		});
+		
+		if (Target.bBuildEditor) { PrivateDependencyModuleNames.Add("UnrealEd"); } 
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

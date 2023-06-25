@@ -26,6 +26,7 @@ void UBaseWaveEvent::OnWaveEnd()
 {
 }
 
+#if WITH_EDITOR
 void UBaseWaveEvent::EditorLoad(float timeSinceStart, AActor* levelAsset)
 {
     if(m_isEditorLoaded)
@@ -60,6 +61,7 @@ void UBaseWaveEvent::EditorSave()
         return;
     }
 }
+#endif
 
 void UBaseWaveEvent::Finish()
 {

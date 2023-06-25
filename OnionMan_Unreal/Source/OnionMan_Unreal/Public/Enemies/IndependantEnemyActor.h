@@ -22,10 +22,12 @@ public:
 
 
 	// Editor
+#if WITH_EDITOR
 	virtual void EditorLoad(float timeSinceSpawn) override;
 	virtual void EditorLoadAtPosition(float timeSinceSpawn, FVector startPosition);
 	virtual void EditorUpdate(float newTimeSinceSpawn) override;
 	virtual void EditorUpdateAtPosition(float newTimeSinceSpawn, FVector startPosition);
 	virtual void EditorUnload() override;
+#endif
 	
 };

@@ -61,11 +61,13 @@ public:
     virtual void OnWaveEnd() override;
 
     // Editor
+#if WITH_EDITOR
     virtual void EditorLoad(float timeSinceStart, AActor* levelAsset) override;
     virtual void EditorUpdate(float newTimeSinceStart) override;
     virtual void EditorUnload() override;
 
     virtual void EditorSave() override;
+#endif
 
 protected:
     virtual void OnFinish() override;
