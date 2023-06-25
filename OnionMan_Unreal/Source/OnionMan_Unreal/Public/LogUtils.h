@@ -8,7 +8,7 @@ DECLARE_LOG_CATEGORY_EXTERN(OnionMan_Unreal, Log, All);
 // custom log macro
 #define LOG(x, ...) UE_LOG(OnionMan_Unreal, Log, TEXT(x), __VA_ARGS__)
 #define LOG_WARNING(x, ...) UE_LOG(OnionMan_Unreal, Warning, TEXT(x), __VA_ARGS__)
-#define LOG_ERROR(x, ...) UE_LOG(OnionMan_Unreal, Error, TEXT(x), __VA_ARGS__)
+#define LOG_ERROR(x, ...) UE_LOG(OnionMan_Unreal, Warning, TEXT(x), __VA_ARGS__)
 
 
 namespace internal
