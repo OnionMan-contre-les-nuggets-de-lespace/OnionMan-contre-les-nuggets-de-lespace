@@ -92,7 +92,7 @@ MonoBehaviour:
   actionName: "Am\xE9liorer l'arme du Burg-3R"
   cantBeDoneFeedbackMessageList:
   - "Veuillez d\xE9poser l'extincteur"
-  - 
+  - "Pas assez de pi\xE8ce d\xE9tach\xE9es"
   actionTime: 7
   upgradeTime: 7
   upgradeManager: {fileID: 0}

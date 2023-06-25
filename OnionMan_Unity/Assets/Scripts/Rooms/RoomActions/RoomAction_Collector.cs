@@ -7,6 +7,7 @@ public class RoomAction_Collector : RoomAction
 {
     [SerializeField] private float collectorActionTime;
     [SerializeField] private UpgradeManager upgradeManager;
+    [SerializeField] public SO_CollectorIsFull SO_collectorIsFull;
 
     public Action OnCollectorActionEnd;
 
@@ -21,7 +22,7 @@ public class RoomAction_Collector : RoomAction
         bool canBeDone;
 
         statements.Add(!RoomActionConditions.hasExtinguisher);
-        statements.Add(RoomActionConditions.collectorIsFull);
+        statements.Add(SO_collectorIsFull.SP_CollectorIsFull.Value);
 
         indexOfFalseStatement = GetFalseStatementIndex(statements, out canBeDone);
 
@@ -31,14 +32,15 @@ public class RoomAction_Collector : RoomAction
     public override void LaunchAction(RoomName currentRoom)
     {
         base.LaunchAction(currentRoom);
-        StartCoroutine(UpgradeCoroutine(currentRoom));
+        StartCoroutine(CollectorCoroutine(currentRoom));
     }
 
-    IEnumerator UpgradeCoroutine(RoomName currentRoom)
+    IEnumerator CollectorCoroutine(RoomName currentRoom)
     {
         Debug.Log("LAUNCHING COLLECTOR");
 
         yield return new WaitForSeconds(collectorActionTime);
+        SO_collectorIsFull.SP_CollectorIsFull.Value = false;
         upgradeManager.numberOfScrappedPart++;
         OnCollectorActionEnd?.Invoke();
         Debug.Log("Collector Action Ended");

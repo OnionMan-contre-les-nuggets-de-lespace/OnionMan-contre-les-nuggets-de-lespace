@@ -41,7 +41,7 @@ protected:
 	int PoolIndex;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	FVector DisabledObjectsPosition {0, 0, -50};
+	FVector DisabledObjectsPosition {0, 0, -50000};
 
 	FTimerHandle LifeSpanTimer;
 };
