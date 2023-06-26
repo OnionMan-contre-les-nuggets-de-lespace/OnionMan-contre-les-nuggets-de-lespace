@@ -14,6 +14,9 @@ public class RepairManager : MonoBehaviour
     [SerializeField] private GameObject resultPanel;
     [SerializeField] private TMP_Text resultText;
     [SerializeField] private Button[] toolsButton;
+    [SerializeField] private AudioSource repairAudioSource;
+    [SerializeField] private AudioClip repairSuccessfulClip;
+    [SerializeField] private AudioClip repairFailedClip;
 
     public bool reparationIsSuccess;
     public bool reparationDone;
@@ -115,12 +118,14 @@ public class RepairManager : MonoBehaviour
         {
             resultText.text = "Réparation réussi ! La salle " + GameManager.userRoomName[m_scannedRoom] + " sera réparée !";
             m_allMiddleRooms[m_scannedRoom].OnRoomRepaired();
+            repairAudioSource.PlayOneShot(repairSuccessfulClip);
             Debug.Log("SUCCESS");
             reparationDone = true;
         }
         else
         {
             resultText.text = "Réparation ratée !";
+            repairAudioSource.PlayOneShot(repairFailedClip);
             Debug.Log("FAILED");
         }
     }
