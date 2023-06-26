@@ -377,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6119559463967742099, guid: 6e7881eec2bc5d2488d0b7f0a5cf1968, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.67
+      value: -1.83
       objectReference: {fileID: 0}
     - target: {fileID: 6119559463967742099, guid: 6e7881eec2bc5d2488d0b7f0a5cf1968, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3922,6 +3922,10 @@ PrefabInstance:
     - target: {fileID: 7346327927940918031, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.2424
+      objectReference: {fileID: 0}
+    - target: {fileID: 7505107193668871966, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.73
       objectReference: {fileID: 0}
     - target: {fileID: 7574412263348158023, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[0].position.x
