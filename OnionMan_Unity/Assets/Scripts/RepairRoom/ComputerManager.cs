@@ -19,6 +19,8 @@ public class ComputerManager : MonoBehaviour
     [SerializeField] private List<Sprite> toolsSpriteList = new List<Sprite>();
     [SerializeField] private List<Color> colorList = new List<Color>();
     [SerializeField] private Canvas mainCanvas;
+    [SerializeField] private AudioSource computerAudioSource;
+    [SerializeField] private AudioClip failedComputerGameClip;
     [Space]
     [Header("Beam Panel")]
     [SerializeField] private GameObject m_beamPanel;
@@ -88,6 +90,7 @@ public class ComputerManager : MonoBehaviour
         else
         {
             m_loosePanel.SetActive(true);
+            computerAudioSource.PlayOneShot(failedComputerGameClip);
         }
 
     }
