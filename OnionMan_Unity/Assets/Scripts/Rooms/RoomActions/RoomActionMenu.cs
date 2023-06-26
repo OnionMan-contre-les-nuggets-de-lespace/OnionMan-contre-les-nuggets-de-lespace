@@ -12,6 +12,8 @@ public class RoomActionMenu : MonoBehaviour
     [SerializeField] private List<TMP_Text> m_cantBeDoneFeedbackText = new List<TMP_Text>();
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private Slider actionTimeSlider;
+    [SerializeField] private AudioSource clickAudioSource;
+
     [Space]
     [Header("DoTween ref")]
     [SerializeField] RectTransform panelTransform;
@@ -67,6 +69,7 @@ public class RoomActionMenu : MonoBehaviour
                 //m_cantBeDoneFeedbackText[i].text = "L'action est disponible";
                 int x = i;
                 m_actionButton[i].onClick.AddListener(delegate {
+                    clickAudioSource.Play();
                     HideAndResetActionMenu();
                     actionList[x].LaunchAction(roomToLaunchAction.roomName);
                     GameManager.DisablePlayerNavigation(true); //TODO : Reenable Navigation

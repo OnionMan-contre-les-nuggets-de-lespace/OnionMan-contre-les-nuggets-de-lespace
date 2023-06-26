@@ -6,6 +6,9 @@ using System;
 public class RoomAction_ExtinguishFire : RoomAction
 {
     [SerializeField] private float extinguishTime;
+    [SerializeField] private AudioSource alarmAudioSource;
+    [SerializeField] private AudioSource extinguisherAudioSource;
+
 
     public Action OnExtinguishActionEnd;
 
@@ -43,10 +46,24 @@ public class RoomAction_ExtinguishFire : RoomAction
     {
         Debug.Log("LAUNCHING EXTINGUISH");
         OnExtinguishActionEnd += roomManager.middleRooms[currentRoom].OnExtinguishFireActionEnd;
-
+        extinguisherAudioSource.Play();
         yield return new WaitForSeconds(extinguishTime);
+        extinguisherAudioSource.Stop();
         OnExtinguishActionEnd?.Invoke();
         OnExtinguishActionEnd = null;
+        bool stopAlarmSound = true;
+        foreach (MiddleRoom middleRoom in roomManager.middleRooms.Values)
+        {
+            if (middleRoom.isInCriticalState)
+            {
+                stopAlarmSound = false;
+            }
+        }
+
+        if (stopAlarmSound)
+        {
+            alarmAudioSource.Stop();
+        }
         Debug.Log("Extinguish Action Ended");
     }
 }
