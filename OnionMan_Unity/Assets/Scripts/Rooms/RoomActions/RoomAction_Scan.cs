@@ -7,6 +7,7 @@ public class RoomAction_Scan : RoomAction
 {
     [SerializeField] private float scanTime;
     [SerializeField] SO_ShipParticles SO_shipParticles;
+    [SerializeField] private AudioSource scanAudioSource;
 
     public Action OnScanActionEnd;
 
@@ -41,7 +42,9 @@ public class RoomAction_Scan : RoomAction
     {
         roomManager.middleRooms[roomToScan].scanEffect.SetActive(true);
         Debug.Log("LAUNCHING SCAN");
+        scanAudioSource.Play();
         yield return new WaitForSeconds(scanTime);
+        scanAudioSource.Stop();
 
         roomManager.middleRooms[roomToScan].scanEffect.SetActive(false);
         RoomActionConditions.hasScannedRoom = true;
