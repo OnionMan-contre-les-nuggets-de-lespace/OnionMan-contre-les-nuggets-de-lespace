@@ -23,6 +23,7 @@ public class MiddleRoom : BaseRoom
     [SerializeField] private GameObject criticalStateFeedbackVisual;
     [SerializeField] private int numberOfFireToSpawn;
     [SerializeField] private List<RectTransform> fireRectTransform;
+    [SerializeField] private AudioSource alarmAudioSource;
     [HideInInspector]
     public List<RectTransform> spawnedFireRectTransform;
 
@@ -125,6 +126,11 @@ public class MiddleRoom : BaseRoom
     }
     private void StepIntoCriticalState()
     {
+        if(!alarmAudioSource.isPlaying)
+        {
+            alarmAudioSource.Play();
+        }
+
         spawnedFireRectTransform.Clear();
         m_hasAlreadyEnterCriticalState = true;
         criticalStateFeedback.SetActive(true);

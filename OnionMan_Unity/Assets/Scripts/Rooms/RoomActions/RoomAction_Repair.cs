@@ -45,6 +45,8 @@ public class RoomAction_Repair : RoomAction
         yield return new WaitUntil(() => repairManager.reparationDone);
         RoomActionConditions.hasScannedRoom = false;
         roomManager.middleRooms[roomToScan].isScanned = false;
+
+
         //repairManager.repairPanel.SetActive(false);
         OnRepairActionEnd?.Invoke();
     }
