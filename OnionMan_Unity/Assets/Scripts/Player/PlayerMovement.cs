@@ -153,8 +153,8 @@ public class PlayerMovement : Subject
     {
         targetIsAbove = playerTargetedPos.position.y > playerTransform.position.y;
         targetIsBelow = playerTargetedPos.position.y < playerTransform.position.y;
-        targetIsLeft = playerTargetedPos.position.x > playerTransform.position.x;
-        targetIsRight = playerTargetedPos.position.x < playerTransform.position.x;
+        //targetIsLeft = playerTargetedPos.position.x > playerTransform.position.x;
+        //targetIsRight = playerTargetedPos.position.x < playerTransform.position.x;
     }
 
     private void Update()
@@ -244,7 +244,7 @@ public class PlayerMovement : Subject
 
                 movementDirection = MovementDirection.UP;
 
-                yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor + 1].position.y - playerTransform.position.y) < 0.1f);
+                yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor + 1].position.y - playerTransform.position.y) < 0.05f);
                 currentPlayerFloor++;
 
                 isOnAFloor = true;
@@ -261,7 +261,7 @@ public class PlayerMovement : Subject
                 movementDirection = MovementDirection.LEFT;
             }
 
-            yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
+            yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.05f);
             movementDirection = MovementDirection.STAY;
             isAtDestination = true;
             playerAnimatorController.EnterIdleAnimation();
@@ -288,10 +288,11 @@ public class PlayerMovement : Subject
 
                 movementDirection = MovementDirection.DOWN;
 
-                yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor - 1].position.y - playerTransform.position.y) < 0.1f);
+                yield return new WaitUntil(() => Mathf.Abs(possiblePlayerPoses[currentPlayerFloor - 1].position.y - playerTransform.position.y) < 0.05f);
 
                 currentPlayerFloor--;
                 isOnAFloor = true;
+                playerTargetedPos = cachedTargetedPos;
             }
 
             //if (playerTargetedPos != cachedTargetedPos)
@@ -315,7 +316,7 @@ public class PlayerMovement : Subject
                 movementDirection = MovementDirection.LEFT;
             }
 
-            yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.1f);
+            yield return new WaitUntil(() => Mathf.Abs(playerTargetedPos.position.x - playerTransform.position.x) < 0.05f);
             movementDirection = MovementDirection.STAY;
             isAtDestination = true;
             playerAnimatorController.EnterIdleAnimation();

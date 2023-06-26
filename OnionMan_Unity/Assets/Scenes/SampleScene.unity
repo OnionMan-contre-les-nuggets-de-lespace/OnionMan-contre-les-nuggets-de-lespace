@@ -377,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6119559463967742099, guid: 6e7881eec2bc5d2488d0b7f0a5cf1968, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.67
+      value: -1.83
       objectReference: {fileID: 0}
     - target: {fileID: 6119559463967742099, guid: 6e7881eec2bc5d2488d0b7f0a5cf1968, type: 3}
       propertyPath: m_LocalPosition.z
@@ -638,6 +638,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!223 &199205890 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 3636955176886578729, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+  m_PrefabInstance: {fileID: 3636955176367539896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &232708940
 GameObject:
   m_ObjectHideFlags: 0
@@ -3918,6 +3923,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.2424
       objectReference: {fileID: 0}
+    - target: {fileID: 7505107193668871966, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.73
+      objectReference: {fileID: 0}
     - target: {fileID: 7574412263348158023, guid: 02718e0d88cdc4d4993b892162c57055, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[0].position.x
       value: -1.6186696
@@ -5454,6 +5463,7 @@ MonoBehaviour:
   clickBlocker: {fileID: 1217734105}
   winGamePanel: {fileID: 3636955176367539898}
   looseGamePanel: {fileID: 3636955176367539897}
+  mainCanvas: {fileID: 199205890}
 --- !u!1001 &2031274095
 PrefabInstance:
   m_ObjectHideFlags: 0
