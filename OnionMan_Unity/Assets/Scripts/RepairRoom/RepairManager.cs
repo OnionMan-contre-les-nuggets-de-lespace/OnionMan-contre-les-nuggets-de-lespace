@@ -87,6 +87,14 @@ public class RepairManager : MonoBehaviour
                 toolsPanel.SetActive(true);
                 instructionText.text = "Quel outil à utiliser sur la valve ?";
 
+                for(int j = 0; j < m_computerManager.valveButtonList.Count; j++)
+                {
+                    if(j != x)
+                    {
+                        m_computerManager.valveButtonList[j].image.color = m_computerManager.valveButtonList[j].colors.disabledColor;
+                    }
+                }
+
                 if(x == computerGameResult.valveIndex)
                 {
                     rightValveChoosen = true;
