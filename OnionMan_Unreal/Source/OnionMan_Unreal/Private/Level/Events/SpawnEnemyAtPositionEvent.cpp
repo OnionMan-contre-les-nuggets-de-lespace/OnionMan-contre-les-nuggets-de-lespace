@@ -10,6 +10,7 @@ USpawnEnemyAtPositionEvent::USpawnEnemyAtPositionEvent()
 {
 }
 
+#if WITH_EDITOR
 void USpawnEnemyAtPositionEvent::EditorLoad(float timeSinceStart, AActor* levelAsset)
 {
 	USpawnEnemyEvent::EditorLoad(timeSinceStart, levelAsset);
@@ -87,6 +88,7 @@ void USpawnEnemyAtPositionEvent::EditorSave()
     }
     // @TODO Save start point position + more is needed
 }
+#endif
 
 TObjectPtr<AEnemyActor> USpawnEnemyAtPositionEvent::SpawnEnemy()
 {

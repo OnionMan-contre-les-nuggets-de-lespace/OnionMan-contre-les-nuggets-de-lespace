@@ -27,11 +27,13 @@ public:
 	USpawnEnemyAtPositionEvent(/* args */);
 
 	// Editor
+#if WITH_EDITOR
 	virtual void EditorLoad(float timeSinceStart, AActor* levelAsset) override;
 	virtual void EditorUpdate(float newTimeSinceStart) override;
 	virtual void EditorUnload() override;
 
 	virtual void EditorSave() override;
+#endif
 
 protected:
 	virtual TObjectPtr<AEnemyActor> SpawnEnemy() override;

@@ -52,6 +52,7 @@ public:
     virtual void OnWaveEnd();
 
     // Editor
+#if WITH_EDITOR
     UFUNCTION(BlueprintCallable)
     virtual void EditorLoad(float timeSinceStart, AActor* levelAsset);
     UFUNCTION(BlueprintCallable)
@@ -60,6 +61,7 @@ public:
     virtual void EditorUnload();
     UFUNCTION(BlueprintCallable)
     virtual void EditorSave();
+#endif
 
 protected:
     UFUNCTION(BlueprintCallable)

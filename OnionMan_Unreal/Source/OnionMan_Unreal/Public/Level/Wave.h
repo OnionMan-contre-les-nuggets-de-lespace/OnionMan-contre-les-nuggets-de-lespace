@@ -48,6 +48,7 @@ public:
     void FinishWave();
 
     // Editor
+#if WITH_EDITOR
     UFUNCTION(BlueprintCallable)
     void EditorLoad(float timeSinceWaveStart, AActor* levelAsset);
     UFUNCTION(BlueprintCallable)
@@ -57,4 +58,5 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void EditorSave();
+#endif
 };
