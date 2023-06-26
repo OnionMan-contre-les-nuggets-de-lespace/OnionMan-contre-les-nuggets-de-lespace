@@ -64,7 +64,6 @@ public class ComputerManager : MonoBehaviour
 
     public void HideComputer()
     {
-        mainCanvas.sortingOrder = 0;
         m_reparatorWelcomePanel.SetActive(false);
         m_computerPanel.SetActive(false);
         m_winPanel.SetActive(false);
@@ -72,6 +71,7 @@ public class ComputerManager : MonoBehaviour
         m_desktopIcons.SetActive(true);
 
         m_computerAction.OnComputerActionEnd?.Invoke();
+        mainCanvas.sortingOrder = 0;
     }
 
     private void CheckResult()

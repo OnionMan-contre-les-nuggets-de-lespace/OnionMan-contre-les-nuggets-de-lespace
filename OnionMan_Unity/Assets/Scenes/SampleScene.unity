@@ -638,6 +638,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!223 &199205890 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 3636955176886578729, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+  m_PrefabInstance: {fileID: 3636955176367539896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &232708940
 GameObject:
   m_ObjectHideFlags: 0
@@ -5454,6 +5459,7 @@ MonoBehaviour:
   clickBlocker: {fileID: 1217734105}
   winGamePanel: {fileID: 3636955176367539898}
   looseGamePanel: {fileID: 3636955176367539897}
+  mainCanvas: {fileID: 199205890}
 --- !u!1001 &2031274095
 PrefabInstance:
   m_ObjectHideFlags: 0
