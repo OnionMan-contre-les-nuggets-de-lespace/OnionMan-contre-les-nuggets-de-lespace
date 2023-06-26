@@ -5452,6 +5452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickBlocker: {fileID: 1217734105}
+  winGamePanel: {fileID: 3636955176367539898}
+  looseGamePanel: {fileID: 3636955176367539897}
 --- !u!1001 &2031274095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6388,6 +6390,10 @@ PrefabInstance:
       propertyPath: SO_shipParticles
       value: 
       objectReference: {fileID: 1099444072}
+    - target: {fileID: 5080804266275097323, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -8.031982
+      objectReference: {fileID: 0}
     - target: {fileID: 5392731125695981619, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: scanEffect
       value: 
@@ -6446,6 +6452,16 @@ PrefabInstance:
       objectReference: {fileID: 432805668}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+--- !u!1 &3636955176367539897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 638586480691424074, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+  m_PrefabInstance: {fileID: 3636955176367539896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3636955176367539898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1112734215304182821, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+  m_PrefabInstance: {fileID: 3636955176367539896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3650480004717718503
 PrefabInstance:
   m_ObjectHideFlags: 0
