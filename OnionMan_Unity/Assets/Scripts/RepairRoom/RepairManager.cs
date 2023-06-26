@@ -107,7 +107,8 @@ public class RepairManager : MonoBehaviour
         {
             resultText.text = "Réparation réussi ! La salle " + GameManager.userRoomName[m_scannedRoom] + " sera réparée !";
             m_allMiddleRooms[m_scannedRoom].OnRoomRepaired();
-            Debug.Log("SUCCES");
+            Debug.Log("SUCCESS");
+            reparationDone = true;
         }
         else
         {
@@ -121,6 +122,5 @@ public class RepairManager : MonoBehaviour
         toolsPanel.SetActive(false);
         resultPanel.SetActive(false);
         repairPanel.SetActive(false);
-        reparationDone = true;
     }
 }
