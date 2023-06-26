@@ -42,6 +42,7 @@ public class RoomAction_Collector : RoomAction
         yield return new WaitForSeconds(collectorActionTime);
         SO_collectorIsFull.SP_CollectorIsFull.Value = false;
         upgradeManager.numberOfScrappedPart++;
+        upgradeManager.UpdateScrappedPartCountText();
         OnCollectorActionEnd?.Invoke();
         Debug.Log("Collector Action Ended");
     }

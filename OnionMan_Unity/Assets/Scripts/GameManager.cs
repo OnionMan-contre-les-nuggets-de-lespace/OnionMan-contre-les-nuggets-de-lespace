@@ -11,6 +11,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField] private GameObject clickBlocker;
     [SerializeField] private GameObject winGamePanel;
     [SerializeField] private GameObject looseGamePanel;
+    [SerializeField] private Canvas mainCanvas;
 
     public static Action<bool> DisablePlayerNavigation;
     public static Dictionary<RoomName, string> userRoomName = new Dictionary<RoomName, string>()
@@ -33,6 +34,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void OnGameStateChanged(int newState)
     {
+        mainCanvas.sortingOrder = 15;
 
         switch (newState)
         {
