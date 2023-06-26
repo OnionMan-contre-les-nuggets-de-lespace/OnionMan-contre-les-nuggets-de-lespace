@@ -4,8 +4,10 @@
 #include "Enemies/EnemyActor.h"
 
 #include "MathUtil.h"
+#if WITH_EDITOR
 #include "Editor/EditorEngine.h"
 #include "UnrealEd.h"
+#endif
 
 // Sets default values
 AEnemyActor::AEnemyActor()
@@ -113,6 +115,7 @@ void AEnemyActor::KillActor(bool killedByPlayer)
 	Deactivate();
 }
 
+#if WITH_EDITOR
 AEnemyActor* AEnemyActor::CloneForEditor()
 {
 	FActorSpawnParameters Parameters;
@@ -154,3 +157,4 @@ void AEnemyActor::EditorUnload()
 void AEnemyActor::EditorSave()
 {
 }
+#endif

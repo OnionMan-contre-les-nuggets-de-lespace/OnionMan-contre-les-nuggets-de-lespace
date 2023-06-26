@@ -14,6 +14,7 @@ void AIndependantEnemyActor::Move(float deltaTime, float timeSinceSpawn)
     AEnemyActor::Move(deltaTime, timeSinceSpawn);
 }
 
+#if WITH_EDITOR
 void AIndependantEnemyActor::EditorLoad(float timeSinceSpawn)
 {
     AEnemyActor::EditorLoad(timeSinceSpawn);
@@ -38,3 +39,4 @@ void AIndependantEnemyActor::EditorUnload()
 {
     AEnemyActor::EditorUnload();
 }
+#endif

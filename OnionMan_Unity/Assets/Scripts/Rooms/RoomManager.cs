@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RoomManager : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class RoomManager : MonoBehaviour
 
     private void ChooseRoomInCriticalState()
     {
-        m_middleRooms[Random.Range(0, m_middleRooms.Count)].isInCriticalState = true;
+        MiddleRoom[] selectedMiddleRooms = m_middleRooms.Where((MiddleRoom middleRoom) => !middleRoom.isScanned && !middleRoom.isInCriticalState).ToArray();
+        selectedMiddleRooms[Random.Range(0, m_middleRooms.Count)].isInCriticalState = true;
     }
 
     public void NotifyRoom(int indexOfRoom)

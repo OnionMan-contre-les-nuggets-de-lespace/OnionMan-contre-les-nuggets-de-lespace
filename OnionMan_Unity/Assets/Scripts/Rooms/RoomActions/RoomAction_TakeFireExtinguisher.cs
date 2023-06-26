@@ -6,6 +6,8 @@ using System;
 public class RoomAction_TakeFireExtinguisher : RoomAction
 {
     [SerializeField] private string nameVariant;
+    [SerializeField] private GameObject playerExtinguisherSprite;
+    [SerializeField] private GameObject sceneryExtinguisherSprite;
 
     public Action OnTakeFireExtinguisherActionEnd;
 
@@ -32,6 +34,8 @@ public class RoomAction_TakeFireExtinguisher : RoomAction
     {
         Debug.Log("LAUNCHING TAKE FIRE EXTINGUISHER");
         RoomActionConditions.hasExtinguisher = !RoomActionConditions.hasExtinguisher;
+        playerExtinguisherSprite.SetActive(RoomActionConditions.hasExtinguisher);
+        sceneryExtinguisherSprite.SetActive(!RoomActionConditions.hasExtinguisher);
         yield return new WaitForEndOfFrame();
         OnTakeFireExtinguisherActionEnd?.Invoke();
 

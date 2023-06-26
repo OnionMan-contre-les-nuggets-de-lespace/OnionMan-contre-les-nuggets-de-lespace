@@ -46,6 +46,7 @@ public:
 	~USpawnEnemyOnSplineEvent();
 
     // Editor
+#if WITH_EDITOR
     virtual void EditorLoad(float timeSinceStart, AActor* levelAsset) override;
     virtual void EditorUpdate(float newTimeSinceStart) override;
     virtual void EditorUnload() override;
@@ -53,6 +54,7 @@ public:
     virtual void EditorSave() override;
 
 	void DestroyEditorActors();
+#endif
 
 protected:
 	virtual TObjectPtr<AEnemyActor> SpawnEnemy() override;

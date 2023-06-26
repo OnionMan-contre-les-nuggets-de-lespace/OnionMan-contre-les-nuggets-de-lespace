@@ -38,6 +38,7 @@ bool AEnemyOnSplineActor::IsOnSpline(float timeSinceSpawn, USplineComponent* tra
 	return GetTimeOnSpline(timeSinceSpawn) < trajectory->Duration;
 }
 
+#if WITH_EDITOR
 void AEnemyOnSplineActor::EditorLoad(float timeSinceSpawn)
 {
 	AEnemyActor::EditorLoad(timeSinceSpawn);
@@ -70,3 +71,4 @@ void AEnemyOnSplineActor::EditorUnload()
 {
 	AEnemyActor::EditorUnload();
 }
+#endif
