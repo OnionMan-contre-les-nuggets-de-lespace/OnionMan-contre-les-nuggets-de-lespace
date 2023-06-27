@@ -18,6 +18,8 @@ class ONIONMAN_UNREAL_API AEnemyOnSplineActor : public AEnemyActor
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 	USplineComponent* m_trajectory;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+	FVector LastPosition{};
 
 public:
 	void Spawn(USplineComponent* trajectory);
