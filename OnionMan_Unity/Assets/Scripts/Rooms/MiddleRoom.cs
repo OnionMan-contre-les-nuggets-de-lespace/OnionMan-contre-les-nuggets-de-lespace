@@ -15,6 +15,7 @@ public class MiddleRoom : BaseRoom
     [SerializeField] private TMP_Text roomHealthText;
     [SerializeField] protected RepairManager repairManager;
     [SerializeField] private SO_PlayerHit SO_playerHit;
+    [SerializeField] private Color[] roomHealthTextColor;
 
     [Space]
 
@@ -66,6 +67,21 @@ public class MiddleRoom : BaseRoom
 
     private void Update()
     {
+        switch(roomHealth)
+        {
+            case > 50:
+                roomHealthText.color = roomHealthTextColor[0];
+                break;
+
+            case > 25:
+                roomHealthText.color = roomHealthTextColor[1];
+                break;
+
+            default:
+                roomHealthText.color = roomHealthTextColor[2];
+                break;
+        }
+
         roomHealthText.text = roomHealth.ToString() + "%";
 
         if(isScanned && roomHealth <= 10)

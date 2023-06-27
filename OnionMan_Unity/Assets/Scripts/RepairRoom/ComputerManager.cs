@@ -139,7 +139,7 @@ public class ComputerManager : MonoBehaviour
     {
         m_desktopIcons.SetActive(false);
         m_reparatorWelcomePanel.SetActive(true);
-        m_reparatorWelcomingMessage.text = "Bienvenue dans le Reparator v022251212. Vous avez scanné la salle : " + GameManager.userRoomName[currentScannedRoom];
+        m_reparatorWelcomingMessage.text = "Bienvenue dans le Reparator v022251212. Vous avez scanne la salle : " + GameManager.userRoomName[currentScannedRoom];
     }
 
     public void OC_OnBeamSetupIconClicked()
