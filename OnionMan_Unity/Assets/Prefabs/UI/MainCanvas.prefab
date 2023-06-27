@@ -7940,11 +7940,11 @@ MonoBehaviour:
   roomManager: {fileID: 737037911}
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
-  reparationHeal: 25
-  healWhenExtinguishFire: 35
-  decayDamage: 10
-  rangeOfTimerBeforeDecay: {x: 2, y: 10}
-  m_timerBeforeStartDecay: 5
+  reparationHeal: 35
+  healWhenExtinguishFire: 25
+  decayDamage: 5
+  rangeOfTimerBeforeDecay: {x: 4, y: 15}
+  m_timerBeforeStartDecay: 15
   roomHealthText: {fileID: 8284236104316865949}
   repairManager: {fileID: 2142421483}
   SO_playerHit: {fileID: 0}
@@ -8283,11 +8283,11 @@ MonoBehaviour:
   roomManager: {fileID: 737037911}
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
-  reparationHeal: 25
-  healWhenExtinguishFire: 35
-  decayDamage: 10
-  rangeOfTimerBeforeDecay: {x: 2, y: 10}
-  m_timerBeforeStartDecay: 5
+  reparationHeal: 35
+  healWhenExtinguishFire: 25
+  decayDamage: 5
+  rangeOfTimerBeforeDecay: {x: 4, y: 15}
+  m_timerBeforeStartDecay: 15
   roomHealthText: {fileID: 5515730860729371940}
   repairManager: {fileID: 2142421483}
   SO_playerHit: {fileID: 0}
@@ -8949,11 +8949,11 @@ MonoBehaviour:
   roomManager: {fileID: 737037911}
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
-  reparationHeal: 25
-  healWhenExtinguishFire: 35
-  decayDamage: 10
-  rangeOfTimerBeforeDecay: {x: 2, y: 10}
-  m_timerBeforeStartDecay: 5
+  reparationHeal: 35
+  healWhenExtinguishFire: 25
+  decayDamage: 5
+  rangeOfTimerBeforeDecay: {x: 4, y: 15}
+  m_timerBeforeStartDecay: 15
   roomHealthText: {fileID: 2696435473756999631}
   repairManager: {fileID: 2142421483}
   SO_playerHit: {fileID: 0}
@@ -9348,11 +9348,11 @@ MonoBehaviour:
   roomManager: {fileID: 737037911}
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
-  reparationHeal: 25
-  healWhenExtinguishFire: 35
-  decayDamage: 10
-  rangeOfTimerBeforeDecay: {x: 2, y: 10}
-  m_timerBeforeStartDecay: 5
+  reparationHeal: 35
+  healWhenExtinguishFire: 25
+  decayDamage: 5
+  rangeOfTimerBeforeDecay: {x: 4, y: 15}
+  m_timerBeforeStartDecay: 15
   roomHealthText: {fileID: 8272984802310220291}
   repairManager: {fileID: 2142421483}
   SO_playerHit: {fileID: 0}
@@ -20961,22 +20961,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4245854835384741467, guid: 041d7c6b36ea6be468e3feec96805646, type: 3}
-      propertyPath: actionTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245854835384741467, guid: 041d7c6b36ea6be468e3feec96805646, type: 3}
-      propertyPath: extinguishTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4245854835384741467, guid: 041d7c6b36ea6be468e3feec96805646, type: 3}
-      propertyPath: alarmAudioSource
-      value: 
-      objectReference: {fileID: 1135401348959447632}
-    - target: {fileID: 4245854835384741467, guid: 041d7c6b36ea6be468e3feec96805646, type: 3}
-      propertyPath: extinguisherAudioSource
-      value: 
-      objectReference: {fileID: 5001196099252762031}
     - target: {fileID: 7976256858880078402, guid: 041d7c6b36ea6be468e3feec96805646, type: 3}
       propertyPath: m_Name
       value: RoomAction_Extinguish

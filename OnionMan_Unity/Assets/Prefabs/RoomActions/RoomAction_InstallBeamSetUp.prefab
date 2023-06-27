@@ -92,5 +92,6 @@ MonoBehaviour:
   actionName: Installer SuperBeamSetup.exe sur l'ordinateur
   cantBeDoneFeedbackMessageList:
   - Le super laser n'est pas utile pour le moment
-  actionTime: 0
+  actionTime: 6
   installTime: 6
+  SO_beamPhase: {fileID: 0}
