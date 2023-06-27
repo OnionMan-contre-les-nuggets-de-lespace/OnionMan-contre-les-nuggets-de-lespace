@@ -468,6 +468,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1027238757786787367, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
+      propertyPath: m_text
+      value: "De quelle <b><u>forme</b></u> sont les etincelles sortant \ndu BURG-3R"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1027238757786787367, guid: 773c3bc1db8dd5b4aa13e65fc021faf0, type: 3}
       propertyPath: m_fontSize
       value: 25
       objectReference: {fileID: 0}
