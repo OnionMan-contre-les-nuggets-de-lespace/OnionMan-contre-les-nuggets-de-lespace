@@ -15,7 +15,9 @@ void AEnemyOnSplineActor::Move(float deltaTime, float timeSinceSpawn)
 	AEnemyActor::Move(deltaTime, timeSinceSpawn);
 	if (IsOnSpline(timeSinceSpawn, m_trajectory))
 	{
-		SetActorLocation(GetPositionOnSpline(timeSinceSpawn, m_trajectory));
+		FVector newLoc = GetPositionOnSpline(timeSinceSpawn, m_trajectory);
+		LastPosition = newLoc;
+		SetActorLocation(newLoc);
 	}
 	else
 	{
