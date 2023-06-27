@@ -43,6 +43,8 @@ public:
 	TSubclassOf<AActor> WeaponPartBP;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
 	float ChanceToSpawnWeaponPart = 1/50.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy")
+	float FireRate = 1.0f;
 
 
 	UFUNCTION(BlueprintCallable, Category = "Enemy")
