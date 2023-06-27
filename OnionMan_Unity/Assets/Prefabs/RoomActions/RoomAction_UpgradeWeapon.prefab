@@ -93,6 +93,6 @@ MonoBehaviour:
   cantBeDoneFeedbackMessageList:
   - "Veuillez d\xE9poser l'extincteur"
   - "Pas assez de pi\xE8ce d\xE9tach\xE9es"
-  actionTime: 7
-  upgradeTime: 7
+  actionTime: 3
+  upgradeTime: 3
   upgradeManager: {fileID: 0}

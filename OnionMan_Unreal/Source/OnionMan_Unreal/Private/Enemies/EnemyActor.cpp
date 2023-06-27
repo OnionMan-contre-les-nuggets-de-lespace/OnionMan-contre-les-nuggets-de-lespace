@@ -79,6 +79,7 @@ void AEnemyActor::GetValuesFromActor(AEnemyActor* other)
 
 	WeaponPartBP = other->WeaponPartBP;
 	ChanceToSpawnWeaponPart = other->ChanceToSpawnWeaponPart;
+	FireRate = other->FireRate;
 }
 
 void AEnemyActor::Initialize()
