@@ -32,7 +32,10 @@ public class RoomManager : MonoBehaviour
     private void ChooseRoomInCriticalState()
     {
         MiddleRoom[] selectedMiddleRooms = m_middleRooms.Where((MiddleRoom middleRoom) => !middleRoom.isScanned && !middleRoom.isInCriticalState).ToArray();
-        selectedMiddleRooms[Random.Range(0, m_middleRooms.Count)].isInCriticalState = true;
+        if (selectedMiddleRooms.Length > 0)
+        {
+            selectedMiddleRooms[Random.Range(0, selectedMiddleRooms.Length)].isInCriticalState = true;
+        }
     }
 
     public void NotifyRoom(int indexOfRoom)
