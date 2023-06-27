@@ -102,7 +102,7 @@ public class MiddleRoom : BaseRoom
             }
         }
 
-        if(roomHealth <= 0)
+        if(roomHealth <= 0 && !m_hasAlreadyEnterCriticalState)
         {
             isInCriticalState = true;
             SO_playerHit.SP_IsPlayerHit.Value = true;
