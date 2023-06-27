@@ -16,6 +16,7 @@ public class MiddleRoom : BaseRoom
     [SerializeField] protected RepairManager repairManager;
     [SerializeField] private SO_PlayerHit SO_playerHit;
     [SerializeField] private Color[] roomHealthTextColor;
+    [SerializeField] private SO_BeamPhase SO_beamPhase;
 
     [Space]
 
@@ -94,7 +95,7 @@ public class MiddleRoom : BaseRoom
             m_timerBeforeStartDecay -= Time.deltaTime;
         }
 
-        if(m_timerBeforeStartDecay <= 0)
+        if(m_timerBeforeStartDecay <= 0 && !SO_beamPhase.SP_BeamPhaseReady)
         {
             if (!isInCriticalState)
             {
