@@ -179,7 +179,7 @@ public class MiddleRoom : BaseRoom
         roomHealth += healWhenExtinguishFire;
         isInCriticalState = false;
         m_hasAlreadyEnterCriticalState = false;
-
+        SO_playerHit.SP_HasReperaidCriticalRoom.Value = true;
         for (int i = 0; i < numberOfFireToSpawn; i++)
         {
             fireRectTransform[i].GetComponent<Animator>().Play("End");

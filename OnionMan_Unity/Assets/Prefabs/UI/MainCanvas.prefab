@@ -7941,7 +7941,7 @@ MonoBehaviour:
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
   reparationHeal: 35
-  healWhenExtinguishFire: 25
+  healWhenExtinguishFire: 10
   decayDamage: 5
   rangeOfTimerBeforeDecay: {x: 4, y: 15}
   m_timerBeforeStartDecay: 15
@@ -7952,6 +7952,7 @@ MonoBehaviour:
   - {r: 0.08829284, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.6924793, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  SO_beamPhase: {fileID: 0}
   criticalStateFeedback: {fileID: 3819164942884530037}
   criticalStateFeedbackVisual: {fileID: 0}
   numberOfFireToSpawn: 3
@@ -8284,7 +8285,7 @@ MonoBehaviour:
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
   reparationHeal: 35
-  healWhenExtinguishFire: 25
+  healWhenExtinguishFire: 10
   decayDamage: 5
   rangeOfTimerBeforeDecay: {x: 4, y: 15}
   m_timerBeforeStartDecay: 15
@@ -8295,6 +8296,7 @@ MonoBehaviour:
   - {r: 0.08829284, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.6924793, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  SO_beamPhase: {fileID: 0}
   criticalStateFeedback: {fileID: 3641646993829124941}
   criticalStateFeedbackVisual: {fileID: 0}
   numberOfFireToSpawn: 3
@@ -8950,7 +8952,7 @@ MonoBehaviour:
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
   reparationHeal: 35
-  healWhenExtinguishFire: 25
+  healWhenExtinguishFire: 10
   decayDamage: 5
   rangeOfTimerBeforeDecay: {x: 4, y: 15}
   m_timerBeforeStartDecay: 15
@@ -8961,6 +8963,7 @@ MonoBehaviour:
   - {r: 0.08829284, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.6924793, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  SO_beamPhase: {fileID: 0}
   criticalStateFeedback: {fileID: 7807763273145394008}
   criticalStateFeedbackVisual: {fileID: 0}
   numberOfFireToSpawn: 3
@@ -9349,7 +9352,7 @@ MonoBehaviour:
   roomActionMenu: {fileID: 6727308991010444998}
   roomHealth: 100
   reparationHeal: 35
-  healWhenExtinguishFire: 25
+  healWhenExtinguishFire: 10
   decayDamage: 5
   rangeOfTimerBeforeDecay: {x: 4, y: 15}
   m_timerBeforeStartDecay: 15
@@ -9360,6 +9363,7 @@ MonoBehaviour:
   - {r: 0.08829284, g: 1, b: 0, a: 1}
   - {r: 1, g: 0.6924793, b: 0, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
+  SO_beamPhase: {fileID: 0}
   criticalStateFeedback: {fileID: 7789363321016027815}
   criticalStateFeedbackVisual: {fileID: 0}
   numberOfFireToSpawn: 3
