@@ -6293,6 +6293,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1726482367}
     - target: {fileID: 1686159714137794910, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_beamPhase
+      value: 
+      objectReference: {fileID: 661267332}
+    - target: {fileID: 1686159714137794910, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: SO_playerHit
       value: 
       objectReference: {fileID: 845933603}
@@ -6300,6 +6304,14 @@ PrefabInstance:
       propertyPath: criticalStateFeedbackVisual
       value: 
       objectReference: {fileID: 72076524}
+    - target: {fileID: 1789596690187479499, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: alarmAudioSource
+      value: 
+      objectReference: {fileID: 3636955176367539900}
+    - target: {fileID: 1789596690187479499, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: extinguisherAudioSource
+      value: 
+      objectReference: {fileID: 3636955176367539899}
     - target: {fileID: 1895231302198432514, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.000076293945
@@ -6489,6 +6501,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 956602380}
     - target: {fileID: 5392731125695981619, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_beamPhase
+      value: 
+      objectReference: {fileID: 661267332}
+    - target: {fileID: 5392731125695981619, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: SO_playerHit
       value: 
       objectReference: {fileID: 845933603}
@@ -6549,6 +6565,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1651873932}
     - target: {fileID: 6032390151777892221, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_beamPhase
+      value: 
+      objectReference: {fileID: 661267332}
+    - target: {fileID: 6032390151777892221, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: SO_playerHit
       value: 
       objectReference: {fileID: 845933603}
@@ -6560,6 +6580,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 17.704002
       objectReference: {fileID: 0}
+    - target: {fileID: 7083432045164432564, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -329.5918
+      objectReference: {fileID: 0}
     - target: {fileID: 8194762967698554268, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6568,6 +6592,10 @@ PrefabInstance:
       propertyPath: scanEffect
       value: 
       objectReference: {fileID: 326679529}
+    - target: {fileID: 8746408027846427803, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+      propertyPath: SO_beamPhase
+      value: 
+      objectReference: {fileID: 661267332}
     - target: {fileID: 8746408027846427803, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
       propertyPath: SO_playerHit
       value: 
@@ -6590,6 +6618,16 @@ GameObject:
 --- !u!1 &3636955176367539898 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1112734215304182821, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+  m_PrefabInstance: {fileID: 3636955176367539896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &3636955176367539899 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5001196099252762031, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
+  m_PrefabInstance: {fileID: 3636955176367539896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &3636955176367539900 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1135401348959447632, guid: 979bda816fbdcc5419ce6e5507e8f83c, type: 3}
   m_PrefabInstance: {fileID: 3636955176367539896}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3650480004717718503

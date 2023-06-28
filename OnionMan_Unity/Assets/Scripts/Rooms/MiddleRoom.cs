@@ -169,15 +169,7 @@ public class MiddleRoom : BaseRoom
     public void OnRoomRepaired()
     {
         OnFinishedAction();
-
-        if(roomHealth + reparationHeal > 100)
-        {
-            roomHealth = 100;
-        }
-        else
-        {
-            roomHealth += reparationHeal;
-        }
+        roomHealth = Mathf.Min(roomHealth + reparationHeal, 100);
         SO_playerHit.SP_HasReperaidCriticalRoom.Value = true;
     }
 
